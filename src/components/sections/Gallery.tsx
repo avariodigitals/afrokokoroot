@@ -40,18 +40,20 @@ const galleryItems = [
   },
 ];
 
-export function Gallery() {
+export function Gallery({ hideTitle = false }: { hideTitle?: boolean }) {
   return (
     <section className="py-24 bg-stone-50 overflow-hidden">
       <div className="container px-4 md:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4 text-stone-900">
-            Capturing the <span className="text-orange-600">Spirit</span>
-          </h2>
-          <p className="text-lg text-stone-600">
-            Moments of joy, rhythm, and connection from our recent events and community gatherings.
-          </p>
-        </div>
+        {!hideTitle && (
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4 text-stone-900">
+              Capturing the <span className="text-orange-600">Spirit</span>
+            </h2>
+            <p className="text-lg text-stone-600">
+              Moments of joy, rhythm, and connection from our recent events and community gatherings.
+            </p>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[200px]">
           {galleryItems.map((item) => (
