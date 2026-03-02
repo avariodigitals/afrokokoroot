@@ -8,35 +8,35 @@ const galleryItems = [
     type: "image",
     src: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1000&auto=format&fit=crop",
     alt: "Community drumming circle",
-    className: "md:col-span-2 md:row-span-2",
+    className: "col-span-1 sm:col-span-2 lg:col-span-2 row-span-1 sm:row-span-2",
   },
   {
     id: 2,
     type: "image",
     src: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=1000&auto=format&fit=crop",
     alt: "Traditional dance performance",
-    className: "md:col-span-1 md:row-span-1",
+    className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1",
   },
   {
     id: 3,
     type: "video",
     src: "https://www.w3schools.com/html/mov_bbb.mp4", // Placeholder video
     alt: "Festival highlights",
-    className: "md:col-span-1 md:row-span-2",
+    className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1 sm:row-span-2",
   },
   {
     id: 4,
     type: "image",
     src: "https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=1000&auto=format&fit=crop",
     alt: "Music workshop",
-    className: "md:col-span-1 md:row-span-1",
+    className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1",
   },
   {
     id: 5,
     type: "image",
     src: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=1000&auto=format&fit=crop",
     alt: "Cultural exhibition",
-    className: "md:col-span-2 md:row-span-1",
+    className: "col-span-1 sm:col-span-2 lg:col-span-2 row-span-1",
   },
 ];
 
@@ -55,11 +55,11 @@ export function Gallery({ hideTitle = false }: { hideTitle?: boolean }) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[200px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
           {galleryItems.map((item) => (
             <div
               key={item.id}
-              className={`relative group overflow-hidden rounded-2xl bg-stone-200 ${item.className}`}
+              className={`relative group overflow-hidden rounded-2xl bg-stone-200 shadow-md hover:shadow-xl transition-all duration-500 ${item.className}`}
             >
               {item.type === "video" ? (
                 <div className="relative w-full h-full">
