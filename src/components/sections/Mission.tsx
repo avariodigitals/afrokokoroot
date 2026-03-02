@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -54,13 +55,13 @@ export function Mission() {
            <div className="absolute -bottom-10 -left-10 w-full h-full bg-orange-500/5 rounded-[3rem] rotate-3 -z-10" />
            
            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-white shadow-2xl shadow-indigo-900/10 border-4 border-white transform hover:scale-[1.02] transition-transform duration-500">
-             {/* Placeholder for About Image */}
-             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-indigo-50 to-orange-50">
-               <div className="text-center p-6">
-                 <span className="block text-4xl mb-2">🥁</span>
-                 <span className="font-bold text-indigo-900/40 text-lg uppercase tracking-widest">[Community Drumming]</span>
-               </div>
-             </div>
+             <Image 
+                src="/community%20drumming.jpeg" 
+                alt="Community Drumming" 
+                fill 
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
            </div>
            
            {/* Floating Card */}
