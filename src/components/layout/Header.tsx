@@ -35,14 +35,14 @@ export function Header() {
   }, [mobileMenuOpen])
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-orange-100 bg-white shadow-sm">
-      <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent opacity-50" />
+    <header className="sticky top-0 z-50 w-full border-b border-lime-200 bg-white/95 backdrop-blur-sm shadow-sm">
+      <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent opacity-50" />
       
       <div className="container flex h-20 items-center justify-between relative">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2 group relative z-50" onClick={() => setMobileMenuOpen(false)}>
-            <div className="absolute -inset-2 bg-gradient-to-r from-orange-500/20 to-purple-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <span className="relative text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 group-hover:scale-105 transition-transform duration-300">
+            <div className="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-lime-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <span className="relative text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-green-700 via-lime-600 to-green-600 group-hover:scale-105 transition-transform duration-300">
               Afrokokoroot
             </span>
           </Link>
@@ -55,19 +55,19 @@ export function Header() {
               key={item.name}
               href={item.href}
               className={cn(
-                "relative px-4 py-2 text-sm font-bold transition-colors hover:text-orange-600 rounded-full hover:bg-orange-50/50 group overflow-hidden",
+                "relative px-4 py-2 text-sm font-bold transition-colors hover:text-green-700 rounded-full hover:bg-lime-50/80 group overflow-hidden",
                 pathname === item.href
-                  ? "text-orange-600 bg-orange-50"
+                  ? "text-green-700 bg-lime-100"
                   : "text-slate-600"
               )}
             >
               <span className="relative z-10">{item.name}</span>
               {pathname === item.href && (
-                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-orange-400 to-purple-500" />
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-green-500 to-lime-500" />
               )}
             </Link>
           ))}
-          <Button asChild size="lg" className="ml-4 shadow-lg shadow-orange-500/20 bg-gradient-to-r from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 border-0 rounded-full font-bold transition-all hover:scale-105">
+          <Button asChild size="lg" className="ml-4 shadow-lg shadow-green-500/20 bg-gradient-to-r from-green-600 to-lime-600 hover:from-green-700 hover:to-lime-700 border-0 rounded-full font-bold transition-all hover:scale-105">
             <Link href="/donate">Donate</Link>
           </Button>
         </nav>
@@ -79,7 +79,7 @@ export function Header() {
             size="icon"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            className="text-slate-900 hover:bg-orange-50 hover:text-orange-600 relative"
+            className="text-slate-900 hover:bg-lime-50 hover:text-green-600 relative"
           >
             {mobileMenuOpen ? (
                <X className="h-6 w-6" />
@@ -104,9 +104,9 @@ export function Header() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "text-2xl font-black transition-all hover:text-orange-600 hover:scale-105 py-2 px-4 rounded-xl block w-full text-center",
+                  "text-2xl font-black transition-all hover:text-green-700 hover:scale-105 py-2 px-4 rounded-xl block w-full text-center",
                   pathname === item.href
-                    ? "text-orange-600 bg-orange-50"
+                    ? "text-green-700 bg-lime-50"
                     : "text-slate-800"
                 )}
                 style={{ 
@@ -123,7 +123,7 @@ export function Header() {
           </div>
           
           <div className="w-full max-w-xs pt-8 border-t border-slate-100 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-forwards">
-            <Button asChild className="w-full h-14 text-xl font-bold bg-gradient-to-r from-orange-500 to-pink-600 shadow-xl rounded-full hover:scale-105 transition-transform">
+            <Button asChild className="w-full h-14 text-xl font-bold bg-gradient-to-r from-green-600 to-lime-600 shadow-xl rounded-full hover:scale-105 transition-transform">
               <Link href="/donate" onClick={() => setMobileMenuOpen(false)}>
                 Donate Now
               </Link>

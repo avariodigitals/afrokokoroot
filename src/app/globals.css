@@ -22,31 +22,31 @@
 }
 
 :root {
-  /* Vibrant "Rhythm & Roots" Palette */
-  --background: #fffaf5; /* Warm Seashell/Cream - not plain white */
-  --foreground: #2a2a2a; /* Softer, deep charcoal */
+  /* Vibrant "Nature & Growth" Palette (Green/Lime) */
+  --background: #f7fee7; /* Lime-50: Very light, fresh background */
+  --foreground: #14532d; /* Green-900: Deep forest green for text */
 
-  --primary: #f97316; /* Orange-500: Brighter, more energetic */
+  --primary: #16a34a; /* Green-600: Vibrant, trustworthy green */
   --primary-foreground: #ffffff;
 
-  --secondary: #4338ca; /* Indigo-700: Richer purple/blue */
-  --secondary-foreground: #e0e7ff;
+  --secondary: #84cc16; /* Lime-500: Energetic, bright lime */
+  --secondary-foreground: #1a2e05; /* Dark olive for contrast on lime */
 
-  --accent: #fbbf24; /* Amber-400: Golden sunshine */
-  --accent-foreground: #1c1917;
+  --accent: #a3e635; /* Lime-400: Highlight color */
+  --accent-foreground: #1a2e05;
 
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
 
-  --muted: #fef3c7; /* Warm Amber-100 */
-  --muted-foreground: #78350f; /* Amber-900 */
+  --muted: #ecfccb; /* Lime-100 */
+  --muted-foreground: #3f6212; /* Lime-800 */
 
   --card: #ffffff;
-  --card-foreground: #1c1917;
+  --card-foreground: #14532d;
 
-  --border: #fed7aa; /* Orange-200 */
-  --input: #fed7aa;
-  --ring: #f97316;
+  --border: #bef264; /* Lime-300 */
+  --input: #bef264;
+  --ring: #16a34a;
   
   --radius: 1rem;
 }
@@ -57,8 +57,8 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(249, 115, 22, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(67, 56, 202, 0.05) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(22, 163, 74, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(132, 204, 22, 0.05) 0px, transparent 50%);
   background-attachment: fixed;
 }
 

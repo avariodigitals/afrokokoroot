@@ -15,37 +15,37 @@ export function Hero() {
           className="object-cover opacity-50"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-green-950/90 via-black/60 to-black/40" />
         <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay" />
       </div>
 
       <div className="container relative z-10 flex flex-col items-center text-center space-y-10">
         
         {/* Badge */}
-        <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-md shadow-lg animate-fade-in-up">
-          <span className="flex h-2 w-2 rounded-full bg-orange-400 mr-2 animate-pulse shadow-[0_0_10px_#fb923c]"></span>
+        <div className="inline-flex items-center rounded-full border border-lime-200/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-md shadow-lg animate-fade-in-up">
+          <span className="flex h-2 w-2 rounded-full bg-lime-400 mr-2 animate-pulse shadow-[0_0_10px_#a3e635]"></span>
           Official 501(c)(3) Nonprofit Organization
         </div>
 
         {/* Main Heading */}
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-black tracking-tight text-white max-w-5xl leading-[1.1] drop-shadow-sm">
-          Rhythm. <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-500">Roots.</span> <br className="hidden sm:block" />
+          Rhythm. <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 via-green-400 to-lime-500">Roots.</span> <br className="hidden sm:block" />
           <span className="relative inline-block">
             Community.
-            <svg className="absolute w-full h-4 -bottom-2 left-0 text-orange-500" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <svg className="absolute w-full h-4 -bottom-2 left-0 text-lime-500" viewBox="0 0 100 10" preserveAspectRatio="none">
               <path d="M0 5 Q 50 12 100 5" stroke="currentColor" strokeWidth="4" fill="none" opacity="0.8" />
             </svg>
           </span>
         </h1>
 
         {/* Subheading */}
-        <p className="text-lg md:text-2xl text-indigo-100 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-md">
+        <p className="text-lg md:text-2xl text-lime-50 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-md">
           Preserving African heritage and fostering global unity through the transformative power of arts education and performance.
         </p>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto pt-4">
-          <Button asChild size="lg" className="text-lg px-10 h-16 rounded-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-xl shadow-orange-900/20 border-none transition-transform hover:scale-105">
+          <Button asChild size="lg" className="text-lg px-10 h-16 rounded-full bg-gradient-to-r from-green-600 to-lime-600 hover:from-green-700 hover:to-lime-700 text-white shadow-xl shadow-green-900/20 border-none transition-transform hover:scale-105">
             <Link href="/donate">
               Donate Now <Heart className="ml-2 h-5 w-5 fill-current" />
             </Link>
@@ -60,10 +60,10 @@ export function Hero() {
         {/* Stats / Trust Indicators */}
         <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 text-center">
           {[
-            { icon: Music, label: "Cultural Arts", color: "text-orange-400" },
-            { icon: Globe, label: "Global Reach", color: "text-blue-400" },
-            { icon: Users, label: "Community", color: "text-green-400" },
-            { icon: Heart, label: "Impact", color: "text-red-400" },
+            { icon: Music, label: "Cultural Arts", color: "text-lime-400" },
+            { icon: Globe, label: "Global Reach", color: "text-green-400" },
+            { icon: Users, label: "Community", color: "text-lime-300" },
+            { icon: Heart, label: "Impact", color: "text-green-300" },
           ].map((stat, i) => (
             <div key={i} className="flex flex-col items-center gap-3 group">
                <div className={`p-4 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm group-hover:bg-white/10 transition-colors ${stat.color}`}>

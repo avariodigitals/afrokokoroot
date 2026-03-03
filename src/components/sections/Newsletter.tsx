@@ -5,13 +5,13 @@ export function Newsletter() {
   return (
     <section className="relative isolate overflow-hidden py-16 sm:py-24 lg:py-32">
       <div className="container px-6 lg:px-8">
-        <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl rounded-3xl sm:px-24 xl:py-32">
+        <div className="relative isolate overflow-hidden bg-green-950 px-6 py-24 shadow-2xl rounded-3xl sm:px-24 xl:py-32">
           {/* Background Gradient & Effects */}
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.orange.100),white)] opacity-20" />
-          <div className="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-orange-600/10 ring-1 ring-orange-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center" />
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.lime.100),white)] opacity-20" />
+          <div className="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-green-600/10 ring-1 ring-green-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center" />
           
           {/* Dark Overlay for contrast */}
-          <div className="absolute inset-0 -z-10 bg-slate-900/90 mix-blend-multiply" />
+          <div className="absolute inset-0 -z-10 bg-green-950/90 mix-blend-multiply" />
           
           {/* Decorative shapes */}
           <svg
@@ -22,8 +22,8 @@ export function Newsletter() {
             <circle cx="512" cy="512" r="512" fill="url(#gradient-newsletter)" fillOpacity="0.7" />
             <defs>
               <radialGradient id="gradient-newsletter">
-                <stop stopColor="#ea580c" /> {/* orange-600 */}
-                <stop offset="1" stopColor="#7c2d12" /> {/* orange-900 */}
+                <stop stopColor="#16a34a" /> {/* green-600 */}
+                <stop offset="1" stopColor="#14532d" /> {/* green-900 */}
               </radialGradient>
             </defs>
           </svg>
@@ -40,12 +40,12 @@ export function Newsletter() {
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6 placeholder:text-gray-400 h-12 w-full sm:w-80"
+                className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-lime-500 sm:text-sm sm:leading-6 placeholder:text-gray-400 h-12 w-full sm:w-80"
               />
               <Button 
                 variant="default" 
                 size="lg" 
-                className="flex-none rounded-md bg-orange-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 h-12 w-full sm:w-auto"
+                className="flex-none rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 h-12 w-full sm:w-auto"
               >
                 Subscribe
               </Button>
