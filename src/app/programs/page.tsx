@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Metadata } from "next"
-import { ArrowRight, Music, Heart, BookOpen, type LucideIcon, Sparkles, Sprout, Globe } from "lucide-react"
+import { ArrowRight, Music, Heart, Sparkles, Sprout, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/lib/site-config"
 

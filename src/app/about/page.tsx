@@ -1,7 +1,6 @@
 import Image from "next/image"
-import Link from "next/link"
 import { Metadata } from "next"
-import { ShieldCheck, Heart, Users, FileText, Globe, Music, Scale, BookOpen, Leaf, CheckCircle2 } from "lucide-react"
+import { ShieldCheck, Heart, Users, FileText, Globe, Music, Scale, Leaf, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getTeam } from "@/lib/api"
 import { TeamMember } from "@/lib/types"
