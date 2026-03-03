@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Facebook, Twitter, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react"
 import { getContactInfo } from "@/lib/api"
 
@@ -12,14 +13,19 @@ export async function Footer() {
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-green-950/50 to-black/50" />
       
       {/* Top Gradient Border */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 via-lime-500 to-green-700" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 via-[#E9A907] to-green-700" />
       
       <div className="container relative z-10 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-6">
           <Link href="/" className="flex items-center space-x-2 group">
-            <span className="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-lime-200 group-hover:to-white transition-all">
-              Afrokokoroot <span className="text-lime-400">Foundation</span>
-            </span>
+            <div className="relative h-24 w-96 transition-transform duration-300 group-hover:scale-105">
+              <Image
+                src="/logo.png"
+                alt="Afrokokoroot Foundation"
+                fill
+                className="object-contain object-left"
+              />
+            </div>
           </Link>
           <p className="text-lime-100 leading-relaxed max-w-xs font-medium">
             Empowering communities through music, art, and cultural exchange. 
@@ -41,7 +47,7 @@ export async function Footer() {
         </div>
         
         <div className="space-y-6">
-          <h3 className="text-lg font-bold tracking-wide text-white border-b border-white/10 pb-2 inline-block">Quick Links</h3>
+          <h3 className="text-lg font-bold tracking-wide text-white border-b border-[#E9A907]/30 pb-2 inline-block">Quick Links</h3>
           <ul className="space-y-3 text-lime-100">
             {[
               { href: "/about", label: "About Us" },
@@ -53,8 +59,8 @@ export async function Footer() {
               { href: "/admin", label: "Admin" }
             ].map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="hover:text-lime-300 transition-all flex items-center gap-2 group">
-                  <span className="h-1.5 w-1.5 bg-lime-500 rounded-full group-hover:w-3 transition-all duration-300" /> 
+                <Link href={link.href} className="hover:text-[#E9A907] transition-all flex items-center gap-2 group">
+                  <span className="h-1.5 w-1.5 bg-[#E9A907] rounded-full group-hover:w-3 transition-all duration-300" /> 
                   <span className="group-hover:translate-x-1 transition-transform">{link.label}</span>
                 </Link>
               </li>
@@ -63,7 +69,7 @@ export async function Footer() {
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-lg font-bold tracking-wide text-white border-b border-white/10 pb-2 inline-block">Get Involved</h3>
+          <h3 className="text-lg font-bold tracking-wide text-white border-b border-[#E9A907]/30 pb-2 inline-block">Get Involved</h3>
           <ul className="space-y-3 text-lime-100">
             {[
               { href: "/donate", label: "Donate" },
@@ -71,8 +77,8 @@ export async function Footer() {
               { href: "/contact", label: "Contact Us" }
             ].map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="hover:text-lime-300 transition-all flex items-center gap-2 group">
-                  <span className="h-1.5 w-1.5 bg-green-500 rounded-full group-hover:w-3 transition-all duration-300" /> 
+                <Link href={link.href} className="hover:text-[#E9A907] transition-all flex items-center gap-2 group">
+                  <span className="h-1.5 w-1.5 bg-[#E9A907] rounded-full group-hover:w-3 transition-all duration-300" /> 
                   <span className="group-hover:translate-x-1 transition-transform">{link.label}</span>
                 </Link>
               </li>
@@ -81,23 +87,23 @@ export async function Footer() {
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-lg font-bold tracking-wide text-white border-b border-white/10 pb-2 inline-block">Contact Info</h3>
+          <h3 className="text-lg font-bold tracking-wide text-white border-b border-[#E9A907]/30 pb-2 inline-block">Contact Info</h3>
           <ul className="space-y-4 text-lime-100">
             <li className="flex items-start gap-3 group">
-              <div className="p-2 rounded-full bg-white/5 group-hover:bg-lime-500/20 transition-colors">
-                <MapPin className="h-5 w-5 shrink-0 text-lime-400 group-hover:text-lime-300" />
+              <div className="p-2 rounded-full bg-white/5 group-hover:bg-[#E9A907]/20 transition-colors">
+                <MapPin className="h-5 w-5 shrink-0 text-[#E9A907] group-hover:text-[#c28e06]" />
               </div>
               <span className="mt-1 whitespace-pre-line">{contactInfo.address}</span>
             </li>
             <li className="flex items-center gap-3 group">
-              <div className="p-2 rounded-full bg-white/5 group-hover:bg-lime-500/20 transition-colors">
-                <Phone className="h-5 w-5 shrink-0 text-lime-400 group-hover:text-lime-300" />
+              <div className="p-2 rounded-full bg-white/5 group-hover:bg-[#E9A907]/20 transition-colors">
+                <Phone className="h-5 w-5 shrink-0 text-[#E9A907] group-hover:text-[#c28e06]" />
               </div>
               <span>{contactInfo.phone}</span>
             </li>
             <li className="flex items-center gap-3 group">
-              <div className="p-2 rounded-full bg-white/5 group-hover:bg-lime-500/20 transition-colors">
-                <Mail className="h-5 w-5 shrink-0 text-lime-400 group-hover:text-lime-300" />
+              <div className="p-2 rounded-full bg-white/5 group-hover:bg-[#E9A907]/20 transition-colors">
+                <Mail className="h-5 w-5 shrink-0 text-[#E9A907] group-hover:text-[#c28e06]" />
               </div>
               <a href={`mailto:${contactInfo.email}`} className="hover:text-white transition-colors">{contactInfo.email}</a>
             </li>

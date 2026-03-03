@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import { Gallery } from "@/components/sections/Gallery";
 import { siteConfig } from "@/lib/site-config";
 
@@ -18,10 +19,12 @@ export default function GalleryPage() {
       {/* Hero Section */}
       <div className="relative h-[60vh] min-h-[500px] w-full overflow-hidden">
         <div className="absolute inset-0">
-          <img
+          <Image
             src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8151.jpeg?updatedAt=1772546608755"
             alt="Gallery Hero - Community Gathering"
-            className="h-full w-full object-cover"
+            fill
+            className="object-cover"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-lime-900/90" />
         </div>

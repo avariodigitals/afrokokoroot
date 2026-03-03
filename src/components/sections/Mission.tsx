@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { MissionVideo } from "./MissionVideo"
 
 export function Mission() {
   return (
@@ -20,7 +21,7 @@ export function Mission() {
           </div>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-foreground leading-tight">
             More Than Music. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-lime-600">A Global Movement.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-[#E9A907]">A Global Movement.</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             The Afrokokoroot Foundation is a registered 501(c)(3) nonprofit organization committed to transparency, ethical governance, and sustainable community impact.
@@ -32,7 +33,7 @@ export function Mission() {
           <div className="flex flex-col gap-4 pt-2">
              {["501(c)(3) Certified", "Community-Led", "Transparent Governance"].map((item) => (
                <div key={item} className="flex items-center gap-3 group">
-                 <div className="h-8 w-8 rounded-full bg-lime-100 flex items-center justify-center text-green-700 group-hover:scale-110 transition-transform shadow-sm">
+                 <div className="h-8 w-8 rounded-full bg-lime-100 flex items-center justify-center text-[#E9A907] group-hover:scale-110 transition-transform shadow-sm">
                    <CheckCircle2 className="h-5 w-5" />
                  </div>
                  <span className="font-semibold text-foreground/80 group-hover:text-foreground transition-colors">{item}</span>
@@ -54,14 +55,10 @@ export function Mission() {
            <div className="absolute -bottom-10 -left-10 w-full h-full bg-lime-500/5 rounded-[3rem] rotate-3 -z-10" />
            
            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-white shadow-2xl shadow-green-900/10 border-4 border-white transform hover:scale-[1.02] transition-transform duration-500">
-             <video
+             <MissionVideo
                 src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8380.mov/ik-video.mp4?updatedAt=1772547046669"
                 poster="/community%20drumming.jpeg"
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="object-cover w-full h-full"
+                limit={5} // Short loop for "GIF" effect
              />
            </div>
            

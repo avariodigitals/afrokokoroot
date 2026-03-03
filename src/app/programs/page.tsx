@@ -27,7 +27,7 @@ const programsData = [
       "Cultural immersion rooted in African traditions"
     ],
     icon: Music,
-    image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=2070&auto=format&fit=crop"
+    image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8151.jpeg?updatedAt=1772546608755"
   },
   {
     title: "Land-Based Learning, Wellness & Outdoor Recreation",
@@ -40,7 +40,7 @@ const programsData = [
       "Land-centered healing & connection"
     ],
     icon: Heart,
-    image: "https://images.unsplash.com/photo-1502086223501-68119136a646?q=80&w=2070&auto=format&fit=crop"
+    image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8379.jpeg?updatedAt=1772546780580"
   },
   {
     title: "Food, Agriculture & Sustainability Education",
@@ -53,7 +53,7 @@ const programsData = [
       "Sustainable food systems education"
     ],
     icon: Sprout,
-    image: "https://images.unsplash.com/photo-1592419044706-39796d40f98c?q=80&w=2079&auto=format&fit=crop"
+    image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/WhatsApp%20Image%202026-02-16%20at%2020.49.58%20(26).jpeg?updatedAt=1772546628435"
   },
   {
     title: "Community Outreach & Cultural Engagement",
@@ -66,7 +66,7 @@ const programsData = [
       "Collaborative cultural experiences"
     ],
     icon: Globe,
-    image: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=2070&auto=format&fit=crop"
+    image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8153.jpeg?updatedAt=1772546625982"
   }
 ]
 

@@ -19,6 +19,8 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --radius: var(--radius);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
 }
 
 :root {
@@ -34,6 +36,9 @@
 
   --accent: #a3e635; /* Lime-400: Highlight color */
   --accent-foreground: #1a2e05;
+  
+  --gold: #E9A907; /* New Gold Accent */
+  --gold-foreground: #1a2e05;
 
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;

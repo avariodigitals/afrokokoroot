@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -44,9 +45,15 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2 group relative z-50" onClick={() => setMobileMenuOpen(false)}>
             <div className="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-lime-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <span className="relative text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-green-700 via-lime-600 to-green-600 group-hover:scale-105 transition-transform duration-300">
-              Afrokokoroot
-            </span>
+            <div className="relative h-16 w-64 transition-transform duration-300 group-hover:scale-105">
+              <Image
+                src="/logo.png"
+                alt="Afrokokoroot Foundation"
+                fill
+                className="object-contain object-left"
+                priority
+              />
+            </div>
           </Link>
         </div>
 
@@ -69,7 +76,7 @@ export function Header() {
               )}
             </Link>
           ))}
-          <Button asChild size="lg" className="ml-4 shadow-lg shadow-green-500/20 bg-gradient-to-r from-green-600 to-lime-600 hover:from-green-700 hover:to-lime-700 border-0 rounded-full font-bold transition-all hover:scale-105">
+          <Button asChild size="lg" className="ml-4 shadow-lg shadow-green-500/20 bg-[#E9A907] text-[#1a2e05] hover:bg-[#c28e06] border-0 rounded-full font-bold transition-all hover:scale-105">
             <Link href="/donate">Donate</Link>
           </Button>
         </nav>
@@ -125,7 +132,7 @@ export function Header() {
           </div>
           
           <div className="w-full max-w-xs mt-auto pt-8 pb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-forwards">
-            <Button asChild className="w-full h-14 text-xl font-bold bg-gradient-to-r from-green-600 to-lime-600 shadow-xl rounded-full hover:scale-105 transition-transform text-white">
+            <Button asChild className="w-full h-14 text-xl font-bold bg-[#E9A907] text-[#1a2e05] hover:bg-[#c28e06] shadow-xl rounded-full hover:scale-105 transition-transform">
               <Link href="/donate" onClick={() => setMobileMenuOpen(false)}>
                 Donate Now
               </Link>

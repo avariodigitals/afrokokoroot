@@ -23,16 +23,16 @@ export function Hero() {
         
         {/* Badge */}
         <div className="inline-flex items-center rounded-full border border-lime-200/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-md shadow-lg animate-fade-in-up">
-          <span className="flex h-2 w-2 rounded-full bg-lime-400 mr-2 animate-pulse shadow-[0_0_10px_#a3e635]"></span>
+          <span className="flex h-2 w-2 rounded-full bg-[#E9A907] mr-2 animate-pulse shadow-[0_0_10px_#E9A907]"></span>
           Official 501(c)(3) Nonprofit Organization
         </div>
 
         {/* Main Heading */}
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-black tracking-tight text-white max-w-5xl leading-[1.1] drop-shadow-sm">
-          Rhythm. <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 via-green-400 to-lime-500">Roots.</span> <br className="hidden sm:block" />
+          Rhythm. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E9A907] via-green-400 to-lime-500">Roots.</span> <br className="hidden sm:block" />
           <span className="relative inline-block">
             Community.
-            <svg className="absolute w-full h-4 -bottom-2 left-0 text-lime-500" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <svg className="absolute w-full h-4 -bottom-2 left-0 text-[#E9A907]" viewBox="0 0 100 10" preserveAspectRatio="none">
               <path d="M0 5 Q 50 12 100 5" stroke="currentColor" strokeWidth="4" fill="none" opacity="0.8" />
             </svg>
           </span>
