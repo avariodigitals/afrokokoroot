@@ -5,38 +5,52 @@ import { Play } from "lucide-react";
 const galleryItems = [
   {
     id: 1,
-    type: "image",
-    src: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1000&auto=format&fit=crop",
-    alt: "Community drumming circle",
+    type: "video",
+    src: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8380.mov/ik-video.mp4?updatedAt=1772547046669",
+    alt: "Community Celebration",
     className: "col-span-1 sm:col-span-2 lg:col-span-2 row-span-1 sm:row-span-2",
   },
   {
     id: 2,
     type: "image",
-    src: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=1000&auto=format&fit=crop",
-    alt: "Traditional dance performance",
+    src: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8381.jpeg?updatedAt=1772546824025",
+    alt: "Cultural Performance",
     className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1",
   },
   {
     id: 3,
-    type: "video",
-    src: "https://www.w3schools.com/html/mov_bbb.mp4", // Placeholder video
-    alt: "Festival highlights",
-    className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1 sm:row-span-2",
+    type: "image",
+    src: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8154.jpeg?updatedAt=1772546596730",
+    alt: "Youth Engagement",
+    className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1",
   },
   {
     id: 4,
     type: "image",
-    src: "https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=1000&auto=format&fit=crop",
-    alt: "Music workshop",
+    src: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8151.jpeg?updatedAt=1772546608755",
+    alt: "Community Gathering",
     className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1",
   },
   {
     id: 5,
     type: "image",
-    src: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=1000&auto=format&fit=crop",
-    alt: "Cultural exhibition",
-    className: "col-span-1 sm:col-span-2 lg:col-span-2 row-span-1",
+    src: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8153.jpeg?updatedAt=1772546625982",
+    alt: "Shared Moments",
+    className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1",
+  },
+  {
+    id: 6,
+    type: "video",
+    src: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_3716.mov/ik-video.mp4?updatedAt=1772546686857",
+    alt: "Live Music Session",
+    className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1 sm:row-span-2",
+  },
+  {
+    id: 7,
+    type: "image",
+    src: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/WhatsApp%20Image%202026-02-16%20at%2020.49.58%20(22).jpeg?updatedAt=1772546638377",
+    alt: "Foundation Event",
+    className: "col-span-1 sm:col-span-1 lg:col-span-1 row-span-1",
   },
 ];
 
@@ -68,7 +82,7 @@ export function Gallery({ hideTitle = false }: { hideTitle?: boolean }) {
                     muted
                     loop
                     playsInline
-                    // autoPlay // Uncomment to autoplay
+                    autoPlay
                   >
                     <source src={item.src} type="video/mp4" />
                   </video>

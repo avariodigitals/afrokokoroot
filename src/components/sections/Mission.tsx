@@ -1,5 +1,4 @@
 import Link from "next/link"
-import Image from "next/image"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -55,13 +54,15 @@ export function Mission() {
            <div className="absolute -bottom-10 -left-10 w-full h-full bg-lime-500/5 rounded-[3rem] rotate-3 -z-10" />
            
            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-white shadow-2xl shadow-green-900/10 border-4 border-white transform hover:scale-[1.02] transition-transform duration-500">
-             <Image 
-                src="/community%20drumming.jpeg" 
-                alt="Community Drumming" 
-                fill 
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
+             <video
+                src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8380.mov/ik-video.mp4?updatedAt=1772547046669"
+                poster="/community%20drumming.jpeg"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="object-cover w-full h-full"
+             />
            </div>
            
            {/* Floating Card */}

@@ -14,19 +14,30 @@ export const metadata: Metadata = {
 
 export default function GalleryPage() {
   return (
-    <div className="min-h-screen bg-lime-50 pt-20">
-      <div className="container px-4 md:px-6 py-12">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h1 className="text-4xl font-black tracking-tight sm:text-5xl md:text-6xl mb-6 text-green-900">
-            Our <span className="text-green-600">Gallery</span>
+    <div className="min-h-screen bg-lime-50">
+      {/* Hero Section */}
+      <div className="relative h-[60vh] min-h-[500px] w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8151.jpeg?updatedAt=1772546608755"
+            alt="Gallery Hero - Community Gathering"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-lime-900/90" />
+        </div>
+        <div className="relative container h-full flex flex-col items-center justify-center text-center px-4 md:px-6">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 drop-shadow-lg">
+            Our <span className="text-lime-400">Gallery</span>
           </h1>
-          <p className="text-xl text-green-800 leading-relaxed">
+          <p className="text-lg md:text-2xl text-lime-50 max-w-2xl mx-auto font-medium drop-shadow-md">
             A visual journey through our mission to preserve African heritage and empower communities through music and art.
           </p>
         </div>
       </div>
       
-      <Gallery hideTitle={true} />
+      <div className="py-12 md:py-20">
+        <Gallery hideTitle={true} />
+      </div>
     </div>
   );
 }
