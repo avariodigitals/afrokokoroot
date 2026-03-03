@@ -35,10 +35,12 @@ export function Header() {
   }, [mobileMenuOpen])
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-lime-200 bg-white/95 backdrop-blur-sm shadow-sm">
-      <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent opacity-50" />
+    <header className="sticky top-0 z-50 w-full">
+      {/* Header Background */}
+      <div className="absolute inset-0 bg-white/95 backdrop-blur-sm border-b border-lime-200 shadow-sm transition-all" />
+      <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent opacity-50 z-10" />
       
-      <div className="container flex h-20 items-center justify-between relative">
+      <div className="container flex h-20 items-center justify-between relative z-20">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2 group relative z-50" onClick={() => setMobileMenuOpen(false)}>
             <div className="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-lime-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -73,13 +75,13 @@ export function Header() {
         </nav>
 
         {/* Mobile Menu Toggle */}
-        <div className="flex lg:hidden z-50">
+        <div className="flex lg:hidden relative z-50">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            className="text-slate-900 hover:bg-lime-50 hover:text-green-600 relative"
+            className="text-green-900 hover:bg-lime-100 hover:text-green-700 relative"
           >
             {mobileMenuOpen ? (
                <X className="h-6 w-6" />
@@ -93,26 +95,26 @@ export function Header() {
       {/* Mobile Navigation Overlay */}
       <div 
         className={cn(
-          "fixed inset-0 z-40 bg-white lg:hidden transition-all duration-300 ease-in-out transform",
+          "fixed top-20 left-0 right-0 bottom-0 z-40 bg-lime-50 lg:hidden transition-all duration-300 ease-in-out transform border-t border-lime-200 shadow-inner",
           mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
         )}
       >
-        <div className="container h-full flex flex-col justify-center items-center space-y-8 pt-20 pb-10 overflow-y-auto">
-          <div className="flex flex-col items-center space-y-6 w-full max-w-md">
+        <div className="container h-full flex flex-col items-center pt-8 pb-10 overflow-y-auto">
+          <div className="flex flex-col items-center space-y-2 w-full max-w-md">
             {navigation.map((item, i) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "text-2xl font-black transition-all hover:text-green-700 hover:scale-105 py-2 px-4 rounded-xl block w-full text-center",
+                  "text-xl font-bold transition-all py-4 px-6 rounded-2xl block w-full text-center hover:bg-white/60 active:scale-95",
                   pathname === item.href
-                    ? "text-green-700 bg-lime-50"
-                    : "text-slate-800"
+                    ? "text-green-800 bg-white shadow-sm border border-lime-100"
+                    : "text-green-900/80 hover:text-green-900"
                 )}
                 style={{ 
                   transitionDelay: `${i * 50}ms`,
                   opacity: mobileMenuOpen ? 1 : 0,
-                  transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+                  transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(10px)',
                   transitionProperty: 'opacity, transform'
                 }}
                 onClick={() => setMobileMenuOpen(false)}
@@ -122,14 +124,14 @@ export function Header() {
             ))}
           </div>
           
-          <div className="w-full max-w-xs pt-8 border-t border-slate-100 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-forwards">
-            <Button asChild className="w-full h-14 text-xl font-bold bg-gradient-to-r from-green-600 to-lime-600 shadow-xl rounded-full hover:scale-105 transition-transform">
+          <div className="w-full max-w-xs mt-auto pt-8 pb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-forwards">
+            <Button asChild className="w-full h-14 text-xl font-bold bg-gradient-to-r from-green-600 to-lime-600 shadow-xl rounded-full hover:scale-105 transition-transform text-white">
               <Link href="/donate" onClick={() => setMobileMenuOpen(false)}>
                 Donate Now
               </Link>
             </Button>
             
-            <p className="mt-8 text-center text-slate-400 text-sm">
+            <p className="mt-8 text-center text-green-700/60 text-sm font-medium">
               &copy; <span suppressHydrationWarning>{new Date().getFullYear()}</span> Afrokokoroot Foundation
             </p>
           </div>

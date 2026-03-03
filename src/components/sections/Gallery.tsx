@@ -42,14 +42,14 @@ const galleryItems = [
 
 export function Gallery({ hideTitle = false }: { hideTitle?: boolean }) {
   return (
-    <section className="py-24 bg-stone-50 overflow-hidden">
+    <section className="py-24 bg-lime-50 overflow-hidden">
       <div className="container px-4 md:px-6">
         {!hideTitle && (
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4 text-stone-900">
-              Capturing the <span className="text-orange-600">Spirit</span>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4 text-green-900">
+              Capturing the <span className="text-green-600">Spirit</span>
             </h2>
-            <p className="text-lg text-stone-600">
+            <p className="text-lg text-green-800">
               Moments of joy, rhythm, and connection from our recent events and community gatherings.
             </p>
           </div>
@@ -59,7 +59,7 @@ export function Gallery({ hideTitle = false }: { hideTitle?: boolean }) {
           {galleryItems.map((item) => (
             <div
               key={item.id}
-              className={`relative group overflow-hidden rounded-2xl bg-stone-200 shadow-md hover:shadow-xl transition-all duration-500 ${item.className}`}
+              className={`relative group overflow-hidden rounded-2xl bg-lime-200 shadow-md hover:shadow-xl transition-all duration-500 ${item.className}`}
             >
               {item.type === "video" ? (
                 <div className="relative w-full h-full">
@@ -74,7 +74,7 @@ export function Gallery({ hideTitle = false }: { hideTitle?: boolean }) {
                   </video>
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/30 transition-colors">
                     <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm group-hover:scale-110 transition-transform">
-                      <Play className="w-5 h-5 text-orange-600 ml-1" fill="currentColor" />
+                      <Play className="w-5 h-5 text-green-600 ml-1" fill="currentColor" />
                     </div>
                   </div>
                 </div>

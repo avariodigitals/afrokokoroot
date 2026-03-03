@@ -21,9 +21,9 @@ export default async function EventsPage() {
   const events = await getEvents()
 
   return (
-    <div className="min-h-screen bg-indigo-50 overflow-hidden">
+    <div className="min-h-screen bg-lime-50 overflow-hidden">
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 bg-indigo-900 text-white overflow-hidden rounded-b-[3rem] shadow-xl z-20">
+      <section className="relative py-24 md:py-32 bg-green-900 text-white overflow-hidden rounded-b-[3rem] shadow-xl z-20">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
@@ -33,19 +33,19 @@ export default async function EventsPage() {
             className="object-cover opacity-60"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/90 via-purple-900/80 to-pink-900/80" />
+          <div className="absolute inset-0 bg-gradient-to-br from-green-900/90 via-green-800/80 to-lime-900/80" />
           <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay" />
         </div>
         
         {/* Animated Blobs */}
-        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse mix-blend-screen" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-pink-500/30 rounded-full blur-3xl animate-pulse mix-blend-screen delay-1000" />
+        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-lime-500/30 rounded-full blur-3xl animate-pulse mix-blend-screen" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-green-600/30 rounded-full blur-3xl animate-pulse mix-blend-screen delay-1000" />
 
         <div className="container relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-            Upcoming <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-200">Events</span>
+            Upcoming <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-300 to-green-200">Events</span>
           </h1>
-          <p className="text-xl md:text-2xl text-indigo-100 max-w-3xl mx-auto font-light leading-relaxed">
+          <p className="text-xl md:text-2xl text-lime-100 max-w-3xl mx-auto font-light leading-relaxed">
             Experience the rhythm, culture, and community. Join us at our next gathering and be part of the movement.
           </p>
         </div>
@@ -55,13 +55,13 @@ export default async function EventsPage() {
       <section className="py-12 md:py-24 container relative z-10">
         <div className="grid gap-12">
           {events.map((event: Event) => (
-            <div key={event.slug} className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-indigo-100 flex flex-col md:flex-row">
+            <div key={event.slug} className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-lime-100 flex flex-col md:flex-row">
               {/* Date Badge (Absolute) */}
-              <div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm rounded-xl p-3 text-center shadow-sm border border-indigo-50">
-                <span className="block text-xs font-bold uppercase text-indigo-500 tracking-wider">
+              <div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm rounded-xl p-3 text-center shadow-sm border border-lime-50">
+                <span className="block text-xs font-bold uppercase text-green-600 tracking-wider">
                   {event.date.split(' ')[0]}
                 </span>
-                <span className="block text-2xl font-black text-indigo-900 leading-none">
+                <span className="block text-2xl font-black text-green-900 leading-none">
                   {event.date.split(' ')[1].replace(',', '')}
                 </span>
               </div>
@@ -77,9 +77,9 @@ export default async function EventsPage() {
                   />
                 ) : (
                   <>
-                    <div className="absolute inset-0 bg-indigo-200 animate-pulse" />
+                    <div className="absolute inset-0 bg-lime-200 animate-pulse" />
                     {/* Placeholder for event image */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 group-hover:scale-110 transition-transform duration-700">
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-green-500 to-lime-600 group-hover:scale-110 transition-transform duration-700">
                        <Calendar className="h-24 w-24 text-white/20" />
                     </div>
                   </>
@@ -90,22 +90,22 @@ export default async function EventsPage() {
               {/* Content Side */}
               <div className="flex-1 p-8 md:p-10 flex flex-col justify-between relative">
                 <div className="absolute top-0 right-0 p-4 opacity-10">
-                   <Ticket className="h-32 w-32 text-indigo-900 rotate-12" />
+                   <Ticket className="h-32 w-32 text-green-900 rotate-12" />
                 </div>
                 
                 <div className="relative z-10 space-y-4">
                   <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-muted-foreground">
-                    <span className="flex items-center bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full">
+                    <span className="flex items-center bg-lime-50 text-green-700 px-3 py-1 rounded-full">
                       <Clock className="h-4 w-4 mr-2" />
                       {event.date.split(' at ')[1] || 'TBA'}
                     </span>
-                    <span className="flex items-center bg-purple-50 text-purple-700 px-3 py-1 rounded-full">
+                    <span className="flex items-center bg-green-50 text-green-700 px-3 py-1 rounded-full">
                       <MapPin className="h-4 w-4 mr-2" />
                       {event.location}
                     </span>
                   </div>
 
-                  <h2 className="text-3xl font-bold group-hover:text-indigo-700 transition-colors">
+                  <h2 className="text-3xl font-bold group-hover:text-green-700 transition-colors">
                     <Link href={`/events/${event.slug}`} className="focus:outline-none">
                       <span className="absolute inset-0 md:hidden" />
                       {event.title}
@@ -117,8 +117,8 @@ export default async function EventsPage() {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between mt-8 relative z-10 pt-6 border-t border-indigo-50">
-                   <div className="text-lg font-bold text-indigo-900">
+                <div className="flex items-center justify-between mt-8 relative z-10 pt-6 border-t border-lime-50">
+                   <div className="text-lg font-bold text-green-900">
                      {event.price === 'Free' ? (
                        <span className="text-green-600">Free Entry</span>
                      ) : (
@@ -126,7 +126,7 @@ export default async function EventsPage() {
                      )}
                    </div>
                    
-                   <Button asChild size="lg" className="rounded-full px-8 bg-indigo-600 hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                   <Button asChild size="lg" className="rounded-full px-8 bg-green-600 hover:bg-green-700 hover:shadow-lg hover:-translate-y-0.5 transition-all text-white">
                     <Link href={`/events/${event.slug}`}>
                       View Details <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
@@ -140,13 +140,13 @@ export default async function EventsPage() {
 
       {/* Newsletter CTA */}
       <section className="py-24 container relative z-10">
-         <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-[3rem] p-10 md:p-20 text-center text-white relative overflow-hidden shadow-2xl">
+         <div className="bg-gradient-to-r from-green-600 to-lime-600 rounded-[3rem] p-10 md:p-20 text-center text-white relative overflow-hidden shadow-2xl">
            <div className="absolute inset-0 bg-[url('/pattern-grid.svg')] opacity-20 mix-blend-overlay" />
            <div className="absolute -left-20 top-1/2 w-64 h-64 bg-white/20 rounded-full blur-3xl" />
            
            <div className="relative z-10 max-w-2xl mx-auto space-y-8">
              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Never Miss a Beat</h2>
-             <p className="text-xl text-pink-100 font-medium">
+             <p className="text-xl text-lime-100 font-medium">
                Subscribe to our newsletter to get the latest updates on events, workshops, and community gatherings.
              </p>
              
@@ -154,9 +154,9 @@ export default async function EventsPage() {
                <input 
                  type="email" 
                  placeholder="Enter your email" 
-                 className="flex-1 h-14 px-6 rounded-full bg-white/10 border border-white/30 text-white placeholder:text-pink-100 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all backdrop-blur-sm"
+                 className="flex-1 h-14 px-6 rounded-full bg-white/10 border border-white/30 text-white placeholder:text-lime-100 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all backdrop-blur-sm"
                />
-               <Button size="lg" className="h-14 px-8 rounded-full bg-white text-purple-600 hover:bg-pink-50 font-bold shadow-lg">
+               <Button size="lg" className="h-14 px-8 rounded-full bg-white text-green-700 hover:bg-lime-50 font-bold shadow-lg">
                  Subscribe
                </Button>
              </form>
