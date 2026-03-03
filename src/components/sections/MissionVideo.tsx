@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface MissionVideoProps {
   src: string
@@ -10,6 +10,14 @@ interface MissionVideoProps {
 
 export function MissionVideo({ src, poster, limit = 10 }: MissionVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMounted(true)
+    }, 0)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const video = videoRef.current
@@ -27,6 +35,12 @@ export function MissionVideo({ src, poster, limit = 10 }: MissionVideoProps) {
     video.addEventListener("timeupdate", handleTimeUpdate)
     return () => video.removeEventListener("timeupdate", handleTimeUpdate)
   }, [limit])
+
+  if (!isMounted) {
+    return (
+      <div className="w-full h-full bg-slate-200 animate-pulse rounded-2xl" />
+    )
+  }
 
   return (
     <video
