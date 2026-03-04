@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Metadata } from "next"
-import { Shield, Lock, Eye, FileText, Cookie, Mail, Phone, MapPin } from "lucide-react"
+import { Shield, Lock, Eye, FileText, Cookie, Mail, Phone } from "lucide-react"
 import { getContactInfo } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
 

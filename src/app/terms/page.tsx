@@ -116,14 +116,14 @@ export default async function TermsPage() {
               </div>
               <div className="prose prose-lg text-muted-foreground max-w-none">
                 <p>
-                  Permission is granted to temporarily download one copy of the materials (information or software) on Afrokokoroot Foundation's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+                  Permission is granted to temporarily download one copy of the materials (information or software) on Afrokokoroot Foundation&apos;s website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 mt-4">
                   <li>modify or copy the materials;</li>
                   <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
-                  <li>attempt to decompile or reverse engineer any software contained on Afrokokoroot Foundation's website;</li>
+                  <li>attempt to decompile or reverse engineer any software contained on Afrokokoroot Foundation&apos;s website;</li>
                   <li>remove any copyright or other proprietary notations from the materials; or</li>
-                  <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
+                  <li>transfer the materials to another person or &quot;mirror&quot; the materials on any other server.</li>
                 </ul>
               </div>
             </section>
@@ -138,7 +138,7 @@ export default async function TermsPage() {
               </div>
               <div className="prose prose-lg text-muted-foreground max-w-none">
                 <p>
-                  The materials on Afrokokoroot Foundation's website are provided on an 'as is' basis. Afrokokoroot Foundation makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+                  The materials on Afrokokoroot Foundation&apos;s website are provided on an &apos;as is&apos; basis. Afrokokoroot Foundation makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
                 </p>
               </div>
             </section>
@@ -153,7 +153,7 @@ export default async function TermsPage() {
               </div>
               <div className="prose prose-lg text-muted-foreground max-w-none">
                 <p>
-                  In no event shall Afrokokoroot Foundation or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Afrokokoroot Foundation's website, even if Afrokokoroot Foundation or a Afrokokoroot Foundation authorized representative has been notified orally or in writing of the possibility of such damage.
+                  In no event shall Afrokokoroot Foundation or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Afrokokoroot Foundation&apos;s website, even if Afrokokoroot Foundation or a Afrokokoroot Foundation authorized representative has been notified orally or in writing of the possibility of such damage.
                 </p>
               </div>
             </section>
