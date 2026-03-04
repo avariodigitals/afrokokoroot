@@ -21,7 +21,17 @@ const navigation = [
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  const [scrolled, setScrolled] = React.useState(false)
   const pathname = usePathname()
+  const isHome = pathname === "/"
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   // Prevent body scroll when menu is open
   React.useEffect(() => {
@@ -35,71 +45,94 @@ export function Header() {
     }
   }, [mobileMenuOpen])
 
-  return (
-    <header className="sticky top-0 z-50 w-full">
-      {/* Header Background */}
-      <div className="absolute inset-0 bg-white/95 backdrop-blur-sm border-b border-lime-200 shadow-sm transition-all" />
-      <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent opacity-50 z-10" />
-      
-      <div className="container flex h-20 items-center justify-between relative z-20">
-        <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center space-x-2 group relative z-50" onClick={() => setMobileMenuOpen(false)}>
-            <div className="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-lime-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="relative h-16 w-64 transition-transform duration-300 group-hover:scale-105">
-              <Image
-                src="/logo.png"
-                alt="Afrokokoroot Foundation"
-                fill
-                className="object-contain object-left"
-                priority
-              />
-            </div>
-          </Link>
-        </div>
+  const isTransparent = isHome && !scrolled && !mobileMenuOpen
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
+  return (
+    <>
+      <header className="fixed top-0 z-50 w-full transition-all duration-300">
+        {/* Header Background */}
+        <div className={cn(
+          "absolute inset-0 transition-all duration-300",
+          isTransparent 
+            ? "bg-transparent" 
+            : "bg-white/95 backdrop-blur-sm border-b border-lime-200 shadow-sm"
+        )} />
+        <div className={cn(
+          "absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-green-500/50 to-transparent z-10 transition-opacity duration-300",
+          isTransparent ? "opacity-0" : "opacity-50"
+        )} />
+        
+        <div className="container flex h-20 items-center justify-between relative z-20">
+          <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center space-x-2 group relative z-50" onClick={() => setMobileMenuOpen(false)}>
+              <div className="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-lime-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative h-16 w-64 transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  src="/logo.png"
+                  alt="Afrokokoroot Foundation"
+                  fill
+                  className="object-contain object-left"
+                  priority
+                />
+              </div>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "relative px-4 py-2 text-sm font-bold transition-colors rounded-full group overflow-hidden",
+                  isTransparent
+                    ? (pathname === item.href 
+                        ? "text-[#E9A907] bg-white/10 backdrop-blur-sm" 
+                        : "text-white/90 hover:text-white hover:bg-white/10")
+                    : (pathname === item.href 
+                        ? "text-green-700 bg-lime-100" 
+                        : "text-slate-600 hover:text-green-700 hover:bg-lime-50/80")
+                )}
+              >
+                <span className="relative z-10">{item.name}</span>
+                {pathname === item.href && (
+                  <span className={cn(
+                    "absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r",
+                    isTransparent ? "from-[#E9A907] to-yellow-300" : "from-green-500 to-lime-500"
+                  )} />
+                )}
+              </Link>
+            ))}
+            <Button asChild size="lg" className="ml-4 shadow-lg shadow-green-500/20 bg-[#E9A907] text-[#1a2e05] hover:bg-[#c28e06] border-0 rounded-full font-bold transition-all hover:scale-105">
+              <Link href="/donate">Donate</Link>
+            </Button>
+          </nav>
+
+          {/* Mobile Menu Toggle */}
+          <div className="flex lg:hidden relative z-50">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               className={cn(
-                "relative px-4 py-2 text-sm font-bold transition-colors hover:text-green-700 rounded-full hover:bg-lime-50/80 group overflow-hidden",
-                pathname === item.href
-                  ? "text-green-700 bg-lime-100"
-                  : "text-slate-600"
+                "relative transition-colors",
+                isTransparent 
+                  ? "text-white hover:bg-white/20" 
+                  : "text-green-900 hover:bg-lime-100 hover:text-green-700"
               )}
             >
-              <span className="relative z-10">{item.name}</span>
-              {pathname === item.href && (
-                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-green-500 to-lime-500" />
+              {mobileMenuOpen ? (
+                 <X className="h-6 w-6" />
+              ) : (
+                 <Menu className="h-6 w-6" />
               )}
-            </Link>
-          ))}
-          <Button asChild size="lg" className="ml-4 shadow-lg shadow-green-500/20 bg-[#E9A907] text-[#1a2e05] hover:bg-[#c28e06] border-0 rounded-full font-bold transition-all hover:scale-105">
-            <Link href="/donate">Donate</Link>
-          </Button>
-        </nav>
-
-        {/* Mobile Menu Toggle */}
-        <div className="flex lg:hidden relative z-50">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            className="text-green-900 hover:bg-lime-100 hover:text-green-700 relative"
-          >
-            {mobileMenuOpen ? (
-               <X className="h-6 w-6" />
-            ) : (
-               <Menu className="h-6 w-6" />
-            )}
-          </Button>
+            </Button>
+          </div>
         </div>
-      </div>
 
-      {/* Mobile Navigation Overlay */}
+        {/* Mobile Navigation Overlay */}
       <div 
         className={cn(
           "fixed top-20 left-0 right-0 bottom-0 z-40 bg-lime-50 lg:hidden transition-all duration-300 ease-in-out transform border-t border-lime-200 shadow-inner",
@@ -145,5 +178,7 @@ export function Header() {
         </div>
       </div>
     </header>
+    {!isHome && <div className="h-20" />}
+    </>
   )
 }
