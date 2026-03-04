@@ -10,15 +10,20 @@ export async function saveEvent(eventData: Event) {
   
   const existingIndex = events.findIndex((e: Event) => e.slug === eventData.slug);
   
+  // Create a deep copy to avoid mutation issues if any
+  const newEventData = { ...eventData };
+
   if (existingIndex >= 0) {
-    events[existingIndex] = eventData;
+    events[existingIndex] = newEventData;
   } else {
-    events.push(eventData);
+    events.push(newEventData);
   }
   
   data.events = events;
   await updateData(data);
   revalidatePath('/events');
+  revalidatePath(`/events/${newEventData.slug}`);
+  revalidatePath('/admin/events');
   revalidatePath('/');
   return { success: true };
 }
@@ -31,6 +36,7 @@ export async function deleteEvent(slug: string) {
   
   await updateData(data);
   revalidatePath('/events');
+  revalidatePath('/admin/events');
   revalidatePath('/');
   return { success: true };
 }

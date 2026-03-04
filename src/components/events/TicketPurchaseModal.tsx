@@ -71,9 +71,13 @@ export function TicketPurchaseModal({ isOpen, onClose, event }: TicketPurchaseMo
   const handlePayPalApprove = async (data: unknown, actions: any) => {
     setIsProcessing(true)
     try {
-      const details = await actions.order.capture()
-      await sendConfirmationEmail(details.id)
-      setStep("success")
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((actions as any).order) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const details = await (actions as any).order.capture()
+        await sendConfirmationEmail(details.id)
+        setStep("success")
+      }
     } catch (error) {
       console.error("Payment error:", error)
       toast.error("Payment failed. Please try again.")

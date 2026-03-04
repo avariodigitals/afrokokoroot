@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Metadata } from "next"
-import { Calendar, MapPin, Clock, ArrowLeft, Share2, Ticket, Sparkles } from "lucide-react"
+import { Calendar, MapPin, Clock, ArrowLeft, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getEvents } from "@/lib/api"
 import { Event } from "@/lib/types"

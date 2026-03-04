@@ -26,14 +26,18 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev: any) => ({ ...prev, [name]: value }))
+    const { name, value, type } = e.target
+    if (type === 'number') {
+      setFormData((prev: Event) => ({ ...prev, [name]: value === '' ? 0 : parseFloat(value) }))
+    } else {
+      setFormData((prev: Event) => ({ ...prev, [name]: value }))
+    }
   }
 
   const handleHighlightsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Split by newlines for simple array management
     const highlights = e.target.value.split('\n').filter(line => line.trim() !== '')
-    setFormData((prev: any) => ({ ...prev, highlights }))
+    setFormData((prev: Event) => ({ ...prev, highlights }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,14 +112,28 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Price</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Display Price (Text)</label>
             <Input 
               name="price" 
               value={formData.price} 
               onChange={handleChange} 
-              placeholder="e.g. Free Entry" 
+              placeholder="e.g. Free Entry or $25" 
             />
           </div>
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1">Ticket Price (Numeric)</label>
+          <Input 
+            name="ticketPrice" 
+            type="number"
+            min="0"
+            step="0.01"
+            value={formData.ticketPrice || ''} 
+            onChange={handleChange} 
+            placeholder="e.g. 25.00 (Leave 0 for free)" 
+          />
+          <p className="text-xs text-slate-500 mt-1">Used for PayPal checkout. Set to 0 for free registration.</p>
         </div>
 
         <div>

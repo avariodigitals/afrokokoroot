@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { Ticket, Share2 } from "lucide-react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { TicketPurchaseModal } from "@/components/events/TicketPurchaseModal"
-import { toast } from "sonner"
 
 interface EventActionsProps {
   event: {
