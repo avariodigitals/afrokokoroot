@@ -40,10 +40,10 @@ export default function DonateClient() {
              Support Our Mission
           </div>
           <h1 className="text-5xl md:text-6xl font-black tracking-tight drop-shadow-lg">
-            Fuel the <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-300">Rhythm</span> of Change
+            Fuel the <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-300">Power</span> of Change
           </h1>
           <p className="text-xl md:text-2xl text-lime-100 font-medium max-w-2xl mx-auto leading-relaxed opacity-90">
-            Your tax-deductible donation empowers youth, supports artists, and bridges communities through the power of Afrobeat.
+            Your tax-deductible donation empowers youth, supports communities, and bridges cultures through the power of education.
           </p>
         </div>
       </section>
@@ -136,7 +136,7 @@ export default function DonateClient() {
                 <div>
                   <h4 className="font-bold text-green-900 mb-1">Your Impact</h4>
                   <p className="text-green-800/80 leading-relaxed">
-                    Your donation of <span className="font-black text-green-900">${amount === "custom" ? (customAmount || "0") : amount}</span> helps provide instruments, sheet music, and mentorship for young musicians in our community.
+                    Your donation of <span className="font-black text-green-900">${amount === "custom" ? (customAmount || "0") : amount}</span> helps provide resources, educational materials, and mentorship for youth in our community.
                   </p>
                 </div>
               </div>
@@ -184,7 +184,7 @@ export default function DonateClient() {
                   <div className="h-8 w-8 rounded-full bg-lime-100 flex items-center justify-center shrink-0 mt-0.5 text-green-600 font-bold">2</div>
                   <div>
                     <strong className="block text-green-900 mb-1">Direct Impact</strong>
-                    <span className="text-green-700/80 text-sm leading-relaxed">85% of every dollar goes directly to our music and education programs.</span>
+                    <span className="text-green-700/80 text-sm leading-relaxed">85% of every dollar goes directly to our cultural and education programs.</span>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">

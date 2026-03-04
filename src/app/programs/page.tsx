@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Metadata } from "next"
-import { ArrowRight, Music, Heart, Sparkles, Sprout, Globe } from "lucide-react"
+import { ArrowRight, Heart, Sparkles, Sprout, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/lib/site-config"
 
@@ -17,16 +17,16 @@ export const metadata: Metadata = {
 
 const programsData = [
   {
-    title: "Community Music & Creative Arts Education",
-    slug: "music-arts-education",
-    description: "To provide accessible music education and creative arts opportunities that nurture self-expression, skill development, and cultural identity among children and families from under-resourced communities.",
+    title: "Creative Arts & Cultural Education",
+    slug: "arts-culture-education",
+    description: "To provide accessible arts education and creative opportunities that nurture self-expression, skill development, and cultural identity among children and families from under-resourced communities.",
     details: [
-      "Community-based recording studio",
-      "Music instruction & songwriting workshops",
+      "Community-based creative workshops",
+      "Arts instruction & storytelling",
       "Youth mentorship through arts",
       "Cultural immersion rooted in African traditions"
     ],
-    icon: Music,
+    icon: Sparkles,
     image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8151.jpeg?updatedAt=1772546608755"
   },
   {
@@ -60,8 +60,8 @@ const programsData = [
     slug: "outreach-culture",
     description: "Fostering community cohesion, cross-cultural understanding, and peaceful expression through inclusive cultural programming and shared creative experiences.",
     details: [
-      "World Peace cultural events & concerts",
-      "Intercultural music exchanges",
+      "World Peace cultural events",
+      "Intercultural dialogue sessions",
       "Dialogue & nonviolent expression workshops",
       "Collaborative cultural experiences"
     ],

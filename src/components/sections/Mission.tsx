@@ -20,14 +20,14 @@ export function Mission() {
             Who We Are
           </div>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-foreground leading-tight">
-            More Than Music. <br />
+            More Than a Foundation. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-[#E9A907]">A Global Movement.</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             The Afrokokoroot Foundation is a registered 501(c)(3) nonprofit organization committed to transparency, ethical governance, and sustainable community impact.
           </p>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            We believe in the power of Afrobeat music and cultural arts to bridge divides, educate youth, and promote mental wellness. Our programs are designed to be accessible, inclusive, and transformative.
+            We believe in the power of community and cultural arts to bridge divides, educate youth, and promote mental wellness. Our programs are designed to be accessible, inclusive, and transformative.
           </p>
           
           <div className="flex flex-col gap-4 pt-2">
@@ -68,7 +68,7 @@ export function Mission() {
                <div className="w-3 h-3 rounded-full bg-lime-500 animate-pulse" />
                <p className="font-bold text-2xl text-green-900">10+ Years</p>
              </div>
-             <p className="text-sm font-medium text-slate-600">Of uniting communities through rhythm and dance.</p>
+             <p className="text-sm font-medium text-slate-600">Of uniting communities through shared experiences.</p>
            </div>
         </div>
       </div>

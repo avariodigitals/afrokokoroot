@@ -23,7 +23,7 @@ export async function EventsPreview() {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-lime-600">Upcoming Events</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl">
-              Join the rhythm. Experience the culture. Be part of the community.
+              Join the movement. Experience the culture. Be part of the community.
             </p>
           </div>
           <Button asChild variant="outline" className="hidden md:inline-flex group border-green-200 hover:border-green-400 text-green-700 hover:bg-green-50 rounded-full px-6">

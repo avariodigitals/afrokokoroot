@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Music, Globe, Heart, Users } from "lucide-react"
+import { ArrowRight, Globe, Heart, Users } from "lucide-react"
 
 export function Hero() {
   return (
@@ -29,7 +29,7 @@ export function Hero() {
 
         {/* Main Heading */}
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-black tracking-tight text-white max-w-5xl leading-[1.1] drop-shadow-sm">
-          Rhythm. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E9A907] via-green-400 to-lime-500">Roots.</span> <br className="hidden sm:block" />
+          Empower. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E9A907] via-green-400 to-lime-500">Uplift.</span> <br className="hidden sm:block" />
           <span className="relative inline-block">
             Community.
             <svg className="absolute w-full h-4 -bottom-2 left-0 text-[#E9A907]" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -40,7 +40,7 @@ export function Hero() {
 
         {/* Subheading */}
         <p className="text-lg md:text-2xl text-lime-50 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-md">
-          Preserving African heritage and fostering global unity through the transformative power of arts education and performance.
+          Preserving African heritage and fostering global unity through education, cultural exchange, and community support.
         </p>
 
         {/* CTA Buttons */}
@@ -60,8 +60,8 @@ export function Hero() {
         {/* Stats / Trust Indicators */}
         <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 text-center">
           {[
-            { icon: Music, label: "Cultural Arts", color: "text-lime-400" },
-            { icon: Globe, label: "Global Reach", color: "text-green-400" },
+            { icon: Globe, label: "Cultural Arts", color: "text-lime-400" },
+            { icon: Heart, label: "Global Reach", color: "text-green-400" },
             { icon: Users, label: "Community", color: "text-lime-300" },
             { icon: Heart, label: "Impact", color: "text-green-300" },
           ].map((stat, i) => (

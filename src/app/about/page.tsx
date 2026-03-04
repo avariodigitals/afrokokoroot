@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { Metadata } from "next"
-import { ShieldCheck, Heart, Users, FileText, Globe, Music, Scale, Leaf, CheckCircle2 } from "lucide-react"
+import { ShieldCheck, Heart, Users, FileText, Globe, BookOpen, Scale, Leaf, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getTeam } from "@/lib/api"
 import { TeamMember } from "@/lib/types"
@@ -46,7 +46,7 @@ export default async function AboutPage() {
             Preserving Heritage, <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-300">Inspiring Unity</span>
           </h1>
           <p className="text-xl md:text-2xl text-lime-50 max-w-3xl mx-auto font-light leading-relaxed">
-            The Afrokokoroot Foundation is a 501(c)(3) public charity dedicated to cultural education, wellness, and community empowerment through the universal language of rhythm and nature.
+            The Afrokokoroot Foundation is a 501(c)(3) public charity dedicated to cultural education, wellness, and community empowerment through the universal language of community and nature.
           </p>
         </div>
       </section>
@@ -105,11 +105,11 @@ export default async function AboutPage() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-4 p-4 rounded-xl bg-lime-50 hover:bg-lime-100 transition-colors">
                   <div className="bg-white p-2 rounded-lg shadow-sm text-green-600 mt-1">
-                    <Music className="h-5 w-5" />
+                    <BookOpen className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="font-bold text-green-900 block">Arts Education</span>
-                    <span className="text-sm text-slate-600">Music, storytelling, and cultural expression.</span>
+                    <span className="font-bold text-green-900 block">Cultural Education</span>
+                    <span className="text-sm text-slate-600">Arts, storytelling, and cultural expression.</span>
                   </div>
                 </li>
                 <li className="flex items-start gap-4 p-4 rounded-xl bg-green-50 hover:bg-green-100 transition-colors">

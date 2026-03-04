@@ -33,7 +33,7 @@ export async function ProgramsPreview() {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-lime-600">Our Programs</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl">
-              From classrooms to stages, we bring transformative arts experiences to life through rhythm and movement.
+              From classrooms to communities, we bring transformative experiences to life through education and cultural exchange.
             </p>
           </div>
           <Button asChild variant="ghost" className="hidden md:inline-flex group text-green-700 hover:text-green-800 hover:bg-lime-100/50">

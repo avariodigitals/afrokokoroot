@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Afrokokoroot Foundation",
-  description: "Empowering communities through music, art, and cultural exchange. A 501(c)(3) nonprofit organization.",
+  description: "Empowering communities through education, art, and cultural exchange. A 501(c)(3) nonprofit organization.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://afrokokoroot-foundation.vercel.app",
   ogImage: "/logo.png",
   links: {
@@ -10,14 +10,14 @@ export const siteConfig = {
   },
   keywords: [
     "Nonprofit",
-    "Music Education",
+    "Cultural Education",
     "Cultural Exchange",
     "Community Empowerment",
     "Afrokokoroot",
     "Arts",
     "Culture",
     "Africa",
-    "Drumming",
+    "Heritage",
     "Dance",
   ],
 };
