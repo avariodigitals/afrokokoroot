@@ -157,21 +157,11 @@ export default async function AboutPage() {
           <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
             {team.map((member: TeamMember) => (
               <div key={member.name} className="group flex flex-col items-center text-center space-y-6 p-6 rounded-3xl hover:bg-lime-50 transition-colors duration-300">
-                <div className="h-40 w-40 rounded-full bg-gradient-to-br from-green-100 to-lime-100 p-1 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                  <div className="w-full h-full rounded-full bg-white overflow-hidden relative border-4 border-white">
-                    {member.image ? (
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-slate-300 font-bold bg-slate-50">
-                        <span className="sr-only">{member.name}</span>
-                        <Users className="h-12 w-12 opacity-50" />
-                      </div>
-                    )}
+                <div className="h-40 w-40 rounded-full bg-gradient-to-br from-[#E9A907] to-lime-500 p-1 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                  <div className="w-full h-full rounded-full bg-white overflow-hidden relative border-4 border-white flex items-center justify-center">
+                    <span className="text-4xl font-black text-green-900 tracking-tighter">
+                      {member.name.split(' ').map(n => n[0]).join('')}
+                    </span>
                   </div>
                 </div>
                 
