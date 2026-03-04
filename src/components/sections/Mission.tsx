@@ -58,7 +58,7 @@ export function Mission() {
              <MissionVideo
                 src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8380.mov/ik-video.mp4?updatedAt=1772547046669"
                 poster="/community%20drumming.jpeg"
-                limit={5} // Short loop for "GIF" effect
+                limit={10} // Loop the first 10 seconds
              />
            </div>
            
