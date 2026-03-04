@@ -20,13 +20,13 @@ const navigation = [
   { name: "Programs", href: "/programs" },
   { name: "Events", href: "/events" },
   { name: "Get Involved", href: "/get-involved" },
+  { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ]
 
 const moreLinks = [
   { name: "Impact", href: "/impact" },
   { name: "Gallery", href: "/gallery" },
-  { name: "Blog", href: "/blog" },
 ]
 
 export function Header() {
