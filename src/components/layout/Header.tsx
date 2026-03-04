@@ -4,9 +4,15 @@ import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -15,6 +21,12 @@ const navigation = [
   { name: "Events", href: "/events" },
   { name: "Get Involved", href: "/get-involved" },
   { name: "Contact", href: "/contact" },
+]
+
+const moreLinks = [
+  { name: "Impact", href: "/impact" },
+  { name: "Gallery", href: "/gallery" },
+  { name: "Blog", href: "/blog" },
 ]
 
 export function Header() {
@@ -102,6 +114,33 @@ export function Header() {
                 )}
               </Link>
             ))}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger className={cn(
+                "flex items-center gap-1 px-4 py-2 text-sm font-bold transition-colors rounded-full group outline-none",
+                isTransparent 
+                  ? "text-white/90 hover:text-white hover:bg-white/10" 
+                  : "text-slate-600 hover:text-green-700 hover:bg-lime-50/80"
+              )}>
+                More <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-white/95 backdrop-blur-md border-lime-200">
+                {moreLinks.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link 
+                      href={item.href}
+                      className={cn(
+                        "w-full cursor-pointer font-medium",
+                        pathname === item.href ? "text-green-700 bg-lime-50" : "text-slate-700 hover:text-green-700 hover:bg-lime-50"
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button asChild size="lg" className="ml-4 shadow-lg shadow-green-500/20 bg-[#E9A907] text-[#1a2e05] hover:bg-[#c28e06] border-0 rounded-full font-bold transition-all hover:scale-105">
               <Link href="/donate">Donate</Link>
             </Button>
@@ -151,6 +190,30 @@ export function Header() {
                 )}
                 style={{ 
                   transitionDelay: `${i * 50}ms`,
+                  opacity: mobileMenuOpen ? 1 : 0,
+                  transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(10px)',
+                  transitionProperty: 'opacity, transform'
+                }}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+
+            <div className="w-full h-px bg-lime-200/50 my-4" />
+            
+            {moreLinks.map((item, i) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "text-lg font-semibold transition-all py-3 px-6 rounded-2xl block w-full text-center hover:bg-white/60 active:scale-95",
+                  pathname === item.href
+                    ? "text-green-800 bg-white shadow-sm border border-lime-100"
+                    : "text-green-800/70 hover:text-green-900"
+                )}
+                style={{ 
+                  transitionDelay: `${(navigation.length + i) * 50}ms`,
                   opacity: mobileMenuOpen ? 1 : 0,
                   transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(10px)',
                   transitionProperty: 'opacity, transform'
