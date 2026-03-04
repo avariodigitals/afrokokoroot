@@ -68,6 +68,7 @@ export function TicketPurchaseModal({ isOpen, onClose, event }: TicketPurchaseMo
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handlePayPalApprove = async (data: unknown, actions: any) => {
     setIsProcessing(true)
     try {
