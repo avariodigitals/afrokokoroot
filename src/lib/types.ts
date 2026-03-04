@@ -9,6 +9,7 @@ export interface Event {
   description: string;
   highlights: string[];
   image?: string;
+  ticketPrice?: number; // Numeric price for PayPal
 }
 
 export interface Program {

@@ -7,6 +7,7 @@ import { getEvents } from "@/lib/api"
 import { Event } from "@/lib/types"
 import { siteConfig } from "@/lib/site-config"
 import JsonLd from "@/components/ui/JSONLD"
+import { EventActions } from "@/components/events/EventActions"
 
 interface EventPageProps {
   params: Promise<{
@@ -232,14 +233,14 @@ export default async function EventPage({ params }: EventPageProps) {
               </div>
 
               <div className="pt-2 space-y-3">
-                <Button className="w-full h-12 text-lg font-bold shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:-translate-y-0.5 transition-all bg-green-600 hover:bg-green-700 text-white" size="lg">
-                  <Ticket className="mr-2 h-5 w-5" />
-                  Get Tickets / RSVP
-                </Button>
-                <Button variant="outline" className="w-full h-12 text-lg font-bold border-2 hover:bg-lime-50 border-lime-200 text-green-700">
-                  <Share2 className="mr-2 h-5 w-5" />
-                  Share Event
-                </Button>
+                <EventActions event={{
+                  title: event.title,
+                  date: event.date,
+                  time: event.time,
+                  location: event.location,
+                  ticketPrice: event.ticketPrice,
+                  slug: event.slug,
+                }} />
               </div>
             </div>
           </div>
