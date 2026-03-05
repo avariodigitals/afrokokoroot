@@ -2,7 +2,7 @@
 
 import { getData, updateData } from './api';
 import { revalidatePath } from 'next/cache';
-import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead } from '@/lib/types';
+import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead, GalleryItem } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function saveEvent(eventData: Event) {
@@ -184,5 +184,43 @@ export async function saveLead(email: string) {
   
   await updateData(data);
   revalidatePath('/admin/leads');
+  return { success: true };
+}
+
+// Gallery
+export async function saveGalleryItem(item: GalleryItem) {
+  const data = await getData();
+  const gallery: GalleryItem[] = data.gallery || [];
+  
+  if (item.id) {
+    const existingIndex = gallery.findIndex((g: GalleryItem) => g.id === item.id);
+    if (existingIndex >= 0) {
+      gallery[existingIndex] = item;
+    } else {
+      gallery.push(item);
+    }
+  } else {
+    item.id = uuidv4();
+    gallery.push(item);
+  }
+  
+  data.gallery = gallery;
+  await updateData(data);
+  revalidatePath('/gallery');
+  revalidatePath('/');
+  revalidatePath('/admin/gallery');
+  return { success: true };
+}
+
+export async function deleteGalleryItem(id: string) {
+  const data = await getData();
+  const gallery: GalleryItem[] = data.gallery || [];
+  
+  data.gallery = gallery.filter((g: GalleryItem) => g.id !== id);
+  
+  await updateData(data);
+  revalidatePath('/gallery');
+  revalidatePath('/');
+  revalidatePath('/admin/gallery');
   return { success: true };
 }

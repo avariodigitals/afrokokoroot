@@ -28,6 +28,7 @@ export function Newsletter() {
         toast.error(result.error || "Failed to subscribe")
       }
     } catch (error) {
+      console.error(error)
       toast.error("Something went wrong. Please try again.")
     } finally {
       setIsLoading(false)

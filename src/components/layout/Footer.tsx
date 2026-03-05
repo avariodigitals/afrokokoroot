@@ -57,8 +57,7 @@ export async function Footer() {
               { href: "/events", label: "Upcoming Events" },
               { href: "/blog", label: "Latest News" },
               { href: "/privacy", label: "Privacy Policy" },
-              { href: "/terms", label: "Terms of Service" },
-              { href: "/admin", label: "Admin" }
+              { href: "/terms", label: "Terms of Service" }
             ].map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className="hover:text-[#E9A907] transition-all flex items-center gap-2 group">

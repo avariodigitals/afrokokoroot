@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, Calendar, FileText, Settings, LogOut, Music, Users, BarChart3, Globe, Menu, X } from "lucide-react"
+import { LayoutDashboard, Calendar, FileText, Settings, LogOut, Music, Users, BarChart3, Globe, Menu, X, Image as ImageIcon } from "lucide-react"
 
 export default function AdminLayout({
   children,
@@ -92,6 +92,10 @@ export default function AdminLayout({
           <Link href="/admin/team" className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${pathname?.startsWith('/admin/team') ? 'bg-white/10 text-white' : 'text-lime-100 hover:bg-white/5'}`}>
             <Users className="h-5 w-5" />
             <span>Team</span>
+          </Link>
+          <Link href="/admin/gallery" className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${pathname?.startsWith('/admin/gallery') ? 'bg-white/10 text-white' : 'text-lime-100 hover:bg-white/5'}`}>
+            <ImageIcon className="h-5 w-5" />
+            <span>Gallery</span>
           </Link>
           <Link href="/admin/impact" className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${pathname?.startsWith('/admin/impact') ? 'bg-white/10 text-white' : 'text-lime-100 hover:bg-white/5'}`}>
             <BarChart3 className="h-5 w-5" />

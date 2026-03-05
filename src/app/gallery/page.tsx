@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { Gallery } from "@/components/sections/Gallery";
 import { siteConfig } from "@/lib/site-config";
+import { getGalleryItems } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const galleryItems = await getGalleryItems();
+
   return (
     <div className="min-h-screen bg-lime-50">
       {/* Hero Section */}
@@ -39,7 +42,7 @@ export default function GalleryPage() {
       </div>
       
       <div className="py-12 md:py-20">
-        <Gallery hideTitle={true} />
+        <Gallery hideTitle={true} initialItems={galleryItems} />
       </div>
     </div>
   );

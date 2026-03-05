@@ -5,8 +5,8 @@
       "title": "World Peace Awakening 2026",
       "date": "July 12, 2026",
       "time": "10:00 AM - 10:00 PM",
-      "location": "Warren Park",
-      "address": "Warren Park, Chicago, IL",
+      "location": "Afrokokoroot Haven",
+      "address": "Afrokokoroot Haven, Nashville, TN",
       "price": "Free Entry",
       "description": "A global celebration of peace, unity, and cultural diversity. Join us for a day of music, art, and community connection.",
       "highlights": [
@@ -82,9 +82,9 @@
     }
   ],
   "contactInfo": {
-    "address": "3500 W. Peterson Ave, Suite #203, Chicago, IL 60659",
+    "address": "8369, Cub Creek Rd, Nashville TN 37209, USA",
     "email": "info@afrokokoroot.org",
-    "phone": "+1 (773) 893-0691",
+    "phone": "(615) 686-8841",
     "socials": {
       "facebook": "https://www.facebook.com/Afrokokoroot",
       "instagram": "https://www.instagram.com/afrokokoroot_foundation",
@@ -93,22 +93,22 @@
   },
   "impactMetrics": [
     {
-      "label": "Community Events",
+      "label": "Students Educated",
       "value": "50+",
+      "description": "Empowering youth through education."
+    },
+    {
+      "label": "Community Events",
+      "value": "10+",
       "description": "Bringing people together through culture."
     },
     {
-      "label": "Lives Impacted",
-      "value": "1000+",
-      "description": "Empowering individuals through our programs."
+      "label": "Artists Supported",
+      "value": "10+",
+      "description": "Fostering creative talent."
     },
     {
-      "label": "Partner Organizations",
-      "value": "20+",
-      "description": "Collaborating for greater impact."
-    },
-    {
-      "label": "Years of Service",
+      "label": "Years Active",
       "value": "10+",
       "description": "Dedication to our community."
     }

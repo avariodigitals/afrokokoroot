@@ -66,3 +66,11 @@ export interface Lead {
   date: string;
   status: 'active' | 'unsubscribed';
 }
+
+export interface GalleryItem {
+  id: string;
+  title: string;
+  image: string;
+  category: string;
+  date: string;
+}
