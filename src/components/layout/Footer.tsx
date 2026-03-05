@@ -35,8 +35,8 @@ export async function Footer() {
             </div>
           </Link>
           <p className="text-lime-100 leading-relaxed max-w-xs font-medium">
-            Empowering communities through art and cultural exchange. 
-            A 501(c)(3) nonprofit organization dedicated to preserving and celebrating African heritage.
+            Empowering communities through music, creative arts, and cultural exchange. 
+            Afrokokoroot Foundation is a 501(c)(3) nonprofit organization dedicated to nurturing creativity, preserving cultural heritage, and strengthening communities.
           </p>
           <div className="flex gap-4 pt-2">
             {socialLinks.map(({ Icon, label, href, color }) => (
