@@ -97,6 +97,10 @@ export default function AdminLayout({
             <BarChart3 className="h-5 w-5" />
             <span>Impact Metrics</span>
           </Link>
+          <Link href="/admin/leads" className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${pathname?.startsWith('/admin/leads') ? 'bg-white/10 text-white' : 'text-lime-100 hover:bg-white/5'}`}>
+            <Users className="h-5 w-5" />
+            <span>Leads</span>
+          </Link>
           <Link href="/admin/settings" className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${pathname?.startsWith('/admin/settings') ? 'bg-white/10 text-white' : 'text-lime-100 hover:bg-white/5'}`}>
             <Settings className="h-5 w-5" />
             <span>Settings</span>

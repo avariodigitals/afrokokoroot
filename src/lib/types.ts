@@ -59,3 +59,10 @@ export interface BlogPost {
   image?: string;
   content?: string;
 }
+
+export interface Lead {
+  id: string;
+  email: string;
+  date: string;
+  status: 'active' | 'unsubscribed';
+}

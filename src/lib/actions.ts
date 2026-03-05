@@ -2,7 +2,8 @@
 
 import { getData, updateData } from './api';
 import { revalidatePath } from 'next/cache';
-import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo } from '@/lib/types';
+import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead } from '@/lib/types';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function saveEvent(eventData: Event) {
   const data = await getData();
@@ -158,5 +159,30 @@ export async function saveImpactMetrics(metricsData: ImpactMetric[]) {
   
   await updateData(data);
   revalidatePath('/');
+  return { success: true };
+}
+
+// Leads
+export async function saveLead(email: string) {
+  const data = await getData();
+  const leads: Lead[] = data.leads || [];
+  
+  // Check if email already exists
+  if (leads.some(l => l.email === email)) {
+    return { success: false, error: "Email already subscribed" };
+  }
+  
+  const newLead: Lead = {
+    id: uuidv4(),
+    email,
+    date: new Date().toISOString(),
+    status: 'active'
+  };
+  
+  leads.push(newLead);
+  data.leads = leads;
+  
+  await updateData(data);
+  revalidatePath('/admin/leads');
   return { success: true };
 }

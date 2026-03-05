@@ -1,7 +1,39 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { saveLead } from "@/lib/actions"
+import { toast } from "sonner"
+import { Loader2 } from "lucide-react"
 
 export function Newsletter() {
+  const [email, setEmail] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!email) return
+    
+    setIsLoading(true)
+    
+    try {
+      const result = await saveLead(email)
+      
+      if (result.success) {
+        toast.success("Successfully subscribed to newsletter!")
+        setEmail("")
+      } else {
+        toast.error(result.error || "Failed to subscribe")
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <section className="relative isolate overflow-hidden py-16 sm:py-24 lg:py-32">
       <div className="container px-6 lg:px-8">
@@ -36,20 +68,25 @@ export function Newsletter() {
               Stay updated on our latest programs, events, and impact stories. Be part of the change.
             </p>
             
-            <div className="mt-10 flex flex-col gap-y-4 sm:flex-row sm:justify-center sm:gap-x-6 items-center">
+            <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-y-4 sm:flex-row sm:justify-center sm:gap-x-6 items-center">
               <Input
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-lime-500 sm:text-sm sm:leading-6 placeholder:text-gray-400 h-12 w-full sm:w-80"
+                required
               />
               <Button 
+                type="submit"
                 variant="default" 
                 size="lg" 
+                disabled={isLoading}
                 className="flex-none rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 h-12 w-full sm:w-auto"
               >
-                Subscribe
+                {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Subscribe"}
               </Button>
-            </div>
+            </form>
             
             <p className="mt-4 text-xs leading-5 text-gray-400">
               We respect your privacy. Unsubscribe at any time.

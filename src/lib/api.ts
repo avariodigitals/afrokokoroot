@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { Event, Program, TeamMember, ContactInfo, ImpactMetric, BlogPost } from './types';
+import { Event, Program, TeamMember, ContactInfo, ImpactMetric, BlogPost, Lead } from './types';
 import dbData from './db.json';
 
 const DB_PATH = path.join(process.cwd(), 'src/lib/db.json');
@@ -12,6 +12,7 @@ export interface DatabaseSchema {
   contactInfo: ContactInfo;
   impactMetrics: ImpactMetric[];
   blogPosts: BlogPost[];
+  leads: Lead[];
 }
 
 export async function getData(): Promise<DatabaseSchema> {
@@ -73,4 +74,9 @@ export async function getContactInfo(): Promise<ContactInfo> {
 export async function getImpactMetrics(): Promise<ImpactMetric[]> {
   const data = await getData();
   return data.impactMetrics || [];
+}
+
+export async function getLeads(): Promise<Lead[]> {
+  const data = await getData();
+  return data.leads || [];
 }
