@@ -78,7 +78,7 @@ export function Header() {
               <div className="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-lime-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative h-16 w-64 transition-transform duration-300 group-hover:scale-105">
                 <Image
-                  src="/logo.png"
+                  src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/WhatsApp_Image_2026-02-27_at_5.56.00_PM-removebg-preview.png"
                   alt="Afrokokoroot Foundation"
                   fill
                   className="object-contain object-left"

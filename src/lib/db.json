@@ -1,61 +1,61 @@
 {
   "events": [
     {
-      "slug": "world-peace-festival-2025",
-      "title": "World Peace Music & Art Festival 2025",
-      "date": "June 7, 2025",
+      "slug": "world-peace-awakening-2026",
+      "title": "World Peace Awakening 2026",
+      "date": "July 12, 2026",
       "time": "10:00 AM - 10:00 PM",
-      "location": "Mocking Bird Theatre",
-      "address": "230 Franklin Rd, Building 6, Franklin, TN 37064",
-      "price": "$20 (Indoor) / Free (Outdoor)",
-      "description": "Join us for the 7th annual World Peace Music & Art Festival! Experience a full sensory immersion with Afrokokoroot and other global artists. The outdoor festival is open to the public with free parking.",
+      "location": "Warren Park",
+      "address": "Warren Park, Chicago, IL",
+      "price": "Free Entry",
+      "description": "A global celebration of peace, unity, and cultural diversity. Join us for a day of music, art, and community connection.",
       "highlights": [
-        "Live performance by Afrokokoroot (12-piece Afrobeat ensemble)",
-        "Global food vendors",
-        "Art installations and workshops",
-        "Family-friendly activities"
+        "Live Cultural Performances",
+        "Global Food Vendors",
+        "Art Installations",
+        "Family-Friendly Activities"
       ],
       "image": "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?q=80&w=2070&auto=format&fit=crop"
     },
     {
-      "slug": "lp-launch",
-      "title": "Afrokokoroot LP Launch Party",
-      "date": "February 7, 2025",
-      "time": "7:00 PM",
-      "location": "Afrokokoroot HQ",
-      "address": "101 Broadway, Nashville, TN 37201",
-      "price": "Free Entry",
-      "description": "Get ready for the highly anticipated release of Afrokokoroot's LP Album! Available in Vinyl, Cassette, and CD formats.",
+      "slug": "community-clean-up",
+      "title": "Community Clean-Up Drive",
+      "date": "April 22, 2026",
+      "time": "9:00 AM - 1:00 PM",
+      "location": "Rogers Park",
+      "address": "Rogers Park, Chicago, IL",
+      "price": "Free Registration",
+      "description": "Join us as we beautify our neighborhood and promote environmental stewardship. Gloves and bags provided.",
       "highlights": [
-        "Exclusive listening party",
-        "Meet the band",
-        "Signed merchandise available",
-        "Live DJ set"
+        "Community Bonding",
+        "Environmental Impact",
+        "Refreshments Provided",
+        "Volunteer Hours Available"
       ],
-      "image": "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop"
+      "image": "https://images.unsplash.com/photo-1618477461853-5f8dd68aa395?q=80&w=2070&auto=format&fit=crop"
     }
   ],
   "programs": [
     {
-      "slug": "academy",
-      "title": "Afrobeat Music Academy",
-      "description": "Empowering youth with professional music education, focusing on rhythm, brass, and ensemble performance.",
-      "content": "Our academy provides comprehensive music education rooted in the African diaspora traditions.",
+      "slug": "cultural-arts",
+      "title": "Cultural Arts Workshops",
+      "description": "Dance, drumming, and storytelling sessions for all ages.",
+      "content": "Our workshops provide immersive experiences in traditional African arts, fostering appreciation and skill development.",
       "image": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop"
     },
     {
-      "slug": "wellness",
-      "title": "Wellness Through Rhythm",
-      "description": "Therapeutic drumming workshops designed to improve mental health, reduce stress, and build community bonds.",
-      "content": "Rhythm is a powerful tool for healing. Our workshops are guided by certified music therapists.",
-      "image": "https://images.unsplash.com/photo-1519834785169-98be25ec3f84?q=80&w=2664&auto=format&fit=crop"
+      "slug": "youth-mentorship",
+      "title": "Youth Mentorship",
+      "description": "Guiding young minds through leadership and skill-building programs.",
+      "content": "We empower the next generation with the tools they need to succeed, offering mentorship in leadership, arts, and personal development.",
+      "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop"
     },
     {
-      "slug": "education",
-      "title": "Cultural Exchange & Education",
-      "description": "School residencies and community workshops that explore the rich history and impact of African diaspora arts.",
-      "content": "We bring the world to the classroom through interactive performances and lectures.",
-      "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop"
+      "slug": "community-wellness",
+      "title": "Community Wellness",
+      "description": "Promoting health and well-being through holistic practices.",
+      "content": "Our wellness programs integrate rhythm, movement, and mindfulness to support community health and vitality.",
+      "image": "https://images.unsplash.com/photo-1519834785169-98be25ec3f84?q=80&w=2664&auto=format&fit=crop"
     }
   ],
   "team": [
@@ -82,64 +82,56 @@
     }
   ],
   "contactInfo": {
-    "address": "Nashville, TN, USA",
-    "email": "info@afrokokoroot.com",
-    "phone": "(615) 555-0123",
+    "address": "3500 W. Peterson Ave, Suite #203, Chicago, IL 60659",
+    "email": "info@afrokokoroot.org",
+    "phone": "+1 (773) 893-0691",
     "socials": {
-      "facebook": "https://facebook.com/afrokokoroot",
-      "instagram": "https://instagram.com/afrokokoroot",
+      "facebook": "https://www.facebook.com/Afrokokoroot",
+      "instagram": "https://www.instagram.com/afrokokoroot_foundation",
+      "threads": "https://www.threads.net/@afrokokoroot_foundation",
       "twitter": "https://twitter.com/afrokokoroot"
     }
   },
   "impactMetrics": [
     {
-      "label": "Students Educated",
-      "value": "500+",
-      "description": "Youth empowered through our music academy and school residencies."
-    },
-    {
       "label": "Community Events",
       "value": "50+",
-      "description": "Free concerts, workshops, and festivals organized for the public."
+      "description": "Bringing people together through culture."
     },
     {
-      "label": "Artists Supported",
-      "value": "100+",
-      "description": "Local and international artists provided with performance opportunities."
+      "label": "Lives Impacted",
+      "value": "1000+",
+      "description": "Empowering individuals through our programs."
     },
     {
-      "label": "Years Active",
-      "value": "7",
-      "description": "Building bridges through music since our inception."
+      "label": "Partner Organizations",
+      "value": "20+",
+      "description": "Collaborating for greater impact."
+    },
+    {
+      "label": "Years of Service",
+      "value": "10+",
+      "description": "Dedication to our community."
     }
   ],
   "blogPosts": [
     {
-      "slug": "power-of-rhythm",
-      "title": "The Healing Power of Rhythm",
-      "excerpt": "Discover how drumming circles are helping our community members find balance and mental clarity.",
-      "date": "February 15, 2026",
+      "slug": "cultural-education",
+      "title": "The Importance of Cultural Education in Schools",
+      "excerpt": "Discover how integrating cultural arts into the curriculum benefits students and fosters inclusivity.",
+      "date": "March 15, 2026",
       "author": "Sunny Dada",
-      "category": "Wellness",
-      "image": "https://images.unsplash.com/photo-1519834785169-98be25ec3f84?q=80&w=2664&auto=format&fit=crop"
+      "category": "Education",
+      "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop"
     },
     {
-      "slug": "festival-recap-2025",
-      "title": "Recap: World Peace Music Festival 2025",
-      "excerpt": "Highlights from our biggest event of the year, featuring performances from around the globe.",
-      "date": "June 10, 2025",
+      "slug": "winter-gala-recap",
+      "title": "Recap: Winter Charity Gala Success",
+      "excerpt": "Thanks to your support, we raised over $10,000 for our youth programs. Read more about the night's highlights.",
+      "date": "February 20, 2026",
       "author": "Joshua Cook",
       "category": "Events",
       "image": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop"
-    },
-    {
-      "slug": "music-education-matters",
-      "title": "Why Music Education Matters for Youth",
-      "excerpt": "Exploring the cognitive and social benefits of early music education in underserved communities.",
-      "date": "April 3, 2025",
-      "author": "Jakub Martin",
-      "category": "Education",
-      "image": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop"
     }
   ]
 }

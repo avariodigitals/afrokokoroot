@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
 import { getContactInfo } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
+import { ThreadsIcon } from "@/components/icons"
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -117,6 +118,14 @@ export default async function ContactPage() {
                     <Link href={contactInfo.socials.instagram} target="_blank">
                       <Instagram className="h-5 w-5" />
                       <span className="sr-only">Instagram</span>
+                    </Link>
+                  </Button>
+                )}
+                {contactInfo.socials.threads && (
+                  <Button variant="outline" size="icon" className="h-12 w-12 rounded-full border-2 border-slate-200 hover:border-black hover:bg-black hover:text-white transition-all" asChild>
+                    <Link href={contactInfo.socials.threads} target="_blank">
+                      <ThreadsIcon className="h-5 w-5" />
+                      <span className="sr-only">Threads</span>
                     </Link>
                   </Button>
                 )}

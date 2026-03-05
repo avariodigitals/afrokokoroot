@@ -30,7 +30,7 @@ export function Newsletter() {
 
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Join Our Movement
+              Stay Connected
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
               Stay updated on our latest programs, events, and impact stories. Be part of the change.

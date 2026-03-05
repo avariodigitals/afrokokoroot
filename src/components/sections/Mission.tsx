@@ -24,14 +24,11 @@ export function Mission() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-[#E9A907]">A Global Movement.</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            The Afrokokoroot Foundation is a registered 501(c)(3) nonprofit organization committed to transparency, ethical governance, and sustainable community impact.
-          </p>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            We believe in the power of community and cultural arts to bridge divides, educate youth, and promote mental wellness. Our programs are designed to be accessible, inclusive, and transformative.
+            Afrokokoroot Foundation empowers underserved children and families through accessible music education, cultural immersion, and nature-based learning that foster creativity, connection, and wholistic well-being.
           </p>
           
           <div className="flex flex-col gap-4 pt-2">
-             {["501(c)(3) Certified", "Community-Led", "Transparent Governance"].map((item) => (
+             {["Cultural Preservation", "Youth Empowerment", "Community Outreach"].map((item) => (
                <div key={item} className="flex items-center gap-3 group">
                  <div className="h-8 w-8 rounded-full bg-lime-100 flex items-center justify-center text-[#E9A907] group-hover:scale-110 transition-transform shadow-sm">
                    <CheckCircle2 className="h-5 w-5" />

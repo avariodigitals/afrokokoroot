@@ -29,9 +29,10 @@ export function Hero() {
 
         {/* Main Heading */}
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-black tracking-tight text-white max-w-5xl leading-[1.1] drop-shadow-sm">
-          Empower. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E9A907] via-green-400 to-lime-500">Uplift.</span> <br className="hidden sm:block" />
+          Where <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E9A907] via-green-400 to-lime-500">Culture, Creativity,</span> <br className="hidden sm:block" />
+          and Community Take{" "}
           <span className="relative inline-block">
-            Community.
+            Root
             <svg className="absolute w-full h-4 -bottom-2 left-0 text-[#E9A907]" viewBox="0 0 100 10" preserveAspectRatio="none">
               <path d="M0 5 Q 50 12 100 5" stroke="currentColor" strokeWidth="4" fill="none" opacity="0.8" />
             </svg>
@@ -40,7 +41,7 @@ export function Hero() {
 
         {/* Subheading */}
         <p className="text-lg md:text-2xl text-lime-50 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-md">
-          Preserving African heritage and fostering global unity through education, cultural exchange, and community support.
+          Join us in preserving heritage, promoting unity, and creating opportunities for the next generation.
         </p>
 
         {/* CTA Buttons */}
@@ -50,9 +51,9 @@ export function Hero() {
               Donate Now <Heart className="ml-2 h-5 w-5 fill-current" />
             </Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="text-lg px-10 h-16 rounded-full border-2 border-white/30 bg-white/5 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-sm transition-transform hover:scale-105">
+          <Button asChild variant="outline" size="lg" className="text-lg px-10 h-16 rounded-full border-2 border-white/30 bg-white/5 text-white hover:bg-lime-600 hover:border-lime-600 backdrop-blur-sm transition-transform hover:scale-105">
             <Link href="/programs">
-              Explore Programs <ArrowRight className="ml-2 h-5 w-5" />
+              Join Our Programs <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>

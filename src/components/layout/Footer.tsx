@@ -1,10 +1,17 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Facebook, Twitter, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react"
+import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react"
 import { getContactInfo } from "@/lib/api"
+import { ThreadsIcon } from "@/components/icons"
 
 export async function Footer() {
   const contactInfo = await getContactInfo()
+  
+  const socialLinks = [
+    { Icon: Instagram, label: "Instagram", href: contactInfo.socials.instagram, color: "hover:bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCAF45]" },
+    { Icon: Facebook, label: "Facebook", href: contactInfo.socials.facebook, color: "hover:bg-[#1877F2]" },
+    { Icon: ThreadsIcon, label: "Threads", href: contactInfo.socials.threads, color: "hover:bg-black" },
+  ].filter(link => link.href) as { Icon: any, label: string, href: string, color: string }[]
   
   return (
     <footer className="w-full bg-[#064e3b] text-white py-12 md:py-16 lg:py-24 border-t border-white/10 relative overflow-hidden">
@@ -20,7 +27,7 @@ export async function Footer() {
           <Link href="/" className="flex items-center space-x-2 group">
             <div className="relative h-24 w-96 transition-transform duration-300 group-hover:scale-105">
               <Image
-                src="/logo.png"
+                src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/WhatsApp_Image_2026-02-27_at_5.56.00_PM-removebg-preview.png"
                 alt="Afrokokoroot Foundation"
                 fill
                 className="object-contain object-left"
@@ -32,13 +39,8 @@ export async function Footer() {
             A 501(c)(3) nonprofit organization dedicated to preserving and celebrating African heritage.
           </p>
           <div className="flex gap-4 pt-2">
-            {[
-              { Icon: Facebook, label: "Facebook", color: "hover:bg-[#1877F2]" },
-              { Icon: Twitter, label: "Twitter", color: "hover:bg-[#1DA1F2]" },
-              { Icon: Instagram, label: "Instagram", color: "hover:bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCAF45]" },
-              { Icon: Linkedin, label: "LinkedIn", color: "hover:bg-[#0A66C2]" }
-            ].map(({ Icon, label, color }) => (
-              <Link key={label} href="#" className={`bg-white/10 p-2.5 rounded-full text-white/80 transition-all hover:scale-110 hover:text-white hover:shadow-lg hover:shadow-white/10 ${color}`}>
+            {socialLinks.map(({ Icon, label, href, color }) => (
+              <Link key={label} href={href} target="_blank" rel="noopener noreferrer" className={`bg-white/10 p-2.5 rounded-full text-white/80 transition-all hover:scale-110 hover:text-white hover:shadow-lg hover:shadow-white/10 ${color}`}>
                 <Icon className="h-5 w-5" />
                 <span className="sr-only">{label}</span>
               </Link>

@@ -33,6 +33,7 @@ export interface Socials {
   instagram?: string;
   twitter?: string;
   linkedin?: string;
+  threads?: string;
 }
 
 export interface ContactInfo {
