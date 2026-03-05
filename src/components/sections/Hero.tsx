@@ -5,7 +5,7 @@ import { ArrowRight, Globe, Heart, Users } from "lucide-react"
 
 export function Hero() {
   return (
-    <section className="relative w-full py-24 md:py-32 lg:py-48 overflow-hidden bg-black rounded-b-[3rem] shadow-2xl z-20">
+    <section className="relative w-full py-24 md:py-28 lg:py-32 overflow-hidden bg-black rounded-b-[3rem] shadow-2xl z-20">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <Image
@@ -19,7 +19,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay" />
       </div>
 
-      <div className="container relative z-10 flex flex-col items-center text-center space-y-10">
+      <div className="container relative z-10 flex flex-col items-center text-center space-y-10 lg:space-y-8">
         
         {/* Badge */}
         <div className="inline-flex items-center rounded-full border border-lime-200/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-md shadow-lg animate-fade-in-up">
@@ -28,7 +28,7 @@ export function Hero() {
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-4xl md:text-6xl lg:text-8xl font-black tracking-tight text-white max-w-5xl leading-[1.1] drop-shadow-sm">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-5xl leading-[1.1] drop-shadow-sm">
           Where <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E9A907] via-green-400 to-lime-500">Culture, Creativity,</span> <br className="hidden sm:block" />
           and Community Take{" "}
           <span className="relative inline-block">
@@ -59,7 +59,7 @@ export function Hero() {
         </div>
 
         {/* Stats / Trust Indicators */}
-        <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 text-center">
+        <div className="pt-16 lg:pt-12 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 text-center">
           {[
             { icon: Globe, label: "Cultural Arts", color: "text-lime-400" },
             { icon: Heart, label: "Global Reach", color: "text-green-400" },

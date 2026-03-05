@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Metadata } from "next"
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Send } from "lucide-react"
+import { Mail, Phone, MapPin, Facebook, Instagram, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
@@ -126,14 +126,6 @@ export default async function ContactPage() {
                     <Link href={contactInfo.socials.threads} target="_blank">
                       <ThreadsIcon className="h-5 w-5" />
                       <span className="sr-only">Threads</span>
-                    </Link>
-                  </Button>
-                )}
-                {contactInfo.socials.twitter && (
-                  <Button variant="outline" size="icon" className="h-12 w-12 rounded-full border-2 border-emerald-200 hover:border-emerald-500 hover:bg-emerald-500 hover:text-white transition-all" asChild>
-                    <Link href={contactInfo.socials.twitter} target="_blank">
-                      <Twitter className="h-5 w-5" />
-                      <span className="sr-only">Twitter</span>
                     </Link>
                   </Button>
                 )}
