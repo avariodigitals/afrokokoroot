@@ -11,7 +11,7 @@ export async function Footer() {
     { Icon: Instagram, label: "Instagram", href: contactInfo.socials.instagram, color: "hover:bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCAF45]" },
     { Icon: Facebook, label: "Facebook", href: contactInfo.socials.facebook, color: "hover:bg-[#1877F2]" },
     { Icon: ThreadsIcon, label: "Threads", href: contactInfo.socials.threads, color: "hover:bg-black" },
-  ].filter(link => link.href) as { Icon: any, label: string, href: string, color: string }[]
+  ].filter(link => link.href) as { Icon: React.ComponentType<{ className?: string }>; label: string; href: string; color: string }[]
   
   return (
     <footer className="w-full bg-[#064e3b] text-white py-12 md:py-16 lg:py-24 border-t border-white/10 relative overflow-hidden">
@@ -35,7 +35,7 @@ export async function Footer() {
             </div>
           </Link>
           <p className="text-lime-100 leading-relaxed max-w-xs font-medium">
-            Empowering communities through music, art, and cultural exchange. 
+            Empowering communities through art and cultural exchange. 
             A 501(c)(3) nonprofit organization dedicated to preserving and celebrating African heritage.
           </p>
           <div className="flex gap-4 pt-2">
