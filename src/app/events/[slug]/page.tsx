@@ -1,7 +1,8 @@
+import Image from "next/image"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Metadata } from "next"
-import { Calendar, MapPin, Clock, ArrowLeft, Sparkles } from "lucide-react"
+import { Calendar, MapPin, Clock, ArrowLeft, Sparkles, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Gallery } from "@/components/sections/Gallery"
 import { getEvents, getGalleryItems } from "@/lib/api"
@@ -180,6 +181,48 @@ export default async function EventPage({ params }: EventPageProps) {
                     </li>
                   ))}
                 </ul>
+              </section>
+            )}
+
+            {event.artists && event.artists.length > 0 && (
+              <section className="relative pt-12">
+                <h2 className="text-3xl font-bold mb-8 text-green-950 text-center">Featured Artists</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-8">
+                  {event.artists.map((artist, index) => (
+                    <div key={index} className="group text-center">
+                      <div className="relative w-full aspect-square rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
+                        {artist.image ? (
+                          <Image src={artist.image} alt={artist.name || 'Artist'} layout="fill" objectFit="cover" className="transition-opacity duration-300 group-hover:opacity-90" />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-green-100 to-lime-100 flex items-center justify-center">
+                            <User className="w-1/2 h-1/2 text-green-400" />
+                          </div>
+                        )}
+                      </div>
+                      {artist.name && <h3 className="mt-4 font-bold text-lg text-slate-800 tracking-tight">{artist.name}</h3>}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {event.sponsors && event.sponsors.length > 0 && (
+              <section className="relative pt-16">
+                <h2 className="text-3xl font-bold mb-10 text-green-950 text-center">Our Sponsors</h2>
+                <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+                  {event.sponsors.map((sponsor, index) => (
+                    <div key={index} className="group">
+                      {sponsor.image ? (
+                        <div className="relative h-20 w-40 grayscale opacity-70 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110">
+                           <Image src={sponsor.image} alt={sponsor.name || 'Sponsor'} layout="fill" objectFit="contain" />
+                        </div>
+                       
+                      ) : (
+                         sponsor.name && <p className="text-lg font-semibold text-slate-500">{sponsor.name}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </section>
             )}
           </div>

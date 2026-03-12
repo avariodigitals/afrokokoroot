@@ -10,6 +10,18 @@ export interface Event {
   highlights: string[];
   image?: string;
   ticketPrice?: number; // Numeric price for PayPal
+  artists?: Artist[];
+  sponsors?: Sponsor[];
+}
+
+export interface Artist {
+  name: string;
+  image?: string;
+}
+
+export interface Sponsor {
+  name: string;
+  image?: string;
 }
 
 export interface Program {

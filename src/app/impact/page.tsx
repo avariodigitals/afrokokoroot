@@ -43,7 +43,7 @@ export default function ImpactPage() {
       </section>
 
       {/* Key Metrics Grid */}
-      <section className="py-20 container relative z-20 -mt-20">
+      <section className="py-20 container relative z-20 -mt-20 pt-[12rem]">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {impactMetrics.map((metric, index) => (
             <div key={index} className="bg-white rounded-2xl p-8 shadow-xl border border-lime-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300 group">

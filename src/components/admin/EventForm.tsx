@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { saveEvent } from '@/lib/actions'
 import { Loader2 } from 'lucide-react'
-import { Event } from '@/lib/types'
+import { Event, Artist, Sponsor } from '@/lib/types'
 
 export default function EventForm({ initialData }: { initialData?: Event }) {
   const router = useRouter()
@@ -22,7 +22,9 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
     price: '',
     description: '',
     image: '',
-    highlights: []
+    highlights: [],
+    artists: [],
+    sponsors: []
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -38,6 +40,38 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
     // Split by newlines for simple array management
     const highlights = e.target.value.split('\n').filter(line => line.trim() !== '')
     setFormData((prev: Event) => ({ ...prev, highlights }))
+  }
+
+  const addArtist = () => {
+    setFormData((prev: Event) => ({ ...prev, artists: [...(prev.artists || []), { name: '', image: '' }] }))
+  }
+
+  const removeArtist = (index: number) => {
+    setFormData((prev: Event) => ({ ...prev, artists: prev.artists?.filter((_, i) => i !== index) || [] }))
+  }
+
+  const handleArtistChange = (index: number, field: keyof Artist, value: string) => {
+    setFormData((prev: Event) => {
+      const newArtists = [...(prev.artists || [])]
+      newArtists[index] = { ...newArtists[index], [field]: value }
+      return { ...prev, artists: newArtists }
+    })
+  }
+
+  const addSponsor = () => {
+    setFormData((prev: Event) => ({ ...prev, sponsors: [...(prev.sponsors || []), { name: '', image: '' }] }))
+  }
+
+  const removeSponsor = (index: number) => {
+    setFormData((prev: Event) => ({ ...prev, sponsors: prev.sponsors?.filter((_, i) => i !== index) || [] }))
+  }
+
+  const handleSponsorChange = (index: number, field: keyof Sponsor, value: string) => {
+    setFormData((prev: Event) => {
+      const newSponsors = [...(prev.sponsors || [])]
+      newSponsors[index] = { ...newSponsors[index], [field]: value }
+      return { ...prev, sponsors: newSponsors }
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -188,6 +222,60 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
             placeholder="/images/event.jpg" 
           />
           <p className="text-xs text-slate-500 mt-1">Enter a path to an image in the public folder (e.g., /event.jpg)</p>
+        </div>
+
+        {/* Artists Section */}
+        <div className="space-y-4 rounded-lg border border-slate-200 p-4">
+          <h3 className="text-lg font-medium text-slate-800">Artists</h3>
+          {formData.artists?.map((artist, index) => (
+            <div key={index} className="flex items-end gap-4 p-3 bg-slate-50 rounded-md">
+              <div className="flex-grow grid grid-cols-2 gap-4">
+                <Input
+                  value={artist.name}
+                  onChange={(e) => handleArtistChange(index, 'name', e.target.value)}
+                  placeholder="Artist Name"
+                />
+                <Input
+                  value={artist.image}
+                  onChange={(e) => handleArtistChange(index, 'image', e.target.value)}
+                  placeholder="Artist Image URL"
+                />
+              </div>
+              <Button type="button" variant="destructive" size="sm" onClick={() => removeArtist(index)}>
+                Remove
+              </Button>
+            </div>
+          ))}
+          <Button type="button" variant="outline" onClick={addArtist}>
+            Add Artist
+          </Button>
+        </div>
+
+        {/* Sponsors Section */}
+        <div className="space-y-4 rounded-lg border border-slate-200 p-4">
+          <h3 className="text-lg font-medium text-slate-800">Sponsors</h3>
+          {formData.sponsors?.map((sponsor, index) => (
+            <div key={index} className="flex items-end gap-4 p-3 bg-slate-50 rounded-md">
+              <div className="flex-grow grid grid-cols-2 gap-4">
+                <Input
+                  value={sponsor.name}
+                  onChange={(e) => handleSponsorChange(index, 'name', e.target.value)}
+                  placeholder="Sponsor Name"
+                />
+                <Input
+                  value={sponsor.image}
+                  onChange={(e) => handleSponsorChange(index, 'image', e.target.value)}
+                  placeholder="Sponsor Image URL"
+                />
+              </div>
+              <Button type="button" variant="destructive" size="sm" onClick={() => removeSponsor(index)}>
+                Remove
+              </Button>
+            </div>
+          ))}
+          <Button type="button" variant="outline" onClick={addSponsor}>
+            Add Sponsor
+          </Button>
         </div>
       </div>
 
