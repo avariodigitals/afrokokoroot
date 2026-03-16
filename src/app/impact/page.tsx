@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Metadata } from "next"
 import { BarChart, Heart, Users, Globe, ArrowRight, Quote } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -81,10 +82,12 @@ export default function ImpactPage() {
              <div className="relative group">
                  <div className="absolute inset-0 bg-gradient-to-br from-lime-400 to-green-500 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
                  <div className="aspect-square bg-green-900 rounded-[2rem] overflow-hidden relative shadow-2xl border-4 border-white transform group-hover:rotate-1 transition-transform duration-500">
-                     <div className="absolute inset-0 flex items-center justify-center text-white/30 font-bold text-xl">
-                       <span className="sr-only">Student performing</span>
-                       [Image Placeholder: Saxophonist]
-                     </div>
+                     <Image
+                       src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop"
+                       alt="Youth music workshop"
+                       fill
+                       className="object-cover"
+                     />
                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                  </div>
              </div>
@@ -122,10 +125,12 @@ export default function ImpactPage() {
              <div className="order-1 md:order-2 relative group">
                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-lime-500 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
                  <div className="aspect-square bg-green-900 rounded-[2rem] overflow-hidden relative shadow-2xl border-4 border-white transform group-hover:-rotate-1 transition-transform duration-500">
-                     <div className="absolute inset-0 flex items-center justify-center text-white/30 font-bold text-xl">
-                       <span className="sr-only">Festival Crowd</span>
-                       [Image Placeholder: Festival Crowd]
-                     </div>
+                     <Image
+                       src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/P1016432.JPG"
+                       alt="World Peace Music & Arts event"
+                       fill
+                       className="object-cover"
+                     />
                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                  </div>
              </div>
