@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { MapPin, ArrowRight, Clock, Ticket } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getEvents } from "@/lib/api"
@@ -42,9 +43,11 @@ export async function EventsPreview() {
                 <div className="absolute inset-0 bg-[url('/pattern-grid.svg')] opacity-20" />
                 
                 {/* Background Image with Fallback */}
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                  style={{ backgroundImage: `url(${event.image})` }}
+                <Image 
+                  src={event.image || "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?q=80&w=2070&auto=format&fit=crop"} 
+                  alt={event.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-green-900/10 group-hover:bg-green-900/0 transition-colors duration-300" />
                 

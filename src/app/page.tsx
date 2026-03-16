@@ -6,6 +6,8 @@ import { ProgramsPreview } from "@/components/sections/ProgramsPreview"
 import { EventsPreview } from "@/components/sections/EventsPreview"
 import { Newsletter } from "@/components/sections/Newsletter"
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const stats = await getImpactMetrics()
 
