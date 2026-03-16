@@ -181,13 +181,24 @@ export default async function EventPage({ params }: EventPageProps) {
               {event.highlights && (
                 <div className="relative">
                   <h3 className="text-2xl font-bold mb-6 text-green-950">Event Highlights</h3>
-                  <ul className="grid sm:grid-cols-2 gap-4">
-                    {event.highlights.map((highlight: string, index: number) => (
-                      <li key={index} className="flex items-start bg-lime-50/50 p-4 rounded-xl border border-lime-100 hover:border-lime-200 transition-colors">
-                        <span className="flex h-3 w-3 translate-y-1.5 rounded-full bg-green-500 mr-3 shadow-sm shadow-green-500/50" />
-                        <span className="font-semibold text-slate-700">{highlight}</span>
-                      </li>
-                    ))}
+                  <ul className="grid sm:grid-cols-2 gap-6">
+                    {event.highlights.map((highlight: string, index: number) => {
+                      const [title, ...descParts] = highlight.split(': ');
+                      const description = descParts.join(': ');
+                      return (
+                        <li key={index} className="flex flex-col bg-lime-50/50 p-6 rounded-2xl border border-lime-100 hover:border-lime-200 transition-all hover:shadow-md group/item">
+                          <div className="flex items-center mb-3">
+                            <span className="flex h-3 w-3 rounded-full bg-green-500 mr-3 shadow-sm shadow-green-500/50 group-hover/item:scale-125 transition-transform" />
+                            <span className="font-bold text-green-900 text-lg">{title}</span>
+                          </div>
+                          {description && (
+                            <p className="text-slate-600 text-sm leading-relaxed pl-6 border-l-2 border-lime-200 ml-1.5">
+                              {description}
+                            </p>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}
