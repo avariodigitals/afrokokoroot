@@ -25,9 +25,9 @@ export async function Footer() {
       <div className="container relative z-10 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-6">
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="relative h-24 w-96 transition-transform duration-300 group-hover:scale-105">
+            <div className="relative h-44 w-[480px] transition-transform duration-300 group-hover:scale-105">
               <Image
-                src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/WhatsApp_Image_2026-02-27_at_5.56.00_PM-removebg-preview.png"
+                src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Afrokoko%20Foundation%20Logo%20HZR.png"
                 alt="Afrokokoroot Foundation"
                 fill
                 className="object-contain object-left"

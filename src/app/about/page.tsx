@@ -2,8 +2,6 @@ import Image from "next/image"
 import { Metadata } from "next"
 import { ShieldCheck, Heart, Users, FileText, Globe, BookOpen, Scale, Leaf, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { getTeam } from "@/lib/api"
-import { TeamMember } from "@/lib/types"
 import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
@@ -17,8 +15,32 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
-  // Ideally, this would fetch the actual board members. For now, we use the team data.
-  const team = await getTeam()
+  const boardMembers = [
+    {
+      name: "Sunny Dada",
+      role: "Founder and Director",
+      image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Sunny%20Dada%20-%20Founder%20and%20Director.jpeg",
+      bio: "Dedicated leader committed to preserving African heritage and fostering community unity through music and education."
+    },
+    {
+      name: "Chujuana Harris",
+      role: "Secretary",
+      image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Chujuana%20Harris%20-%20Secreatary.jpeg",
+      bio: "Organized and passionate professional ensuring smooth operations and clear communication within the foundation."
+    },
+    {
+      name: "Terry Hardin",
+      role: "Director",
+      image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Terry%20Hardin%20-%20Director.jpeg",
+      bio: "Strategic director focused on expanding the reach and impact of the Afrokokoroot Foundation."
+    },
+    {
+      name: "Nelson Guillen",
+      role: "Member",
+      image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Nelson%20Guillen%20-%20Member.jpeg",
+      bio: "Active community member providing valuable insights and support to the foundation's initiatives."
+    }
+  ]
 
   return (
     <div className="min-h-screen bg-lime-50 font-sans selection:bg-lime-200 selection:text-green-900">
@@ -154,14 +176,23 @@ export default async function AboutPage() {
             Our independent board ensures we stay true to our mission and serve the public interest.
           </p>
           
-          <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-            {team.map((member: TeamMember) => (
-              <div key={member.name} className="group flex flex-col items-center text-center space-y-6 p-6 rounded-3xl hover:bg-lime-50 transition-colors duration-300">
-                <div className="h-40 w-40 rounded-full bg-gradient-to-br from-[#E9A907] to-lime-500 p-1 shadow-lg group-hover:scale-105 transition-transform duration-300">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-7xl mx-auto">
+            {boardMembers.map((member) => (
+              <div key={member.name} className="group flex flex-col items-center text-center space-y-6 p-6 rounded-3xl hover:bg-lime-50 transition-all duration-300">
+                <div className="h-48 w-48 rounded-full bg-gradient-to-br from-[#E9A907] to-lime-500 p-1 shadow-lg group-hover:scale-105 transition-transform duration-300">
                   <div className="w-full h-full rounded-full bg-white overflow-hidden relative border-4 border-white flex items-center justify-center">
-                    <span className="text-4xl font-black text-green-900 tracking-tighter">
-                      {member.name.split(' ').map(n => n[0]).join('')}
-                    </span>
+                    {member.image ? (
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        className="object-cover rounded-full"
+                      />
+                    ) : (
+                      <span className="text-4xl font-black text-green-900 tracking-tighter">
+                        {member.name.split(' ').map(n => n[0]).join('')}
+                      </span>
+                    )}
                   </div>
                 </div>
                 

@@ -72,13 +72,13 @@ export function Header() {
           isTransparent ? "opacity-0" : "opacity-50"
         )} />
         
-        <div className="container flex h-20 items-center justify-between relative z-20">
+        <div className="container flex h-32 items-center justify-between relative z-20">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center space-x-2 group relative z-50" onClick={() => setMobileMenuOpen(false)}>
               <div className="absolute -inset-2 bg-gradient-to-r from-green-500/20 to-lime-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative h-16 w-64 transition-transform duration-300 group-hover:scale-105">
+              <div className="relative h-28 w-[400px] transition-transform duration-300 group-hover:scale-105">
                 <Image
-                  src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/WhatsApp_Image_2026-02-27_at_5.56.00_PM-removebg-preview.png"
+                  src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Afrokoko%20Foundation%20Logo%20HZR%20Full.png"
                   alt="Afrokokoroot Foundation"
                   fill
                   className="object-contain object-left"
@@ -172,7 +172,7 @@ export function Header() {
         {/* Mobile Navigation Overlay */}
       <div 
         className={cn(
-          "fixed top-20 left-0 right-0 bottom-0 z-40 bg-lime-50 lg:hidden transition-all duration-300 ease-in-out transform border-t border-lime-200 shadow-inner",
+          "fixed top-32 left-0 right-0 bottom-0 z-40 bg-lime-50 lg:hidden transition-all duration-300 ease-in-out transform border-t border-lime-200 shadow-inner",
           mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
         )}
       >
@@ -239,7 +239,7 @@ export function Header() {
         </div>
       </div>
     </header>
-    {!isHome && <div className="h-20" />}
+    {!isHome && <div className="h-32" />}
     </>
   )
 }

@@ -91,15 +91,15 @@ export default function ImpactPage() {
              <div className="space-y-8">
                <Quote className="h-12 w-12 text-lime-400 opacity-50" />
                <blockquote className="text-2xl md:text-3xl font-bold text-green-900 leading-tight">
-               &quot;Before joining the Afrobeat Music Academy, I was shy and unsure of myself. Learning the saxophone gave me a voice. Now, I perform with confidence.&quot;
+               &quot;Before attending the Afrokokoroot youth music workshop, I was shy and unsure of myself. Being surrounded by music and creative expression helped me find my confidence and connect with others through rhythm.&quot;
               </blockquote>
                <div>
                  <p className="font-bold text-lg text-green-900">– Michael, Age 16</p>
-                 <p className="text-green-600">Academy Student</p>
+                 <p className="text-green-600">Community Program Participant</p>
                </div>
                <div className="h-1 w-20 bg-gradient-to-r from-lime-400 to-green-500 rounded-full" />
                <p className="text-lg text-green-800/80 leading-relaxed">
-                 Through our academy, we provide free and low-cost music education to underserved youth in Nashville. We focus not just on technical skill, but on leadership, discipline, and cultural pride.
+                 Through our youth engagement programs, we provide opportunities for young people in Nashville to explore music, creativity, and cultural expression while building confidence and leadership.
                </p>
              </div>
           </div>
@@ -108,15 +108,15 @@ export default function ImpactPage() {
              <div className="order-2 md:order-1 space-y-8">
                <Quote className="h-12 w-12 text-emerald-400 opacity-50" />
                <blockquote className="text-2xl md:text-3xl font-bold text-green-900 leading-tight">
-               &quot;The World Peace Festival opened my eyes to the beauty of African culture. It was amazing to see people of all backgrounds dancing together as one.&quot;
+               &quot;The World Peace Music & Arts event opened my eyes to how powerful music and culture can be in bringing people together. Seeing people from different backgrounds celebrate together was unforgettable.&quot;
               </blockquote>
                <div>
                  <p className="font-bold text-lg text-green-900">– Sarah J.</p>
-                 <p className="text-green-600">Festival Attendee</p>
+                 <p className="text-green-600">Event Attendee</p>
                </div>
                <div className="h-1 w-20 bg-gradient-to-r from-emerald-400 to-lime-500 rounded-full" />
                <p className="text-lg text-green-800/80 leading-relaxed">
-                 Our events serve as a meeting ground for diverse populations. By celebrating our shared humanity through the universal language of rhythm, we break down stereotypes and build lasting connections.
+                 Our events create spaces where diverse communities come together through music, art, and shared cultural experiences—building understanding and lasting connections.
                </p>
              </div>
              <div className="order-1 md:order-2 relative group">

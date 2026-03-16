@@ -3,10 +3,10 @@
     {
       "slug": "world-peace-awakening-2026",
       "title": "World Peace Awakening 2026",
-      "date": "July 12, 2026",
+      "date": "Sept 26, 2026",
       "time": "10:00 AM - 10:00 PM",
       "location": "Afrokokoroot Haven",
-      "address": "Afrokokoroot Haven, Nashville, TN",
+      "address": "8369, Cub Creek Rd, Nashville TN 37209, USA",
       "price": "Free Entry",
       "description": "A global celebration of peace, unity, and cultural diversity. Join us for a day of music, art, and community connection.",
       "highlights": [
@@ -17,16 +17,36 @@
       ],
       "image": "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?q=80&w=2070&auto=format&fit=crop",
       "artists": [
-        {
-          "name": "Sunny",
-          "image": ""
-        }
+        { "name": "SUNNY DADA & HIS AFROKOKOROOT AFROBEAT ENSEMBLE", "stage": "BESE SAKA STAGE" },
+        { "name": "GIOVANNI RODRIGUEZ & HIS LATIN BAND", "stage": "BESE SAKA STAGE" },
+        { "name": "SOULCHESS", "stage": "BESE SAKA STAGE" },
+        { "name": "CAM GALLAGHER & THE TASTY SOUL", "stage": "BESE SAKA STAGE" },
+        { "name": "BABA MUSA & THE NATURE’S DRUMS", "stage": "BESE SAKA STAGE" },
+        { "name": "PAPA TURNEY & THE JUKE JOINT ALLSTARS", "stage": "BESE SAKA STAGE" },
+        { "name": "FREDERICK & THE MUZIXITY", "stage": "BESE SAKA STAGE" },
+        { "name": "ROSA RODRIGUEZ V.", "stage": "BESE SAKA STAGE" },
+        { "name": "SARAH SLADE & THE SLOW BURN", "stage": "BESE SAKA STAGE" },
+        { "name": "TEDDY J & THE RUDE RAGGAMUFFIN", "stage": "BESE SAKA STAGE" },
+        { "name": "CHARLENE ROBINSON & SOUNDWAVE", "stage": "BESE SAKA STAGE" },
+        { "name": "THE MUSIC CITY YOUTH ALLSTARS", "stage": "BESE SAKA STAGE" },
+        { "name": "DJ MELLO-D", "stage": "BESE SAKA STAGE" },
+        { "name": "MYSTIIK STYLEZ", "stage": "BESE SAKA STAGE" },
+        { "name": "DANZA AZTECA OLLIN QUETZALLI", "stage": "BESE SAKA STAGE" },
+        { "name": "VOICE OF RESILIENCE NASHVILLE HOMELESS CHOIR", "stage": "BESE SAKA STAGE" },
+        { "name": "MONAAXI", "stage": "AKOMA LOUNGE STAGE" },
+        { "name": "JOHN NTIBONERA", "stage": "AKOMA LOUNGE STAGE" },
+        { "name": "GRACE SERENE", "stage": "AKOMA LOUNGE STAGE" },
+        { "name": "O’HENRY", "stage": "AKOMA LOUNGE STAGE" },
+        { "name": "FADE2BLUE", "stage": "AKOMA LOUNGE STAGE" },
+        { "name": "SCOTT CLAY & FRIENDS", "stage": "AKOMA LOUNGE STAGE" },
+        { "name": "DJ JESSZEFFECT", "stage": "AKOMA LOUNGE STAGE" }
       ],
       "sponsors": [
-        {
-          "name": "Sunny",
-          "image": ""
-        }
+        { "name": "Sunny", "image": "" }
+      ],
+      "partners": [
+        { "name": "Partner 1", "image": "" },
+        { "name": "Partner 2", "image": "" }
       ]
     },
     {

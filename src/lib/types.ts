@@ -12,11 +12,13 @@ export interface Event {
   ticketPrice?: number; // Numeric price for PayPal
   artists?: Artist[];
   sponsors?: Sponsor[];
+  partners?: Sponsor[];
 }
 
 export interface Artist {
   name: string;
   image?: string;
+  stage?: string;
 }
 
 export interface Sponsor {
