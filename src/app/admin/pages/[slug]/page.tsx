@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { getPageContent, getPages } from '@/lib/api'
 import PageForm from '@/components/admin/PageForm'
 import { PageContent } from '@/lib/types'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
 export async function generateStaticParams() {
   const pages: PageContent[] = await getPages()
@@ -9,6 +10,7 @@ export async function generateStaticParams() {
 }
 
 export default async function PageContentEditor({ params }: { params: Promise<{ slug: string }> }) {
+  await requireAdminPagePermission('pages')
   const { slug } = await params
   const page = await getPageContent(slug)
 

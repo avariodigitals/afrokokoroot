@@ -1,6 +1,9 @@
 import TeamForm from '@/components/admin/TeamForm'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
-export default function NewTeamMemberPage() {
+export default async function NewTeamMemberPage() {
+  await requireAdminPagePermission('team')
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">

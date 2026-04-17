@@ -7,6 +7,8 @@ import { getBlogPosts } from "@/lib/api"
 import { BlogPost } from "@/lib/types"
 import { siteConfig } from "@/lib/site-config"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "Blog",
   description: "Read our latest news, stories, and insights on African culture, arts, and community empowerment.",

@@ -1,6 +1,9 @@
 import ProgramForm from '@/components/admin/ProgramForm'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
-export default function NewProgramPage() {
+export default async function NewProgramPage() {
+  await requireAdminPagePermission('programs')
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">

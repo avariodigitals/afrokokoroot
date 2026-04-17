@@ -1,6 +1,9 @@
 import BlogForm from '@/components/admin/BlogForm'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
-export default function NewBlogPage() {
+export default async function NewBlogPage() {
+  await requireAdminPagePermission('blog')
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">

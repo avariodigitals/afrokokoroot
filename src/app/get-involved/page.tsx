@@ -4,6 +4,7 @@ import { Metadata } from "next"
 import { Users, Heart, Briefcase, Mail, ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import DecorativeTitle from "@/components/ui/DecorativeTitle"
 import { siteConfig } from "@/lib/site-config"
 import { getPageContent } from "@/lib/api"
 
@@ -56,7 +57,7 @@ export default async function GetInvolvedPage() {
              Join Our Community
           </div>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight drop-shadow-sm">
-            {page?.heroTitle || 'Be the Rhythm.'}
+            <DecorativeTitle text={page?.heroTitle || 'Be the Rhythm.'} variant="hero" />
           </h1>
           <p className="text-xl md:text-2xl text-lime-100 font-medium max-w-2xl mx-auto leading-relaxed">
             {page?.heroSubtitle || 'Whether you have time, talent, or resources to share, your contribution helps us keep the beat alive.'}
@@ -151,7 +152,7 @@ export default async function GetInvolvedPage() {
             <Heart className="h-10 w-10 text-green-500 fill-current" />
           </div>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6 text-foreground">
-            {content?.donateHeadline || 'Make a Financial Contribution'}
+            <DecorativeTitle text={content?.donateHeadline || 'Make a Financial Contribution'} />
           </h2>
           <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
             {content?.donateDescription || 'Can\'t volunteer? Your donation is the most direct way to support our mission. Every dollar goes towards instruments, education, and community events.'}
@@ -176,7 +177,7 @@ export default async function GetInvolvedPage() {
            
            <div className="relative z-10">
              <Mail className="h-16 w-16 mx-auto mb-6 text-lime-300" />
-             <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">{content?.newsletterHeadline || 'Stay in the Loop'}</h2>
+             <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6"><DecorativeTitle text={content?.newsletterHeadline || 'Stay in the Loop'} /></h2>
              <p className="text-xl text-lime-100 mb-10 max-w-2xl mx-auto font-medium">
                {content?.newsletterDescription || 'Sign up for our newsletter to receive updates on upcoming events, program success stories, and volunteer opportunities.'}
              </p>

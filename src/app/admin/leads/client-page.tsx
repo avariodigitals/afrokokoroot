@@ -7,6 +7,26 @@ import { Search, Download, Mail } from "lucide-react"
 import { toast } from "sonner"
 import { Lead } from "@/lib/types"
 
+function formatUtcDate(value: string) {
+  const date = new Date(value)
+
+  if (Number.isNaN(date.getTime())) {
+    return 'Unknown'
+  }
+
+  return date.toISOString().slice(0, 10)
+}
+
+function formatUtcDateTime(value: string) {
+  const date = new Date(value)
+
+  if (Number.isNaN(date.getTime())) {
+    return 'Unknown'
+  }
+
+  return `${date.toISOString().slice(0, 16).replace('T', ' ')} UTC`
+}
+
 interface LeadsClientPageProps {
   initialLeads: Lead[]
 }
@@ -31,7 +51,7 @@ export function LeadsClientPage({ initialLeads }: LeadsClientPageProps) {
       ...leads.map(lead => [
         lead.id,
         lead.email,
-        new Date(lead.date).toLocaleDateString(),
+        formatUtcDate(lead.date),
         lead.status
       ].join(","))
     ].join("\n")
@@ -90,7 +110,7 @@ export function LeadsClientPage({ initialLeads }: LeadsClientPageProps) {
                     {lead.email}
                   </td>
                   <td className="px-6 py-4 text-slate-600">
-                    {new Date(lead.date).toLocaleDateString()} at {new Date(lead.date).toLocaleTimeString()}
+                    {formatUtcDateTime(lead.date)}
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${

@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import DecorativeTitle from "@/components/ui/DecorativeTitle"
 import { ArrowRight, Globe, Heart, Users } from "lucide-react"
 
 interface HeroProps {
@@ -49,7 +50,7 @@ export function Hero({
 
         {/* Main Heading */}
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-5xl leading-[1.1] drop-shadow-sm">
-          {title}
+          <DecorativeTitle text={title} variant="hero" />
         </h1>
 
         {/* Subheading */}

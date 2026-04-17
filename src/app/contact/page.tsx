@@ -5,6 +5,7 @@ import { Mail, Phone, MapPin, Facebook, Instagram, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
+import DecorativeTitle from "@/components/ui/DecorativeTitle"
 import { getContactInfo, getPageContent } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
 import { ThreadsIcon } from "@/components/icons"
@@ -46,7 +47,7 @@ export default async function ContactPage() {
 
         <div className="container relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-            {page?.heroTitle || 'Get in Touch'}
+            <DecorativeTitle text={page?.heroTitle || 'Get in Touch'} variant="hero" />
           </h1>
           <p className="text-xl md:text-2xl text-lime-100 max-w-3xl mx-auto font-light leading-relaxed">
             {page?.heroSubtitle || 'We&apos;d love to hear from you. Whether you have a question, want to partner, or just want to say hello.'}

@@ -1,6 +1,9 @@
 import EventForm from '@/components/admin/EventForm'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
-export default function NewEventPage() {
+export default async function NewEventPage() {
+  await requireAdminPagePermission('events')
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">

@@ -3,8 +3,10 @@ import { getBlogPosts } from "@/lib/api"
 import { Plus, Pencil, Trash2, Calendar, User } from "lucide-react"
 import { deleteBlogPost } from "@/lib/actions"
 import { BlogPost } from "@/lib/types"
+import { requireAdminPagePermission } from "@/lib/admin-auth"
 
 export default async function AdminBlogPage() {
+  await requireAdminPagePermission('blog')
   const posts = await getBlogPosts()
 
   return (

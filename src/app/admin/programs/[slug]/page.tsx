@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import ProgramForm from '@/components/admin/ProgramForm'
 import { getPrograms } from '@/lib/api'
 import { Program } from '@/lib/types'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
 export async function generateStaticParams() {
   const programs = await getPrograms()
@@ -11,6 +12,7 @@ export async function generateStaticParams() {
 }
 
 export default async function EditProgramPage({ params }: { params: Promise<{ slug: string }> }) {
+  await requireAdminPagePermission('programs')
   const { slug } = await params
   const programs = await getPrograms()
   const program = programs.find((p: Program) => p.slug === slug)

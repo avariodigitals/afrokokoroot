@@ -1,8 +1,10 @@
 import { getContactInfo, getStorageStatus } from "@/lib/api";
 import AdminStorageNotice from "@/components/admin/AdminStorageNotice";
 import SettingsForm from "@/components/admin/SettingsForm";
+import { requireAdminPagePermission } from "@/lib/admin-auth";
 
 export default async function SettingsPage() {
+  await requireAdminPagePermission('settings');
   const contactInfo = await getContactInfo();
   const storageStatus = getStorageStatus();
 

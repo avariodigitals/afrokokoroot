@@ -3,8 +3,10 @@ import { getPrograms } from "@/lib/api"
 import { Plus, Pencil, Trash2, Music } from "lucide-react"
 import { deleteProgram } from "@/lib/actions"
 import { Program } from "@/lib/types"
+import { requireAdminPagePermission } from "@/lib/admin-auth"
 
 export default async function ProgramsAdminPage() {
+  await requireAdminPagePermission('programs')
   const programs = await getPrograms()
 
   return (

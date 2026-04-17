@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import EventForm from '@/components/admin/EventForm'
 import { getEvents } from '@/lib/api'
 import { Event } from '@/lib/types'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
 export async function generateStaticParams() {
   const events = await getEvents()
@@ -11,6 +12,7 @@ export async function generateStaticParams() {
 }
 
 export default async function EditEventPage({ params }: { params: Promise<{ slug: string }> }) {
+  await requireAdminPagePermission('events')
   const { slug } = await params
   const events = await getEvents()
   const event = events.find((e: Event) => e.slug === slug)

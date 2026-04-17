@@ -2,6 +2,7 @@ import Image from "next/image"
 import { Metadata } from "next"
 import { ShieldCheck, Heart, Users, FileText, Globe, BookOpen, Scale, Leaf, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import DecorativeTitle from "@/components/ui/DecorativeTitle"
 import { siteConfig } from "@/lib/site-config"
 import { getPageContent, getTeam } from "@/lib/api"
 import type { PageContent, TeamMember } from "@/lib/types"
@@ -72,7 +73,7 @@ export default async function AboutPage() {
 
         <div className="container relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-            {heroTitle}
+            <DecorativeTitle text={heroTitle} variant="hero" />
           </h1>
           <p className="text-xl md:text-2xl text-lime-50 max-w-3xl mx-auto font-light leading-relaxed">
             {heroSubtitle}
@@ -156,7 +157,7 @@ export default async function AboutPage() {
       <section className="py-24 bg-white relative overflow-hidden rounded-3xl mx-4 shadow-sm border border-lime-100">
         <div className="container relative z-10 text-center">
           <span className="inline-block py-1 px-3 rounded-full bg-lime-100 text-green-800 font-bold text-sm mb-4">Leadership</span>
-          <h2 className="text-4xl font-bold tracking-tight mb-4 text-green-950">{leadershipHeadline}</h2>
+          <h2 className="text-4xl font-bold tracking-tight mb-4 text-green-950"><DecorativeTitle text={leadershipHeadline} /></h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-16">
             {leadershipCopy}
           </p>
@@ -208,7 +209,7 @@ export default async function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-green-950 to-green-800 opacity-90" />
         
         <div className="container relative z-10 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-8">{transparencyHeadline}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-8"><DecorativeTitle text={transparencyHeadline} /></h2>
           <p className="text-xl text-lime-100 max-w-3xl mx-auto mb-12">
             {transparencyCopy}
           </p>

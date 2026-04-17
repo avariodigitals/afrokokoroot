@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { getPages } from '@/lib/api'
 import { PageContent } from '@/lib/types'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
 export default async function AdminPages() {
+  await requireAdminPagePermission('pages')
   const pages: PageContent[] = await getPages()
 
   return (

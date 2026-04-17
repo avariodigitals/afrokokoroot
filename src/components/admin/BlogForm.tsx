@@ -75,7 +75,7 @@ export default function BlogForm({ initialData }: { initialData?: BlogPost }) {
         slug: formData.slug || formData.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
       }
       
-      await saveBlogPost(dataToSave)
+        await saveBlogPost(dataToSave, initialData?.slug)
       router.push('/admin/blog')
       router.refresh()
     } catch (error) {

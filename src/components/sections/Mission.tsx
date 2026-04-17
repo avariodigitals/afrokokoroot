@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import DecorativeTitle from "@/components/ui/DecorativeTitle"
 import { MissionVideo } from "./MissionVideo"
 
 interface MissionProps {
@@ -38,7 +39,7 @@ export function Mission({
             Who We Are
           </div>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-foreground leading-tight">
-            {headline}
+            <DecorativeTitle text={headline} />
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             {body}

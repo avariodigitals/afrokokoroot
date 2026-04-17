@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/lib/site-config";
 
 const geistSans = Geist({
@@ -49,24 +51,35 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerStore = await headers();
+  const currentPath = headerStore.get("x-current-path") || "";
+  const isAdminRoute = currentPath.startsWith("/admin");
+
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
         suppressHydrationWarning={true}
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Header />
-        <main className="flex-1">
-          <Breadcrumbs />
-          {children}
-        </main>
-        <Footer />
-        <ScrollToTop />
+        {isAdminRoute ? (
+          children
+        ) : (
+          <>
+            <Header />
+            <main className="flex-1">
+              <Breadcrumbs />
+              {children}
+            </main>
+            <Footer />
+            <ScrollToTop />
+          </>
+        )}
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

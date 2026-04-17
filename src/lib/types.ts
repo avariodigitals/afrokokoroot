@@ -89,6 +89,44 @@ export interface GalleryItem {
   date: string;
 }
 
+export type AdminPermission =
+  | 'dashboard'
+  | 'events'
+  | 'blog'
+  | 'pages'
+  | 'programs'
+  | 'team'
+  | 'gallery'
+  | 'impact'
+  | 'leads'
+  | 'settings'
+  | 'users';
+
+export interface AdminUser {
+  id: string;
+  name: string;
+  username: string;
+  passwordHash: string;
+  permissions: AdminPermission[];
+  isActive: boolean;
+  isOwner: boolean;
+  createdAt: string;
+  updatedAt: string;
+  lastLoginAt?: string;
+}
+
+export type AdminUserProfile = Omit<AdminUser, 'passwordHash'>;
+
+export interface AdminUserInput {
+  id?: string;
+  name: string;
+  username: string;
+  password?: string;
+  permissions: AdminPermission[];
+  isActive: boolean;
+  isOwner: boolean;
+}
+
 export interface PageContent {
   slug: string;
   title: string;

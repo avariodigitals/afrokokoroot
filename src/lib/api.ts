@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { get, put } from '@vercel/blob';
-import { Event, Program, TeamMember, ContactInfo, ImpactMetric, BlogPost, Lead, GalleryItem, PageContent } from './types';
+import { Event, Program, TeamMember, ContactInfo, ImpactMetric, BlogPost, Lead, GalleryItem, PageContent, AdminUser } from './types';
 import dbData from './db.json';
 
 const DB_PATH = path.join(process.cwd(), 'src/lib/db.json');
@@ -31,6 +31,7 @@ export interface DatabaseSchema {
   blogPosts: BlogPost[];
   leads: Lead[];
   gallery: GalleryItem[];
+  users: AdminUser[];
 }
 
 async function readBlobDatabase(): Promise<DatabaseSchema | null> {

@@ -7,6 +7,8 @@ import { getBlogPosts } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
 import Image from "next/image"
 
+export const dynamic = "force-dynamic"
+
 interface BlogPostPageProps {
   params: Promise<{
     slug: string
@@ -51,13 +53,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       images: [post.image || siteConfig.ogImage],
     },
   }
-}
-
-export async function generateStaticParams() {
-  const posts = await getBlogPosts()
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {

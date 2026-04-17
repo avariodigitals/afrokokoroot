@@ -3,14 +3,35 @@ import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { NextRequest, NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
+import { AuthError, PermissionError, assertAdminPermission } from '@/lib/admin-auth';
 
 const canUseBlobStorage = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+
+const uploadPermissions = {
+  blog: 'blog',
+  events: 'events',
+  gallery: 'gallery',
+  pages: 'pages',
+  programs: 'programs',
+  team: 'team',
+} as const;
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const category = formData.get('category') as string || 'general';
+
+    const requiredPermission = uploadPermissions[category as keyof typeof uploadPermissions];
+
+    if (!requiredPermission) {
+      return NextResponse.json(
+        { error: 'Unknown upload category' },
+        { status: 400 }
+      );
+    }
+
+    await assertAdminPermission(requiredPermission);
 
     if (!file) {
       return NextResponse.json(
@@ -83,6 +104,13 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
+    if (error instanceof AuthError || error instanceof PermissionError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.status }
+      );
+    }
+
     console.error('Upload error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Upload failed' },

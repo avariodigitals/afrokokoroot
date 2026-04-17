@@ -3,8 +3,10 @@ import { getTeam } from "@/lib/api"
 import { TeamMember } from "@/lib/types"
 import { Plus, Pencil, Trash2, Users } from "lucide-react"
 import { deleteTeamMember } from "@/lib/actions"
+import { requireAdminPagePermission } from "@/lib/admin-auth"
 
 export default async function TeamAdminPage() {
+  await requireAdminPagePermission('team')
   const team = await getTeam()
 
   return (

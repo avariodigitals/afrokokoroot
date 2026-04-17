@@ -1,7 +1,9 @@
 import { getImpactMetrics } from "@/lib/api";
 import ImpactForm from "@/components/admin/ImpactForm";
+import { requireAdminPagePermission } from "@/lib/admin-auth";
 
 export default async function ImpactPage() {
+  await requireAdminPagePermission('impact');
   const metrics = await getImpactMetrics();
 
   return (

@@ -3,6 +3,7 @@ import Image from "next/image"
 import { Metadata } from "next"
 import { BarChart, Heart, Users, Globe, ArrowRight, Quote } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import DecorativeTitle from "@/components/ui/DecorativeTitle"
 import { getImpactMetrics, getPageContent } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
 
@@ -42,7 +43,7 @@ export default async function ImpactPage() {
              Measurable Change
           </div>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight drop-shadow-lg">
-            {page?.heroTitle || 'Impact in Action'}
+            <DecorativeTitle text={page?.heroTitle || 'Impact in Action'} variant="hero" />
           </h1>
           <p className="text-xl md:text-2xl text-lime-100 font-medium max-w-3xl mx-auto leading-relaxed opacity-90">
             {page?.heroSubtitle || 'Beyond the music, we measure our success by the lives transformed, communities united, and cultural bridges built.'}
@@ -57,7 +58,7 @@ export default async function ImpactPage() {
             {content?.metricHeadline || 'Impact at a Glance'}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-green-900">
-            {content?.impactIntro || 'Our metrics capture meaningful progress in education, events, arts access, and community support.'}
+            <DecorativeTitle text={content?.impactIntro || 'Our metrics capture meaningful progress in education, events, arts access, and community support.'} />
           </h2>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -90,7 +91,7 @@ export default async function ImpactPage() {
         <div className="container">
           <div className="text-center mb-16 space-y-4">
              <span className="text-green-600 font-bold tracking-wider uppercase text-sm">Real Stories</span>
-             <h2 className="text-3xl md:text-5xl font-black tracking-tight text-green-900">{content?.storiesHeadline || 'Voices of Change'}</h2>
+             <h2 className="text-3xl md:text-5xl font-black tracking-tight text-green-900"><DecorativeTitle text={content?.storiesHeadline || 'Voices of Change'} /></h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
@@ -162,7 +163,7 @@ export default async function ImpactPage() {
              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-lime-400 via-green-500 to-emerald-600" />
              
              <BarChart className="h-16 w-16 text-green-500 mx-auto mb-6" />
-             <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6 text-green-900">{content?.transparencyHeadline || 'Radical Transparency'}</h2>
+             <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6 text-green-900"><DecorativeTitle text={content?.transparencyHeadline || 'Radical Transparency'} /></h2>
              <p className="text-xl text-green-800/70 mb-10 max-w-2xl mx-auto">
                {content?.transparencyDescription || 'We believe in full accountability. Every dollar donated helps us keep the rhythm alive. Review our annual impact reports to see exactly how your support is being used.'}
              </p>
@@ -190,7 +191,7 @@ export default async function ImpactPage() {
         <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-lime-500/20 rounded-full blur-3xl animate-pulse" />
         
         <div className="container max-w-3xl relative z-10">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-8 drop-shadow-sm">{content?.ctaHeadline || 'Be Part of Our Story'}</h2>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-8 drop-shadow-sm"><DecorativeTitle text={content?.ctaHeadline || 'Be Part of Our Story'} /></h2>
           <p className="text-xl md:text-2xl text-lime-100/90 mb-10 font-medium max-w-2xl mx-auto">
             {content?.ctaDescription || 'Your contribution empowers us to reach more students, host more community events, and keep the culture alive.'}
           </p>

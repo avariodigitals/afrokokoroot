@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Metadata } from "next"
 import { ArrowRight, Heart, Sparkles, Sprout, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import DecorativeTitle from "@/components/ui/DecorativeTitle"
 import { siteConfig } from "@/lib/site-config"
 import { getPageContent, getPrograms } from "@/lib/api"
 import { Program } from "@/lib/types"
@@ -47,7 +48,7 @@ export default async function ProgramsPage() {
 
         <div className="container relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-            {page?.heroTitle || 'Our Programs'}
+            <DecorativeTitle text={page?.heroTitle || 'Our Programs'} variant="hero" />
           </h1>
           <p className="text-xl md:text-2xl text-lime-50 max-w-3xl mx-auto font-light leading-relaxed">
             {page?.heroSubtitle || 'We are dedicated to preserving African heritage and empowering communities through four core pillars of impact.'}
@@ -62,7 +63,7 @@ export default async function ProgramsPage() {
             {content?.programListHeadline || 'Featured Programs'}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-green-900">
-            {content?.programIntro || 'Our programs connect culture, learning and health through creative workshops, mentorship, and community support.'}
+            <DecorativeTitle text={content?.programIntro || 'Our programs connect culture, learning and health through creative workshops, mentorship, and community support.'} />
           </h2>
         </div>
         <div className="grid gap-16 md:gap-32">
@@ -141,7 +142,7 @@ export default async function ProgramsPage() {
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse delay-700" />
           
           <div className="relative z-10 max-w-3xl mx-auto space-y-8">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">{content?.ctaHeadline || 'Partner With Us'}</h2>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight"><DecorativeTitle text={content?.ctaHeadline || 'Partner With Us'} /></h2>
             <p className="text-xl text-lime-100 leading-relaxed">
               {content?.ctaDescription || 'Interested in bringing one of our programs to your school, community center, or organization? We\'d love to collaborate to spread the rhythm.'}
             </p>

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { saveLead } from "@/lib/actions"
+import DecorativeTitle from "@/components/ui/DecorativeTitle"
 import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
 
@@ -73,7 +74,7 @@ export function Newsletter({
 
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              {headline}
+              <DecorativeTitle text={headline} />
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
               {description}

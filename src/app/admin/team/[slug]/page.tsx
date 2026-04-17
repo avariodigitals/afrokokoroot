@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import TeamForm from '@/components/admin/TeamForm'
 import { getTeam } from '@/lib/api'
 import { TeamMember } from '@/lib/types'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
 export async function generateStaticParams() {
   const team = await getTeam()
@@ -11,6 +12,7 @@ export async function generateStaticParams() {
 }
 
 export default async function EditTeamMemberPage({ params }: { params: Promise<{ slug: string }> }) {
+  await requireAdminPagePermission('team')
   const { slug } = await params
   const team = await getTeam()
   const member = team.find((m: TeamMember) => m.slug === slug)

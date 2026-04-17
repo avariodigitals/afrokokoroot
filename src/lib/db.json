@@ -215,14 +215,30 @@
       "heroImage": "https://images.unsplash.com/photo-1504194921103-f8b80cadd5e4?q=80&w=2070&auto=format&fit=crop",
       "content": {
         "featureItems": [
-          { "title": "Live Events", "description": "Meaningful gatherings that celebrate music, art, and unity.", "icon": "globe" },
-          { "title": "Community Programs", "description": "Workshops, mentorship, and wellness sessions designed for every age.", "icon": "users" },
-          { "title": "Creative Education", "description": "Cultural learning that honors African heritage and inspires future leaders.", "icon": "book" }
+          {
+            "title": "Live Events",
+            "description": "Meaningful gatherings that celebrate music, art, and unity.",
+            "icon": "globe"
+          },
+          {
+            "title": "Community Programs",
+            "description": "Workshops, mentorship, and wellness sessions designed for every age.",
+            "icon": "users"
+          },
+          {
+            "title": "Creative Education",
+            "description": "Cultural learning that honors African heritage and inspires future leaders.",
+            "icon": "book"
+          }
         ],
         "badgeText": "Official 501(c)(3) Nonprofit Organization",
         "headline": "More Than a Foundation. A Global Movement.",
         "body": "Afrokokoroot Foundation empowers underserved children and families through accessible music education, cultural immersion, and nature-based learning that foster creativity, connection, and wholistic well-being.",
-        "bullets": ["Cultural Preservation", "Youth Empowerment", "Community Outreach"],
+        "bullets": [
+          "Cultural Preservation",
+          "Youth Empowerment",
+          "Community Outreach"
+        ],
         "ctaText": "Discover how you can be part of our next event, program, or community initiative.",
         "latestHeadline": "What’s Happening Now"
       }
@@ -238,10 +254,26 @@
         "missionIntro": "Afrokokoroot Foundation is structured as a 501(c)(3) public charity. We are legally and operationally separate from commercial entities, and our mission is purely charitable and educational, focused on serving underserved communities.",
         "governanceText": "We maintain strict compliance and credibility through a diverse Board of Directors with a majority of independent members. Our governance follows strong policies for conflict of interest, financial oversight, and transparency.",
         "pillarItems": [
-          { "icon": "book", "title": "Cultural Education", "description": "Arts, storytelling, and cultural expression." },
-          { "icon": "leaf", "title": "Wellness & Nature", "description": "Outdoor recreation and land-based learning." },
-          { "icon": "heart", "title": "Food Security", "description": "Sustainable agriculture and nutrition." },
-          { "icon": "users", "title": "Community Peace", "description": "Cross-cultural engagement and unity." }
+          {
+            "icon": "book",
+            "title": "Cultural Education",
+            "description": "Arts, storytelling, and cultural expression."
+          },
+          {
+            "icon": "leaf",
+            "title": "Wellness & Nature",
+            "description": "Outdoor recreation and land-based learning."
+          },
+          {
+            "icon": "heart",
+            "title": "Food Security",
+            "description": "Sustainable agriculture and nutrition."
+          },
+          {
+            "icon": "users",
+            "title": "Community Peace",
+            "description": "Cross-cultural engagement and unity."
+          }
         ],
         "leadershipHeadline": "Board of Directors",
         "leadershipCopy": "Our independent board ensures we stay true to our mission and serve the public interest.",
@@ -258,9 +290,18 @@
       "heroImage": "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=2070&auto=format&fit=crop",
       "content": {
         "sections": [
-          { "title": "Volunteer", "description": "Support events, youth programs, and local initiatives with hands-on help." },
-          { "title": "Donate", "description": "Your contribution directly supports arts education, wellness programming, and community outreach." },
-          { "title": "Partner", "description": "Work with us to build sustainable, community-centered projects that last." }
+          {
+            "title": "Volunteer",
+            "description": "Support events, youth programs, and local initiatives with hands-on help."
+          },
+          {
+            "title": "Donate",
+            "description": "Your contribution directly supports arts education, wellness programming, and community outreach."
+          },
+          {
+            "title": "Partner",
+            "description": "Work with us to build sustainable, community-centered projects that last."
+          }
         ]
       }
     },
@@ -352,7 +393,62 @@
       "date": "February 20, 2026",
       "author": "Joshua Cook",
       "category": "Events",
-      "image": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop"
+      "image": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop",
+      "content": "hivshivhjsdkohjvosidjokvsd"
+    },
+    {
+      "title": "The Sea",
+      "slug": "best-way-to-see",
+      "date": "April 10, 2026",
+      "author": "Ralph",
+      "category": "Events",
+      "excerpt": "jhfiajw0efje",
+      "image": "/uploads/blog/b567d7ea-7cf7-4bd5-9359-b2289ba39ce5.jpeg",
+      "content": "eafojseofskj0-g"
+    }
+  ],
+  "users": [
+    {
+      "id": "owner-admin",
+      "name": "Primary Owner",
+      "username": "admin",
+      "passwordHash": "4f92a97e8700eb33491e21c1462d2fe1:bb94e2d5025107d6c616f0c0951e399c3cba21dc77798fbe689381dabebfde3d87ca2c8d17427e50b30feabe91fd5eca85487cd3f563bbfc8ad1ca320759ce06",
+      "permissions": [
+        "dashboard",
+        "events",
+        "blog",
+        "pages",
+        "programs",
+        "team",
+        "gallery",
+        "impact",
+        "leads",
+        "settings",
+        "users"
+      ],
+      "isActive": true,
+      "isOwner": true,
+      "createdAt": "2026-04-17T00:00:00.000Z",
+      "updatedAt": "2026-04-17T18:34:09.554Z",
+      "lastLoginAt": "2026-04-17T18:34:09.554Z"
+    },
+    {
+      "id": "a61e6618-a1a4-406e-9a87-4afd0db4e24f",
+      "name": "Sunny Dada",
+      "username": "sunny",
+      "passwordHash": "506d15c296984403b1dcb4799f552a3a:46b0c62db52b07ebc59a46a9cca823ae9260d41feff2e75e9250fb6231c446b90ef2d99c897980b8a90d1756c9d209b6d7ef36002e2396d34c362c4038278ef1",
+      "permissions": [
+        "dashboard",
+        "events",
+        "leads",
+        "impact",
+        "programs",
+        "blog"
+      ],
+      "isActive": true,
+      "isOwner": false,
+      "createdAt": "2026-04-17T18:40:38.060Z",
+      "updatedAt": "2026-04-17T18:40:38.060Z"
     }
   ]
 }

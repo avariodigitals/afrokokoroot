@@ -2,10 +2,12 @@
 
 import { getData, updateData } from './api';
 import { revalidatePath } from 'next/cache';
-import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead, GalleryItem, PageContent } from '@/lib/types';
+import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead, GalleryItem, PageContent, AdminUserInput } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
+import { assertAdminPermission, deleteAdminUserAccount, saveAdminUserAccount } from '@/lib/admin-auth';
 
 export async function saveEvent(eventData: Event) {
+  await assertAdminPermission('events');
   const data = await getData();
   const events: Event[] = data.events || [];
   
@@ -30,6 +32,7 @@ export async function saveEvent(eventData: Event) {
 }
 
 export async function deleteEvent(slug: string) {
+  await assertAdminPermission('events');
   const data = await getData();
   const events: Event[] = data.events || [];
   
@@ -42,11 +45,13 @@ export async function deleteEvent(slug: string) {
   return { success: true };
 }
 
-export async function saveBlogPost(postData: BlogPost) {
+export async function saveBlogPost(postData: BlogPost, originalSlug?: string) {
+  await assertAdminPermission('blog');
   const data = await getData();
   const posts: BlogPost[] = data.blogPosts || [];
-  
-  const existingIndex = posts.findIndex((p: BlogPost) => p.slug === postData.slug);
+
+  const lookupSlug = originalSlug || postData.slug;
+  const existingIndex = posts.findIndex((p: BlogPost) => p.slug === lookupSlug);
   
   if (existingIndex >= 0) {
     posts[existingIndex] = postData;
@@ -57,11 +62,20 @@ export async function saveBlogPost(postData: BlogPost) {
   data.blogPosts = posts;
   await updateData(data);
   revalidatePath('/blog');
+  revalidatePath('/admin/blog');
+  revalidatePath('/admin');
+  revalidatePath(`/blog/${postData.slug}`);
+
+  if (originalSlug && originalSlug !== postData.slug) {
+    revalidatePath(`/blog/${originalSlug}`);
+  }
+
   revalidatePath('/');
   return { success: true };
 }
 
 export async function deleteBlogPost(slug: string) {
+  await assertAdminPermission('blog');
   const data = await getData();
   const posts: BlogPost[] = data.blogPosts || [];
   
@@ -69,12 +83,16 @@ export async function deleteBlogPost(slug: string) {
   
   await updateData(data);
   revalidatePath('/blog');
+  revalidatePath('/admin/blog');
+  revalidatePath('/admin');
+  revalidatePath(`/blog/${slug}`);
   revalidatePath('/');
   return { success: true };
 }
 
 // Programs
 export async function saveProgram(programData: Program) {
+  await assertAdminPermission('programs');
   const data = await getData();
   const programs: Program[] = data.programs || [];
   
@@ -94,6 +112,7 @@ export async function saveProgram(programData: Program) {
 }
 
 export async function deleteProgram(slug: string) {
+  await assertAdminPermission('programs');
   const data = await getData();
   const programs: Program[] = data.programs || [];
   
@@ -107,6 +126,7 @@ export async function deleteProgram(slug: string) {
 
 // Team
 export async function saveTeamMember(memberData: TeamMember) {
+  await assertAdminPermission('team');
   const data = await getData();
   const team: TeamMember[] = data.team || [];
   
@@ -131,6 +151,7 @@ export async function saveTeamMember(memberData: TeamMember) {
 }
 
 export async function deleteTeamMember(slug: string) {
+  await assertAdminPermission('team');
   const data = await getData();
   const team: TeamMember[] = data.team || [];
   
@@ -144,6 +165,7 @@ export async function deleteTeamMember(slug: string) {
 
 // Contact Info
 export async function saveContactInfo(infoData: ContactInfo) {
+  await assertAdminPermission('settings');
   const data = await getData();
   data.contactInfo = { ...data.contactInfo, ...infoData };
   
@@ -154,6 +176,7 @@ export async function saveContactInfo(infoData: ContactInfo) {
 
 // Page content
 export async function savePageContent(pageData: PageContent) {
+  await assertAdminPermission('pages');
   const data = await getData();
   const pages: PageContent[] = data.pageContents || [];
   const existingIndex = pages.findIndex((page) => page.slug === pageData.slug);
@@ -174,6 +197,7 @@ export async function savePageContent(pageData: PageContent) {
 
 // Impact Metrics
 export async function saveImpactMetrics(metricsData: ImpactMetric[]) {
+  await assertAdminPermission('impact');
   const data = await getData();
   data.impactMetrics = metricsData;
   
@@ -209,6 +233,7 @@ export async function saveLead(email: string) {
 
 // Gallery
 export async function saveGalleryItem(item: GalleryItem) {
+  await assertAdminPermission('gallery');
   const data = await getData();
   const gallery: GalleryItem[] = data.gallery || [];
   
@@ -233,6 +258,7 @@ export async function saveGalleryItem(item: GalleryItem) {
 }
 
 export async function deleteGalleryItem(id: string) {
+  await assertAdminPermission('gallery');
   const data = await getData();
   const gallery: GalleryItem[] = data.gallery || [];
   
@@ -242,5 +268,19 @@ export async function deleteGalleryItem(id: string) {
   revalidatePath('/gallery');
   revalidatePath('/');
   revalidatePath('/admin/gallery');
+  return { success: true };
+}
+
+export async function saveAdminUser(userData: AdminUserInput) {
+  const user = await saveAdminUserAccount(userData);
+  revalidatePath('/admin/users');
+  revalidatePath('/admin');
+  return { success: true, user };
+}
+
+export async function deleteAdminUser(userId: string) {
+  await deleteAdminUserAccount(userId);
+  revalidatePath('/admin/users');
+  revalidatePath('/admin');
   return { success: true };
 }

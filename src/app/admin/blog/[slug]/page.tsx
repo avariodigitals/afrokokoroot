@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import BlogForm from '@/components/admin/BlogForm'
 import { getBlogPosts } from '@/lib/api'
 import { BlogPost } from '@/lib/types'
+import { requireAdminPagePermission } from '@/lib/admin-auth'
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts()
@@ -11,6 +12,7 @@ export async function generateStaticParams() {
 }
 
 export default async function EditBlogPage({ params }: { params: Promise<{ slug: string }> }) {
+  await requireAdminPagePermission('blog')
   const { slug } = await params
   const posts = await getBlogPosts()
   const post = posts.find((p: BlogPost) => p.slug === slug)

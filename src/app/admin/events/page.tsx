@@ -3,8 +3,10 @@ import { getEvents } from "@/lib/api"
 import { Plus, Pencil, Trash2, Calendar } from "lucide-react"
 import { deleteEvent } from "@/lib/actions"
 import { Event } from "@/lib/types"
+import { requireAdminPagePermission } from "@/lib/admin-auth"
 
 export default async function AdminEventsPage() {
+  await requireAdminPagePermission('events')
   const events = await getEvents()
 
   return (
