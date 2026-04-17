@@ -8,10 +8,16 @@ import { Textarea } from '@/components/ui/textarea'
 import { saveBlogPost } from '@/lib/actions'
 import { Loader2 } from 'lucide-react'
 import { BlogPost } from '@/lib/types'
+import Image from 'next/image'
+import { toast } from 'sonner'
 
 export default function BlogForm({ initialData }: { initialData?: BlogPost }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    initialData?.image ? initialData.image : null
+  )
   const [formData, setFormData] = useState<BlogPost>(initialData || {
     title: '',
     slug: '',
@@ -26,6 +32,37 @@ export default function BlogForm({ initialData }: { initialData?: BlogPost }) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev: any) => ({ ...prev, [name]: value }))
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('file', file)
+      formDataToSend.append('category', 'blog')
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataToSend
+      })
+
+      if (!response.ok) {
+        throw new Error('Upload failed')
+      }
+
+      const data = await response.json()
+      setFormData((prev: any) => ({ ...prev, image: data.path }))
+      setImagePreview(data.path)
+      toast.success('Image uploaded successfully')
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload image')
+    } finally {
+      setUploading(false)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -132,13 +169,34 @@ export default function BlogForm({ initialData }: { initialData?: BlogPost }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Image URL</label>
-          <Input 
-            name="image" 
-            value={formData.image} 
-            onChange={handleChange} 
-            placeholder="/images/blog.jpg" 
-          />
+          <label className="block text-sm font-medium text-slate-700 mb-1">Image</label>
+          <div className="flex flex-col gap-4">
+            <div className="relative">
+              <Input
+                name="image"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploading}
+                className="cursor-pointer"
+              />
+              {uploading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white/50">
+                  <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
+                </div>
+              )}
+            </div>
+            {imagePreview && (
+              <div className="relative w-48 h-32 rounded-lg overflow-hidden border-2 border-slate-200">
+                <Image
+                  src={imagePreview}
+                  alt="Preview"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

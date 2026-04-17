@@ -1,9 +1,11 @@
+import Image from "next/image"
 import Link from "next/link"
 import { Metadata } from "next"
 import { Users, Heart, Briefcase, Mail, ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { siteConfig } from "@/lib/site-config"
+import { getPageContent } from "@/lib/api"
 
 export const metadata: Metadata = {
   title: "Get Involved",
@@ -15,14 +17,36 @@ export const metadata: Metadata = {
   },
 }
 
-export default function GetInvolvedPage() {
+export default async function GetInvolvedPage() {
+  const page = await getPageContent('get-involved')
+  const content = page?.content || {}
+  const volunteerBullets = content?.volunteerBullets || [
+    "Event Staff & Logistics",
+    "Teaching Assistants (Music/Art)",
+    "Administrative Support"
+  ]
+  const partnerBullets = content?.partnerBullets || [
+    "School Residencies & Workshops",
+    "Corporate Sponsorships",
+    "Cross-Promotional Events"
+  ]
+
   return (
     <div className="min-h-screen bg-lime-50 overflow-hidden">
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 bg-green-600 text-white overflow-hidden rounded-b-[3rem] shadow-xl">
 
-        <div className="absolute inset-0 bg-gradient-to-br from-green-600 via-lime-600 to-emerald-500 opacity-90" />
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/noise.svg')] opacity-20 mix-blend-overlay" />
+        <div className="absolute inset-0">
+          <Image
+            src={page?.heroImage || 'https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=2070&auto=format&fit=crop'}
+            alt="Get involved"
+            fill
+            className="object-cover opacity-40"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-green-600 via-lime-600 to-emerald-500 opacity-90" />
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('/noise.svg')] opacity-20 mix-blend-overlay" />
+        </div>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-lime-300/30 rounded-full blur-3xl animate-pulse mix-blend-screen" />
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-green-500/20 rounded-full blur-3xl animate-pulse mix-blend-screen delay-700" />
         
@@ -32,11 +56,10 @@ export default function GetInvolvedPage() {
              Join Our Community
           </div>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight drop-shadow-sm">
-            Be the <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-300 to-white">Rhythm.</span><br />
-            Join the Movement.
+            {page?.heroTitle || 'Be the Rhythm.'}
           </h1>
           <p className="text-xl md:text-2xl text-lime-100 font-medium max-w-2xl mx-auto leading-relaxed">
-            Whether you have time, talent, or resources to share, your contribution helps us keep the beat alive.
+            {page?.heroSubtitle || 'Whether you have time, talent, or resources to share, your contribution helps us keep the beat alive.'}
           </p>
         </div>
 
@@ -50,8 +73,11 @@ export default function GetInvolvedPage() {
           <div className="w-full md:w-1/2 relative group">
              <div className="absolute inset-0 bg-gradient-to-br from-lime-400 to-green-500 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
              <div className="relative aspect-video bg-white rounded-[2rem] overflow-hidden shadow-xl border-4 border-white transform group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center bg-lime-50">
-                <Users className="h-24 w-24 text-lime-200" />
-                <span className="absolute bottom-4 right-6 text-sm font-bold text-lime-300">[Volunteer Image]</span>
+                {content?.volunteerImage ? (
+                  <Image src={content.volunteerImage} alt={content?.volunteerTitle || 'Volunteer'} fill className="object-cover" />
+                ) : (
+                  <Users className="h-24 w-24 text-lime-200" />
+                )}
              </div>
           </div>
           
@@ -59,16 +85,12 @@ export default function GetInvolvedPage() {
             <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-lime-100 text-green-600 shadow-sm transform -rotate-3">
               <Users className="h-8 w-8" />
             </div>
-            <h2 className="text-4xl font-bold tracking-tight text-foreground">Volunteer With Us</h2>
+            <h2 className="text-4xl font-bold tracking-tight text-foreground">{content?.volunteerTitle || content?.sections?.[0]?.title || 'Volunteer With Us'}</h2>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Our events and programs rely on the dedication of volunteers. From setting up stages to checking in guests, your help makes our work possible.
+              {content?.volunteerDescription || content?.sections?.[0]?.description || 'Our events and programs rely on the dedication of volunteers. From setting up stages to checking in guests, your help makes our work possible.'}
             </p>
             <ul className="space-y-4">
-              {[
-                "Event Staff & Logistics", 
-                "Teaching Assistants (Music/Art)", 
-                "Administrative Support"
-              ].map((item) => (
+              {volunteerBullets.map((item: string) => (
                 <li key={item} className="flex items-center gap-3 text-lg font-medium text-foreground/80">
                   <CheckCircle2 className="h-6 w-6 text-green-500 shrink-0" />
                   {item}
@@ -88,8 +110,11 @@ export default function GetInvolvedPage() {
           <div className="w-full md:w-1/2 relative group">
              <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-lime-500 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
              <div className="relative aspect-video bg-white rounded-[2rem] overflow-hidden shadow-xl border-4 border-white transform group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center bg-green-50">
-                <Briefcase className="h-24 w-24 text-green-200" />
-                <span className="absolute bottom-4 left-6 text-sm font-bold text-green-300">[Partner Image]</span>
+                {content?.partnerImage ? (
+                  <Image src={content.partnerImage} alt={content?.partnerTitle || 'Partner'} fill className="object-cover" />
+                ) : (
+                  <Briefcase className="h-24 w-24 text-green-200" />
+                )}
              </div>
           </div>
           
@@ -97,16 +122,12 @@ export default function GetInvolvedPage() {
             <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-green-100 text-green-600 shadow-sm transform rotate-3">
               <Briefcase className="h-8 w-8" />
             </div>
-            <h2 className="text-4xl font-bold tracking-tight text-foreground">Partner With Us</h2>
+            <h2 className="text-4xl font-bold tracking-tight text-foreground">{content?.partnerTitle || content?.sections?.[2]?.title || 'Partner With Us'}</h2>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              We collaborate with schools, businesses, and other nonprofits to expand our reach. Let&apos;s create something impactful together.
+              {content?.partnerDescription || content?.sections?.[2]?.description || 'We collaborate with schools, businesses, and other nonprofits to expand our reach. Let\'s create something impactful together.'}
             </p>
             <ul className="space-y-4">
-              {[
-                "School Residencies & Workshops", 
-                "Corporate Sponsorships", 
-                "Cross-Promotional Events"
-              ].map((item) => (
+              {partnerBullets.map((item: string) => (
                 <li key={item} className="flex items-center gap-3 text-lg font-medium text-foreground/80">
                   <CheckCircle2 className="h-6 w-6 text-green-500 shrink-0" />
                   {item}
@@ -130,13 +151,13 @@ export default function GetInvolvedPage() {
             <Heart className="h-10 w-10 text-green-500 fill-current" />
           </div>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6 text-foreground">
-            Make a Financial Contribution
+            {content?.donateHeadline || 'Make a Financial Contribution'}
           </h2>
           <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            Can&apos;t volunteer? Your donation is the most direct way to support our mission. Every dollar goes towards instruments, education, and community events.
+            {content?.donateDescription || 'Can\'t volunteer? Your donation is the most direct way to support our mission. Every dollar goes towards instruments, education, and community events.'}
           </p>
           <Button size="lg" asChild className="h-16 px-12 text-xl font-bold rounded-full bg-gradient-to-r from-green-500 to-lime-600 hover:from-green-600 hover:to-lime-700 shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
-            <Link href="/donate">Donate Now</Link>
+            <Link href="/donate">{content?.donateButtonLabel || 'Donate Now'}</Link>
           </Button>
         </div>
         
@@ -155,9 +176,9 @@ export default function GetInvolvedPage() {
            
            <div className="relative z-10">
              <Mail className="h-16 w-16 mx-auto mb-6 text-lime-300" />
-             <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">Stay in the Loop</h2>
+             <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">{content?.newsletterHeadline || 'Stay in the Loop'}</h2>
              <p className="text-xl text-lime-100 mb-10 max-w-2xl mx-auto font-medium">
-               Sign up for our newsletter to receive updates on upcoming events, program success stories, and volunteer opportunities.
+               {content?.newsletterDescription || 'Sign up for our newsletter to receive updates on upcoming events, program success stories, and volunteer opportunities.'}
              </p>
              <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
                <Input 
@@ -171,7 +192,7 @@ export default function GetInvolvedPage() {
                </Button>
              </form>
              <p className="text-sm text-lime-300/80 mt-6 font-medium">
-               We respect your privacy. Unsubscribe at any time.
+               {content?.newsletterPrivacyText || 'We respect your privacy. Unsubscribe at any time.'}
              </p>
            </div>
         </div>

@@ -3,7 +3,25 @@ import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { MissionVideo } from "./MissionVideo"
 
-export function Mission() {
+interface MissionProps {
+  headline?: string
+  body?: string
+  bullets?: string[]
+  videoSrc?: string
+  poster?: string
+  yearsLabel?: string
+  yearsDescription?: string
+}
+
+export function Mission({
+  headline = 'More Than a Foundation. A Global Movement.',
+  body = 'Afrokokoroot Foundation empowers underserved children and families through accessible music education, cultural immersion, and nature-based learning that foster creativity, connection, and wholistic well-being.',
+  bullets = ['Cultural Preservation', 'Youth Empowerment', 'Community Outreach'],
+  videoSrc = 'https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8380.mov/ik-video.mp4?updatedAt=1772547046669',
+  poster = '/community%20drumming.jpeg',
+  yearsLabel = '10+ Years',
+  yearsDescription = 'Of uniting communities through shared experiences.'
+}: MissionProps) {
   return (
     <section className="py-24 md:py-32 bg-lime-50 relative overflow-hidden rounded-b-[3rem] shadow-xl">
 
@@ -20,15 +38,14 @@ export function Mission() {
             Who We Are
           </div>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-foreground leading-tight">
-            More Than a Foundation. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-[#E9A907]">A Global Movement.</span>
+            {headline}
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Afrokokoroot Foundation empowers underserved children and families through accessible music education, cultural immersion, and nature-based learning that foster creativity, connection, and wholistic well-being.
+            {body}
           </p>
           
           <div className="flex flex-col gap-4 pt-2">
-             {["Cultural Preservation", "Youth Empowerment", "Community Outreach"].map((item) => (
+             {bullets.map((item) => (
                <div key={item} className="flex items-center gap-3 group">
                  <div className="h-8 w-8 rounded-full bg-lime-100 flex items-center justify-center text-[#E9A907] group-hover:scale-110 transition-transform shadow-sm">
                    <CheckCircle2 className="h-5 w-5" />
@@ -53,8 +70,8 @@ export function Mission() {
            
            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-white shadow-2xl shadow-green-900/10 border-4 border-white transform hover:scale-[1.02] transition-transform duration-500">
              <MissionVideo
-                src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8380.mov/ik-video.mp4?updatedAt=1772547046669"
-                poster="/community%20drumming.jpeg"
+                src={videoSrc}
+                poster={poster}
                 limit={10} // Loop the first 10 seconds
              />
            </div>
@@ -63,9 +80,9 @@ export function Mission() {
            <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-green-50 max-w-xs hidden md:block animate-bounce-slow">
              <div className="flex items-center gap-3 mb-2">
                <div className="w-3 h-3 rounded-full bg-lime-500 animate-pulse" />
-               <p className="font-bold text-2xl text-green-900">10+ Years</p>
+               <p className="font-bold text-2xl text-green-900">{yearsLabel}</p>
              </div>
-             <p className="text-sm font-medium text-slate-600">Of uniting communities through shared experiences.</p>
+             <p className="text-sm font-medium text-slate-600">{yearsDescription}</p>
            </div>
         </div>
       </div>

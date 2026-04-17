@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { Calendar, FileText, Users, DollarSign } from "lucide-react"
-import { getEvents, getBlogPosts, getPrograms, getTeam } from "@/lib/api"
+import { Calendar, FileText, Users, Globe } from "lucide-react"
+import { getEvents, getBlogPosts, getPrograms, getTeam, getPages } from "@/lib/api"
 import { Event, BlogPost } from "@/lib/types"
 
 export default async function AdminDashboard() {
@@ -8,6 +8,7 @@ export default async function AdminDashboard() {
   const blogs = await getBlogPosts()
   const programs = await getPrograms()
   const team = await getTeam()
+  const pages = await getPages()
 
   const stats = [
     {
@@ -30,6 +31,13 @@ export default async function AdminDashboard() {
       icon: Users,
       color: "bg-emerald-500",
       href: "/admin/programs"
+    },
+    {
+      label: "Page Content",
+      value: pages.length,
+      icon: Globe,
+      color: "bg-indigo-500",
+      href: "/admin/pages"
     },
     {
       label: "Team Members",

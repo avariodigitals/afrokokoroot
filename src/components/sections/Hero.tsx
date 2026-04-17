@@ -3,14 +3,34 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Globe, Heart, Users } from "lucide-react"
 
-export function Hero() {
+interface HeroProps {
+  badgeText?: string
+  title?: string
+  subtitle?: string
+  heroImage?: string
+  ctaPrimaryLabel?: string
+  ctaPrimaryHref?: string
+  ctaSecondaryLabel?: string
+  ctaSecondaryHref?: string
+}
+
+export function Hero({
+  badgeText = 'Official 501(c)(3) Nonprofit Organization',
+  title = 'Where Culture, Creativity, and Community Take Root',
+  subtitle = 'Join us in preserving heritage, promoting unity, and creating opportunities for the next generation.',
+  heroImage = 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop',
+  ctaPrimaryLabel = 'Donate Now',
+  ctaPrimaryHref = '/donate',
+  ctaSecondaryLabel = 'Join Our Programs',
+  ctaSecondaryHref = '/programs'
+}: HeroProps) {
   return (
     <section className="relative w-full py-24 md:py-28 lg:py-32 overflow-hidden bg-black rounded-b-[3rem] shadow-2xl z-20">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop"
-          alt="Dark concert atmosphere with lights"
+          src={heroImage}
+          alt="Hero background"
           fill
           className="object-cover opacity-50"
           priority
@@ -24,36 +44,29 @@ export function Hero() {
         {/* Badge */}
         <div className="inline-flex items-center rounded-full border border-lime-200/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-md shadow-lg animate-fade-in-up">
           <span className="flex h-2 w-2 rounded-full bg-[#E9A907] mr-2 animate-pulse shadow-[0_0_10px_#E9A907]"></span>
-          Official 501(c)(3) Nonprofit Organization
+          {badgeText}
         </div>
 
         {/* Main Heading */}
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-5xl leading-[1.1] drop-shadow-sm">
-          Where <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E9A907] via-green-400 to-lime-500">Culture, Creativity,</span> <br className="hidden sm:block" />
-          and Community Take{" "}
-          <span className="relative inline-block">
-            Root
-            <svg className="absolute w-full h-4 -bottom-2 left-0 text-[#E9A907]" viewBox="0 0 100 10" preserveAspectRatio="none">
-              <path d="M0 5 Q 50 12 100 5" stroke="currentColor" strokeWidth="4" fill="none" opacity="0.8" />
-            </svg>
-          </span>
+          {title}
         </h1>
 
         {/* Subheading */}
         <p className="text-lg md:text-2xl text-lime-50 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-md">
-          Join us in preserving heritage, promoting unity, and creating opportunities for the next generation.
+          {subtitle}
         </p>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto pt-4">
           <Button asChild size="lg" className="text-lg px-10 h-16 rounded-full bg-gradient-to-r from-green-600 to-lime-600 hover:from-green-700 hover:to-lime-700 text-white shadow-xl shadow-green-900/20 border-none transition-transform hover:scale-105">
-            <Link href="/donate">
-              Donate Now <Heart className="ml-2 h-5 w-5 fill-current" />
+            <Link href={ctaPrimaryHref}>
+              {ctaPrimaryLabel} <Heart className="ml-2 h-5 w-5 fill-current" />
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg" className="text-lg px-10 h-16 rounded-full border-2 border-white/30 bg-white/5 text-white hover:bg-lime-600 hover:border-lime-600 backdrop-blur-sm transition-transform hover:scale-105">
-            <Link href="/programs">
-              Join Our Programs <ArrowRight className="ml-2 h-5 w-5" />
+            <Link href={ctaSecondaryHref}>
+              {ctaSecondaryLabel} <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>

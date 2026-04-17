@@ -5,7 +5,15 @@ import { Button } from "@/components/ui/button"
 import { getEvents } from "@/lib/api"
 import { Event } from "@/lib/types"
 
-export async function EventsPreview() {
+interface EventsPreviewProps {
+  headline?: string
+  description?: string
+}
+
+export async function EventsPreview({
+  headline = "Upcoming Events",
+  description = "Join the movement. Experience the culture. Be part of the community."
+}: EventsPreviewProps) {
   const events = await getEvents()
 
   return (
@@ -21,10 +29,10 @@ export async function EventsPreview() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tight text-foreground">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-lime-600">Upcoming Events</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-lime-600">{headline}</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl">
-              Join the movement. Experience the culture. Be part of the community.
+              {description}
             </p>
           </div>
           <Button asChild variant="outline" className="hidden md:inline-flex group border-green-200 hover:border-green-400 text-green-700 hover:bg-green-50 rounded-full px-6">

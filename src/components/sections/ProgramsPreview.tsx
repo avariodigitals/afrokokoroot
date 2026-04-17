@@ -10,7 +10,15 @@ const iconMap: Record<string, LucideIcon> = {
   education: BookOpen,
 }
 
-export async function ProgramsPreview() {
+interface ProgramsPreviewProps {
+  headline?: string
+  description?: string
+}
+
+export async function ProgramsPreview({
+  headline = "Our Programs",
+  description = "From classrooms to communities, we bring transformative experiences to life through education and cultural exchange."
+}: ProgramsPreviewProps) {
   const programs = await getPrograms()
 
   return (
@@ -30,10 +38,10 @@ export async function ProgramsPreview() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tight text-foreground">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-lime-600">Our Programs</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-lime-600">{headline}</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl">
-              From classrooms to communities, we bring transformative experiences to life through education and cultural exchange.
+              {description}
             </p>
           </div>
           <Button asChild variant="ghost" className="hidden md:inline-flex group text-green-700 hover:text-green-800 hover:bg-lime-100/50">

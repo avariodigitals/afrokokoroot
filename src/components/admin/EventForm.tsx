@@ -8,10 +8,16 @@ import { Textarea } from '@/components/ui/textarea'
 import { saveEvent } from '@/lib/actions'
 import { Loader2 } from 'lucide-react'
 import { Event, Artist, Sponsor } from '@/lib/types'
+import Image from 'next/image'
+import { toast } from 'sonner'
 
 export default function EventForm({ initialData }: { initialData?: Event }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    initialData?.image ? initialData.image : null
+  )
   const [formData, setFormData] = useState<Event>(initialData || {
     title: '',
     slug: '',
@@ -33,6 +39,37 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
       setFormData((prev: Event) => ({ ...prev, [name]: value === '' ? 0 : parseFloat(value) }))
     } else {
       setFormData((prev: Event) => ({ ...prev, [name]: value }))
+    }
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('file', file)
+      formDataToSend.append('category', 'events')
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataToSend
+      })
+
+      if (!response.ok) {
+        throw new Error('Upload failed')
+      }
+
+      const data = await response.json()
+      setFormData((prev: Event) => ({ ...prev, image: data.path }))
+      setImagePreview(data.path)
+      toast.success('Image uploaded successfully')
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload image')
+    } finally {
+      setUploading(false)
     }
   }
 
@@ -58,6 +95,38 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
     })
   }
 
+  const handleArtistImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('file', file)
+      formDataToSend.append('category', 'events')
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataToSend
+      })
+
+      if (!response.ok) throw new Error('Upload failed')
+
+      const data = await response.json()
+      setFormData((prev: Event) => {
+        const newArtists = [...(prev.artists || [])]
+        newArtists[index] = { ...newArtists[index], image: data.path }
+        return { ...prev, artists: newArtists }
+      })
+      toast.success('Artist image uploaded')
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload image')
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const addSponsor = () => {
     setFormData((prev: Event) => ({ ...prev, sponsors: [...(prev.sponsors || []), { name: '', image: '' }] }))
   }
@@ -72,6 +141,38 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
       newSponsors[index] = { ...newSponsors[index], [field]: value }
       return { ...prev, sponsors: newSponsors }
     })
+  }
+
+  const handleSponsorImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('file', file)
+      formDataToSend.append('category', 'events')
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataToSend
+      })
+
+      if (!response.ok) throw new Error('Upload failed')
+
+      const data = await response.json()
+      setFormData((prev: Event) => {
+        const newSponsors = [...(prev.sponsors || [])]
+        newSponsors[index] = { ...newSponsors[index], image: data.path }
+        return { ...prev, sponsors: newSponsors }
+      })
+      toast.success('Sponsor image uploaded')
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload image')
+    } finally {
+      setUploading(false)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -214,32 +315,70 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Image URL</label>
-          <Input 
-            name="image" 
-            value={formData.image} 
-            onChange={handleChange} 
-            placeholder="/images/event.jpg" 
-          />
-          <p className="text-xs text-slate-500 mt-1">Enter a path to an image in the public folder (e.g., /event.jpg)</p>
+          <label className="block text-sm font-medium text-slate-700 mb-1">Event Image</label>
+          <div className="flex flex-col gap-4">
+            <div className="relative">
+              <Input
+                name="image"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploading}
+                className="cursor-pointer"
+              />
+              {uploading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white/50">
+                  <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
+                </div>
+              )}
+            </div>
+            {imagePreview && (
+              <div className="relative w-48 h-32 rounded-lg overflow-hidden border-2 border-slate-200">
+                <Image
+                  src={imagePreview}
+                  alt="Preview"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Artists Section */}
         <div className="space-y-4 rounded-lg border border-slate-200 p-4">
           <h3 className="text-lg font-medium text-slate-800">Artists</h3>
           {formData.artists?.map((artist, index) => (
-            <div key={index} className="flex items-end gap-4 p-3 bg-slate-50 rounded-md">
-              <div className="flex-grow grid grid-cols-2 gap-4">
+            <div key={index} className="space-y-3 p-3 bg-slate-50 rounded-md">
+              <div>
+                <label className="block text-sm font-medium mb-1">Artist Name</label>
                 <Input
                   value={artist.name}
                   onChange={(e) => handleArtistChange(index, 'name', e.target.value)}
                   placeholder="Artist Name"
                 />
-                <Input
-                  value={artist.image}
-                  onChange={(e) => handleArtistChange(index, 'image', e.target.value)}
-                  placeholder="Artist Image URL"
-                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Artist Image</label>
+                <div className="flex flex-col gap-2">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleArtistImageUpload(e, index)}
+                    disabled={uploading}
+                    className="cursor-pointer"
+                  />
+                  {artist.image && (
+                    <div className="relative w-24 h-24 rounded-lg overflow-hidden border-2 border-slate-200">
+                      <Image
+                        src={artist.image}
+                        alt={artist.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <Button type="button" variant="destructive" size="sm" onClick={() => removeArtist(index)}>
                 Remove
@@ -255,18 +394,36 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
         <div className="space-y-4 rounded-lg border border-slate-200 p-4">
           <h3 className="text-lg font-medium text-slate-800">Sponsors</h3>
           {formData.sponsors?.map((sponsor, index) => (
-            <div key={index} className="flex items-end gap-4 p-3 bg-slate-50 rounded-md">
-              <div className="flex-grow grid grid-cols-2 gap-4">
+            <div key={index} className="space-y-3 p-3 bg-slate-50 rounded-md">
+              <div>
+                <label className="block text-sm font-medium mb-1">Sponsor Name</label>
                 <Input
                   value={sponsor.name}
                   onChange={(e) => handleSponsorChange(index, 'name', e.target.value)}
                   placeholder="Sponsor Name"
                 />
-                <Input
-                  value={sponsor.image}
-                  onChange={(e) => handleSponsorChange(index, 'image', e.target.value)}
-                  placeholder="Sponsor Image URL"
-                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Sponsor Logo</label>
+                <div className="flex flex-col gap-2">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleSponsorImageUpload(e, index)}
+                    disabled={uploading}
+                    className="cursor-pointer"
+                  />
+                  {sponsor.image && (
+                    <div className="relative w-24 h-24 rounded-lg overflow-hidden border-2 border-slate-200">
+                      <Image
+                        src={sponsor.image}
+                        alt={sponsor.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <Button type="button" variant="destructive" size="sm" onClick={() => removeSponsor(index)}>
                 Remove

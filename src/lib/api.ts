@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { Event, Program, TeamMember, ContactInfo, ImpactMetric, BlogPost, Lead, GalleryItem } from './types';
+import { Event, Program, TeamMember, ContactInfo, ImpactMetric, BlogPost, Lead, GalleryItem, PageContent } from './types';
 import dbData from './db.json';
 
 const DB_PATH = path.join(process.cwd(), 'src/lib/db.json');
@@ -9,6 +9,7 @@ export interface DatabaseSchema {
   events: Event[];
   programs: Program[];
   team: TeamMember[];
+  pageContents: PageContent[];
   contactInfo: ContactInfo;
   impactMetrics: ImpactMetric[];
   blogPosts: BlogPost[];
@@ -85,4 +86,15 @@ export async function getLeads(): Promise<Lead[]> {
 export async function getGalleryItems(): Promise<GalleryItem[]> {
   const data = await getData();
   return data.gallery || [];
+}
+
+export async function getPages(): Promise<PageContent[]> {
+  const data = await getData();
+  return data.pageContents || [];
+}
+
+export async function getPageContent(slug: string): Promise<PageContent | null> {
+  const data = await getData();
+  const pages = data.pageContents || [];
+  return pages.find((page) => page.slug === slug) || null;
 }

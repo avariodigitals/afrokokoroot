@@ -88,3 +88,13 @@ export interface GalleryItem {
   category: string;
   date: string;
 }
+
+export interface PageContent {
+  slug: string;
+  title: string;
+  description?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroImage?: string;
+  content?: Record<string, any>;
+}

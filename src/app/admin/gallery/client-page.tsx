@@ -20,7 +20,39 @@ export function GalleryClientPage({ initialItems }: GalleryClientPageProps) {
   const [items, setItems] = useState<GalleryItem[]>(initialItems)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [editingItem, setEditingItem] = useState<GalleryItem | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    editingItem?.image ? editingItem.image : null
+  )
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('category', 'gallery')
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (!response.ok) throw new Error('Upload failed')
+
+      const data = await response.json()
+      setImagePreview(data.path)
+      toast.success('Image uploaded successfully')
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload image')
+    } finally {
+      setUploading(false)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -30,9 +62,15 @@ export function GalleryClientPage({ initialItems }: GalleryClientPageProps) {
     const itemData: GalleryItem = {
       id: editingItem?.id || "",
       title: formData.get("title") as string,
-      image: formData.get("image") as string,
+      image: imagePreview || editingItem?.image || "",
       category: formData.get("category") as string,
       date: formData.get("date") as string || new Date().toISOString().split('T')[0],
+    }
+
+    if (!itemData.image) {
+      toast.error("Please upload an image")
+      setIsLoading(false)
+      return
     }
 
     try {
@@ -41,15 +79,9 @@ export function GalleryClientPage({ initialItems }: GalleryClientPageProps) {
         toast.success(editingItem ? "Image updated" : "Image added")
         setIsDialogOpen(false)
         setEditingItem(null)
-        // Optimistic update - in real app would rely on revalidation or returned data
-        if (editingItem) {
-          setItems(items.map(i => i.id === editingItem.id ? itemData : i))
-        } else {
-          // Since we don't get the ID back immediately without reloading or returning it, 
-          // we might need to refresh. For now, let's just reload or trust revalidation if we were using server components fully.
-          // Let's just reload for simplicity to get the new ID.
-          window.location.reload()
-        }
+        setImagePreview(null)
+        // Reload to get the new data
+        window.location.reload()
       } else {
         toast.error("Failed to save image")
       }
@@ -76,6 +108,18 @@ export function GalleryClientPage({ initialItems }: GalleryClientPageProps) {
     }
   }
 
+  const openEditDialog = (item: GalleryItem) => {
+    setEditingItem(item)
+    setImagePreview(item.image)
+    setIsDialogOpen(true)
+  }
+
+  const closeDialog = () => {
+    setIsDialogOpen(false)
+    setEditingItem(null)
+    setImagePreview(null)
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -83,9 +127,15 @@ export function GalleryClientPage({ initialItems }: GalleryClientPageProps) {
           <h1 className="text-3xl font-bold tracking-tight">Gallery</h1>
           <p className="text-muted-foreground">Manage your event photos and memories.</p>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <Dialog open={isDialogOpen} onOpenChange={(open) => {
+          if (!open) closeDialog()
+          setIsDialogOpen(open)
+        }}>
           <DialogTrigger asChild>
-            <Button onClick={() => setEditingItem(null)} className="gap-2">
+            <Button onClick={() => {
+              setEditingItem(null)
+              setImagePreview(null)
+            }} className="gap-2">
               <Plus className="h-4 w-4" /> Add Image
             </Button>
           </DialogTrigger>
@@ -107,10 +157,35 @@ export function GalleryClientPage({ initialItems }: GalleryClientPageProps) {
                 <Input id="date" name="date" type="date" defaultValue={editingItem?.date} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="image">Image URL</Label>
-                <Input id="image" name="image" defaultValue={editingItem?.image} placeholder="https://..." required />
+                <Label htmlFor="image">Upload Image</Label>
+                <div className="flex flex-col gap-2">
+                  <Input 
+                    id="image" 
+                    name="image" 
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploading}
+                    className="cursor-pointer"
+                  />
+                  {uploading && (
+                    <div className="flex items-center justify-center">
+                      <Loader2 className="h-4 w-4 animate-spin text-indigo-600" />
+                    </div>
+                  )}
+                  {imagePreview && (
+                    <div className="relative w-full h-32 rounded-lg overflow-hidden border-2 border-slate-200">
+                      <Image
+                        src={imagePreview}
+                        alt="Preview"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full" disabled={isLoading || !imagePreview}>
                 {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : (editingItem ? "Update" : "Add Image")}
               </Button>
             </form>
@@ -137,10 +212,7 @@ export function GalleryClientPage({ initialItems }: GalleryClientPageProps) {
               <Button
                 variant="secondary"
                 size="icon"
-                onClick={() => {
-                  setEditingItem(item)
-                  setIsDialogOpen(true)
-                }}
+                onClick={() => openEditDialog(item)}
               >
                 <Pencil className="h-4 w-4" />
               </Button>

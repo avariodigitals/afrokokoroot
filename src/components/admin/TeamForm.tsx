@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { saveTeamMember } from '@/lib/actions'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Upload } from 'lucide-react'
 import { TeamMember } from '@/lib/types'
+import Image from 'next/image'
+import { toast } from 'sonner'
 
 interface TeamFormProps {
   initialData?: TeamMember
@@ -16,6 +18,7 @@ interface TeamFormProps {
 export default function TeamForm({ initialData }: TeamFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [formData, setFormData] = useState({
     slug: initialData?.slug || '',
     name: initialData?.name || '',
@@ -23,10 +26,44 @@ export default function TeamForm({ initialData }: TeamFormProps) {
     bio: initialData?.bio || '',
     image: initialData?.image || '',
   })
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    initialData?.image ? initialData.image : null
+  )
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('file', file)
+      formDataToSend.append('category', 'team')
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataToSend
+      })
+
+      if (!response.ok) {
+        throw new Error('Upload failed')
+      }
+
+      const data = await response.json()
+      setFormData(prev => ({ ...prev, image: data.path }))
+      setImagePreview(data.path)
+      toast.success('Image uploaded successfully')
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload image')
+    } finally {
+      setUploading(false)
+    }
   }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,14 +133,35 @@ export default function TeamForm({ initialData }: TeamFormProps) {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="image" className="text-sm font-medium">Image URL</label>
-        <Input
-          id="image"
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
-          placeholder="/team-placeholder.jpg"
-        />
+        <label htmlFor="image" className="text-sm font-medium">Profile Image</label>
+        <div className="flex flex-col gap-4">
+          <div className="relative">
+            <Input
+              id="image"
+              name="image"
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              disabled={uploading}
+              className="cursor-pointer"
+            />
+            {uploading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/50">
+                <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
+              </div>
+            )}
+          </div>
+          {imagePreview && (
+            <div className="relative w-32 h-32 rounded-lg overflow-hidden border-2 border-slate-200">
+              <Image
+                src={imagePreview}
+                alt="Preview"
+                fill
+                className="object-cover"
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="space-y-2">

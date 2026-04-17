@@ -4,6 +4,8 @@ import { Metadata } from "next"
 import { ArrowRight, Heart, Sparkles, Sprout, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/lib/site-config"
+import { getPageContent, getPrograms } from "@/lib/api"
+import { Program } from "@/lib/types"
 
 export const metadata: Metadata = {
   title: "Programs",
@@ -15,62 +17,13 @@ export const metadata: Metadata = {
   },
 }
 
-const programsData = [
-  {
-    title: "Creative Arts & Cultural Education",
-    slug: "arts-culture-education",
-    description: "To provide accessible arts education and creative opportunities that nurture self-expression, skill development, and cultural identity among children and families from under-resourced communities.",
-    details: [
-      "Community-based creative workshops",
-      "Arts instruction & storytelling",
-      "Youth mentorship through arts",
-      "Cultural immersion rooted in African traditions"
-    ],
-    icon: Sparkles,
-    image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8151.jpeg?updatedAt=1772546608755"
-  },
-  {
-    title: "Land-Based Learning, Wellness & Outdoor Recreation",
-    slug: "land-wellness",
-    description: "Promoting wholistic well-being, creativity, and resilience through nature-based learning, outdoor recreation, and experiential education.",
-    details: [
-      "Outdoor educational programming",
-      "Nature-based learning for families",
-      "Wellness activities integrating movement",
-      "Land-centered healing & connection"
-    ],
-    icon: Heart,
-    image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8379.jpeg?updatedAt=1772546780580"
-  },
-  {
-    title: "Food, Agriculture & Sustainability Education",
-    slug: "food-sustainability",
-    description: "Strengthening food security, environmental awareness, and life skills through community gardening, agricultural education, and farm-to-table learning.",
-    details: [
-      "Community gardening initiatives",
-      "Hands-on agricultural education",
-      "Farm-to-table cooking instruction",
-      "Sustainable food systems education"
-    ],
-    icon: Sprout,
-    image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/WhatsApp%20Image%202026-02-16%20at%2020.49.58%20(26).jpeg?updatedAt=1772546628435"
-  },
-  {
-    title: "Community Outreach & Cultural Engagement",
-    slug: "outreach-culture",
-    description: "Fostering community cohesion, cross-cultural understanding, and peaceful expression through inclusive cultural programming and shared creative experiences.",
-    details: [
-      "World Peace cultural events",
-      "Intercultural dialogue sessions",
-      "Dialogue & nonviolent expression workshops",
-      "Collaborative cultural experiences"
-    ],
-    icon: Globe,
-    image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8153.jpeg?updatedAt=1772546625982"
-  }
-]
+const iconMap = [Sparkles, Heart, Sprout, Globe]
 
-export default function ProgramsPage() {
+export default async function ProgramsPage() {
+  const page = await getPageContent('programs')
+  const content = page?.content || {}
+  const programs = await getPrograms()
+
   return (
     <div className="min-h-screen bg-lime-50 overflow-hidden">
       {/* Hero Section */}
@@ -78,7 +31,7 @@ export default function ProgramsPage() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop"
+            src={page?.heroImage || 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop'}
             alt="Music education and instruments"
             fill
             className="object-cover opacity-50"
@@ -94,20 +47,33 @@ export default function ProgramsPage() {
 
         <div className="container relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-200 to-white">Programs</span>
+            {page?.heroTitle || 'Our Programs'}
           </h1>
           <p className="text-xl md:text-2xl text-lime-50 max-w-3xl mx-auto font-light leading-relaxed">
-            We are dedicated to preserving African heritage and empowering communities through four core pillars of impact.
+            {page?.heroSubtitle || 'We are dedicated to preserving African heritage and empowering communities through four core pillars of impact.'}
           </p>
         </div>
       </section>
 
       {/* Programs List */}
       <section className="py-12 md:py-24 container relative z-10">
+        <div className="text-center mb-16">
+          <p className="text-lg text-green-700 font-semibold mb-3">
+            {content?.programListHeadline || 'Featured Programs'}
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-green-900">
+            {content?.programIntro || 'Our programs connect culture, learning and health through creative workshops, mentorship, and community support.'}
+          </h2>
+        </div>
         <div className="grid gap-16 md:gap-32">
-          {programsData.map((program, index) => {
-            const Icon = program.icon
+          {programs.map((program: Program, index) => {
+            const Icon = iconMap[index % iconMap.length]
             const isEven = index % 2 === 0
+            const details = (program.content || '')
+              .split(/[\n.]+/)
+              .map((item) => item.trim())
+              .filter(Boolean)
+              .slice(0, 4)
 
             return (
               <div key={program.slug} className={`flex flex-col md:flex-row gap-12 items-center ${!isEven ? 'md:flex-row-reverse' : ''}`}>
@@ -118,7 +84,7 @@ export default function ProgramsPage() {
                   <div className="relative aspect-video bg-white rounded-[2rem] overflow-hidden shadow-xl border-4 border-white transform group-hover:scale-[1.02] transition-transform duration-500">
                      {/* Program Image */}
                      <Image
-                        src={program.image}
+                      src={program.image || 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop'}
                         alt={program.title}
                         fill
                         className="object-cover"
@@ -144,7 +110,7 @@ export default function ProgramsPage() {
                   </p>
                   
                   <ul className="space-y-3 pt-2">
-                    {program.details.map((detail, i) => (
+                    {details.map((detail, i) => (
                       <li key={i} className="flex items-center gap-3 text-muted-foreground font-medium">
                         <Sparkles className={`h-4 w-4 ${isEven ? 'text-lime-600' : 'text-green-600'}`} />
                         <span>{detail}</span>
@@ -154,7 +120,7 @@ export default function ProgramsPage() {
 
                   <div className="pt-4">
                     <Button asChild size="lg" className={`${isEven ? 'bg-green-600 hover:bg-green-700' : 'bg-lime-600 hover:bg-lime-700'} text-white rounded-full px-8 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}>
-                      <Link href={`/contact?program=${program.slug}`}>
+                      <Link href={`/programs/${program.slug}`}>
                         Get Involved <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
@@ -175,16 +141,16 @@ export default function ProgramsPage() {
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse delay-700" />
           
           <div className="relative z-10 max-w-3xl mx-auto space-y-8">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Partner With Us</h2>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">{content?.ctaHeadline || 'Partner With Us'}</h2>
             <p className="text-xl text-lime-100 leading-relaxed">
-              Interested in bringing one of our programs to your school, community center, or organization? We&apos;d love to collaborate to spread the rhythm.
+              {content?.ctaDescription || 'Interested in bringing one of our programs to your school, community center, or organization? We\'d love to collaborate to spread the rhythm.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
               <Button asChild size="lg" className="bg-white text-green-900 hover:bg-lime-50 rounded-full px-10 font-bold text-lg h-14">
-                <Link href="/contact">Contact Us</Link>
+                <Link href="/contact">{content?.ctaPrimaryLabel || 'Contact Us'}</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="bg-transparent border-green-200 text-white hover:bg-white/10 rounded-full px-10 font-bold text-lg h-14">
-                <Link href="/donate">Support Our Work</Link>
+                <Link href="/donate">{content?.ctaSecondaryLabel || 'Support Our Work'}</Link>
               </Button>
             </div>
           </div>

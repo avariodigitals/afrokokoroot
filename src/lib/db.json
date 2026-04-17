@@ -173,29 +173,134 @@
       "slug": "sunny-dada",
       "name": "Sunny Dada (SHADDAI)",
       "role": "Founder & Executive Director",
-      "bio": "Lead vocalist, percussionist, and director. A visionary leader dedicated to preserving Afrobeat traditions.",
-      "image": "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=1974&auto=format&fit=crop"
-    },
-    {
-      "slug": "jakub-martin",
-      "name": "Jakub Martin",
-      "role": "Director of Music Education",
-      "bio": "Tenor Saxophonist with a passion for teaching and curriculum development.",
-      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop"
-    },
-    {
-      "slug": "joshua-cook",
-      "name": "Joshua Cook",
-      "role": "Community Outreach Coordinator",
-      "bio": "Drummer and community organizer, connecting the foundation with local schools and organizations.",
-      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop"
+      "bio": "Dedicated leader committed to preserving African heritage and fostering community unity through music and education.",
+      "image": "/uploads/team/3d7288ab-b5dd-4f36-8f67-57bcb6f268e9.png"
     },
     {
       "slug": "pete-carels",
       "name": "Pete Carels",
       "role": "Director",
       "bio": "Strategic director focused on expanding the reach and impact of the Afrokokoroot Foundation.",
-      "image": ""
+      "image": "/uploads/team/0fcbb16a-7ac3-4694-b03d-ef7808d4b33e.jpeg"
+    },
+    {
+      "slug": "terry-hardin",
+      "name": "Terry Hardin",
+      "role": "Director",
+      "bio": "Strategic director focused on expanding the reach and impact of the Afrokokoroot Foundation.",
+      "image": "/uploads/team/7b4fa44a-2fd2-46d7-ad92-ac2c1b848440.png"
+    },
+    {
+      "slug": "chujuana-harris",
+      "name": "Chujuana Harris",
+      "role": "Secreatary",
+      "bio": "Organized and passionate professional ensuring smooth operations and clear communication within the foundation.",
+      "image": "/uploads/team/dee6c2b4-7ebd-4f63-8418-917e1efcbb45.png"
+    },
+    {
+      "slug": "nelson-guillen",
+      "name": "Nelson Guillen",
+      "role": "Member",
+      "bio": "Active community member providing valuable insights and support to the foundation's initiatives.",
+      "image": "/uploads/team/834f2a36-7b70-4bbd-9b65-914a0474cbe5.png"
+    }
+  ],
+  "pageContents": [
+    {
+      "slug": "home",
+      "title": "Home",
+      "description": "Afrokokoroot Foundation creates cultural programs, wellness events, and community impact across Nashville and beyond.",
+      "heroTitle": "Together We Grow",
+      "heroSubtitle": "Join Afrokokoroot to celebrate culture, build community, and uplift young leaders through art, nature, and shared experiences.",
+      "heroImage": "https://images.unsplash.com/photo-1504194921103-f8b80cadd5e4?q=80&w=2070&auto=format&fit=crop",
+      "content": {
+        "featureItems": [
+          { "title": "Live Events", "description": "Meaningful gatherings that celebrate music, art, and unity.", "icon": "globe" },
+          { "title": "Community Programs", "description": "Workshops, mentorship, and wellness sessions designed for every age.", "icon": "users" },
+          { "title": "Creative Education", "description": "Cultural learning that honors African heritage and inspires future leaders.", "icon": "book" }
+        ],
+        "badgeText": "Official 501(c)(3) Nonprofit Organization",
+        "headline": "More Than a Foundation. A Global Movement.",
+        "body": "Afrokokoroot Foundation empowers underserved children and families through accessible music education, cultural immersion, and nature-based learning that foster creativity, connection, and wholistic well-being.",
+        "bullets": ["Cultural Preservation", "Youth Empowerment", "Community Outreach"],
+        "ctaText": "Discover how you can be part of our next event, program, or community initiative.",
+        "latestHeadline": "What’s Happening Now"
+      }
+    },
+    {
+      "slug": "about",
+      "title": "About Us",
+      "description": "Learn about the Afrokokoroot Foundation's mission, governance, and commitment to preserving African heritage and empowering communities.",
+      "heroTitle": "Preserving Heritage, Inspiring Unity",
+      "heroSubtitle": "The Afrokokoroot Foundation is a 501(c)(3) public charity dedicated to cultural education, wellness, and community empowerment through the universal language of community and nature.",
+      "heroImage": "https://images.unsplash.com/photo-1504194921103-f8b80cadd5e4?q=80&w=2070&auto=format&fit=crop",
+      "content": {
+        "missionIntro": "Afrokokoroot Foundation is structured as a 501(c)(3) public charity. We are legally and operationally separate from commercial entities, and our mission is purely charitable and educational, focused on serving underserved communities.",
+        "governanceText": "We maintain strict compliance and credibility through a diverse Board of Directors with a majority of independent members. Our governance follows strong policies for conflict of interest, financial oversight, and transparency.",
+        "pillarItems": [
+          { "icon": "book", "title": "Cultural Education", "description": "Arts, storytelling, and cultural expression." },
+          { "icon": "leaf", "title": "Wellness & Nature", "description": "Outdoor recreation and land-based learning." },
+          { "icon": "heart", "title": "Food Security", "description": "Sustainable agriculture and nutrition." },
+          { "icon": "users", "title": "Community Peace", "description": "Cross-cultural engagement and unity." }
+        ],
+        "leadershipHeadline": "Board of Directors",
+        "leadershipCopy": "Our independent board ensures we stay true to our mission and serve the public interest.",
+        "transparencyHeadline": "Financial Transparency",
+        "transparencyCopy": "We are committed to open and honest financial reporting. Our funds are used strictly for charitable purposes, with clear separation from any commercial activities."
+      }
+    },
+    {
+      "slug": "get-involved",
+      "title": "Get Involved",
+      "description": "Join Afrokokoroot through volunteering, donations, and partnership opportunities that deepen our impact.",
+      "heroTitle": "Join the Movement",
+      "heroSubtitle": "Get involved through service, giving, volunteer opportunities, and community partnership with Afrokokoroot.",
+      "heroImage": "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=2070&auto=format&fit=crop",
+      "content": {
+        "sections": [
+          { "title": "Volunteer", "description": "Support events, youth programs, and local initiatives with hands-on help." },
+          { "title": "Donate", "description": "Your contribution directly supports arts education, wellness programming, and community outreach." },
+          { "title": "Partner", "description": "Work with us to build sustainable, community-centered projects that last." }
+        ]
+      }
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "description": "Reach out to Afrokokoroot for event information, program inquiries, or partnership opportunities.",
+      "heroTitle": "We’d Love to Hear From You",
+      "heroSubtitle": "Contact Afrokokoroot for questions about our programs, events, volunteer opportunities, or partnerships.",
+      "heroImage": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2070&auto=format&fit=crop",
+      "content": {
+        "contactIntro": "Email us, call, or visit our office to learn how you can be part of Afrokokoroot's work.",
+        "addressLabel": "Our Address",
+        "emailLabel": "Email",
+        "phoneLabel": "Phone"
+      }
+    },
+    {
+      "slug": "programs",
+      "title": "Programs",
+      "description": "Browse Afrokokoroot's cultural education, youth mentorship, and community wellness programs.",
+      "heroTitle": "Programs That Transform",
+      "heroSubtitle": "Explore our arts, mentorship, and wellness programs designed to strengthen community, culture, and creativity.",
+      "heroImage": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=2070&auto=format&fit=crop",
+      "content": {
+        "programIntro": "Our programs connect culture, learning and health through creative workshops, mentorship, and community support.",
+        "programListHeadline": "Featured Programs"
+      }
+    },
+    {
+      "slug": "impact",
+      "title": "Impact",
+      "description": "See the impact Afrokokoroot has made through education, community events, and cultural programs.",
+      "heroTitle": "Real Impact, Real Change",
+      "heroSubtitle": "Afrokokoroot's work is measured through people served, events hosted, and communities strengthened.",
+      "heroImage": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2070&auto=format&fit=crop",
+      "content": {
+        "impactIntro": "Our metrics capture meaningful progress in education, events, arts access, and community support.",
+        "metricHeadline": "Impact at a Glance"
+      }
     }
   ],
   "contactInfo": {

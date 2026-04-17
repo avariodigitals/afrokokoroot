@@ -7,7 +7,17 @@ import { saveLead } from "@/lib/actions"
 import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
 
-export function Newsletter() {
+interface NewsletterProps {
+  headline?: string
+  description?: string
+  privacyText?: string
+}
+
+export function Newsletter({
+  headline = "Stay Connected",
+  description = "Stay updated on our latest programs, events, and impact stories. Be part of the change.",
+  privacyText = "We respect your privacy. Unsubscribe at any time."
+}: NewsletterProps) {
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
@@ -63,10 +73,10 @@ export function Newsletter() {
 
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Stay Connected
+              {headline}
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
-              Stay updated on our latest programs, events, and impact stories. Be part of the change.
+              {description}
             </p>
             
             <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-y-4 sm:flex-row sm:justify-center sm:gap-x-6 items-center">
@@ -90,7 +100,7 @@ export function Newsletter() {
             </form>
             
             <p className="mt-4 text-xs leading-5 text-gray-400">
-              We respect your privacy. Unsubscribe at any time.
+              {privacyText}
             </p>
           </div>
         </div>

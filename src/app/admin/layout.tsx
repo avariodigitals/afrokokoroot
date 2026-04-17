@@ -85,6 +85,10 @@ export default function AdminLayout({
             <FileText className="h-5 w-5" />
             <span>Blog Posts</span>
           </Link>
+          <Link href="/admin/pages" className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${pathname?.startsWith('/admin/pages') ? 'bg-white/10 text-white' : 'text-lime-100 hover:bg-white/5'}`}>
+            <Globe className="h-5 w-5" />
+            <span>Pages</span>
+          </Link>
           <Link href="/admin/programs" className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${pathname?.startsWith('/admin/programs') ? 'bg-white/10 text-white' : 'text-lime-100 hover:bg-white/5'}`}>
             <Music className="h-5 w-5" />
             <span>Programs</span>

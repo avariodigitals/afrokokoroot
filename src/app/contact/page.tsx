@@ -5,7 +5,7 @@ import { Mail, Phone, MapPin, Facebook, Instagram, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
-import { getContactInfo } from "@/lib/api"
+import { getContactInfo, getPageContent } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
 import { ThreadsIcon } from "@/components/icons"
 
@@ -21,6 +21,8 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const contactInfo = await getContactInfo()
+  const page = await getPageContent('contact')
+  const content = page?.content || {}
   return (
     <div className="min-h-screen bg-lime-50 overflow-hidden">
       {/* Hero Section */}
@@ -28,7 +30,7 @@ export default async function ContactPage() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop"
+            src={page?.heroImage || 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop'}
             alt="Contact our team"
             fill
             className="object-cover opacity-60"
@@ -44,10 +46,10 @@ export default async function ContactPage() {
 
         <div className="container relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-            Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-300">Touch</span>
+            {page?.heroTitle || 'Get in Touch'}
           </h1>
           <p className="text-xl md:text-2xl text-lime-100 max-w-3xl mx-auto font-light leading-relaxed">
-            We&apos;d love to hear from you. Whether you have a question, want to partner, or just want to say hello.
+            {page?.heroSubtitle || 'We&apos;d love to hear from you. Whether you have a question, want to partner, or just want to say hello.'}
           </p>
         </div>
       </section>
@@ -58,6 +60,9 @@ export default async function ContactPage() {
           <div className="space-y-12">
             <div>
               <h2 className="text-3xl font-bold mb-8 text-green-900">Contact Information</h2>
+              <p className="text-lg text-slate-700 max-w-2xl mb-8">
+                {content?.contactIntro || 'Reach out using the details below or send us a message to connect with our team.'}
+              </p>
               <div className="space-y-8">
                 <div className="group flex items-start gap-6 p-6 rounded-2xl bg-white shadow-sm border border-lime-100 hover:shadow-md transition-all hover:-translate-y-1">
                   <div className="bg-lime-100 p-4 rounded-xl text-lime-600 group-hover:bg-lime-600 group-hover:text-white transition-colors">

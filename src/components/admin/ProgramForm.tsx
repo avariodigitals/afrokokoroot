@@ -8,6 +8,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { saveProgram } from '@/lib/actions'
 import { Loader2 } from 'lucide-react'
 import { Program } from '@/lib/types'
+import Image from 'next/image'
+import { toast } from 'sonner'
 
 interface ProgramFormProps {
   initialData?: Program
@@ -16,6 +18,10 @@ interface ProgramFormProps {
 export default function ProgramForm({ initialData }: ProgramFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    initialData?.image ? initialData.image : null
+  )
   const [formData, setFormData] = useState({
     slug: initialData?.slug || '',
     title: initialData?.title || '',
@@ -27,6 +33,37 @@ export default function ProgramForm({ initialData }: ProgramFormProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('file', file)
+      formDataToSend.append('category', 'programs')
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataToSend
+      })
+
+      if (!response.ok) {
+        throw new Error('Upload failed')
+      }
+
+      const data = await response.json()
+      setFormData(prev => ({ ...prev, image: data.path }))
+      setImagePreview(data.path)
+      toast.success('Image uploaded successfully')
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload image')
+    } finally {
+      setUploading(false)
+    }
   }
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,14 +122,35 @@ export default function ProgramForm({ initialData }: ProgramFormProps) {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="image" className="text-sm font-medium">Image URL</label>
-        <Input
-          id="image"
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
-          placeholder="/program-placeholder.jpg"
-        />
+        <label htmlFor="image" className="text-sm font-medium">Program Image</label>
+        <div className="flex flex-col gap-4">
+          <div className="relative">
+            <Input
+              id="image"
+              name="image"
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              disabled={uploading}
+              className="cursor-pointer"
+            />
+            {uploading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/50">
+                <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
+              </div>
+            )}
+          </div>
+          {imagePreview && (
+            <div className="relative w-48 h-32 rounded-lg overflow-hidden border-2 border-slate-200">
+              <Image
+                src={imagePreview}
+                alt="Preview"
+                fill
+                className="object-cover"
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="space-y-2">

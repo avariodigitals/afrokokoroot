@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Metadata } from "next"
 import { BarChart, Heart, Users, Globe, ArrowRight, Quote } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { impactMetrics } from "@/lib/data"
+import { getImpactMetrics, getPageContent } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
@@ -16,12 +16,19 @@ export const metadata: Metadata = {
   },
 }
 
-export default function ImpactPage() {
+export default async function ImpactPage() {
+  const page = await getPageContent('impact')
+  const content = page?.content || {}
+  const impactMetrics = await getImpactMetrics()
+
   return (
     <div className="min-h-screen bg-lime-50 overflow-hidden">
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 bg-green-900 text-white overflow-hidden rounded-b-[3rem] shadow-xl">
         {/* Background Gradient & Pattern */}
+        {page?.heroImage ? (
+          <Image src={page.heroImage} alt="Impact background" fill className="object-cover opacity-25" priority />
+        ) : null}
         <div className="absolute inset-0 bg-gradient-to-br from-green-800 via-green-900 to-lime-950 opacity-95" />
         <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay" />
         
@@ -35,16 +42,24 @@ export default function ImpactPage() {
              Measurable Change
           </div>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight drop-shadow-lg">
-            Impact in <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-300">Action</span>
+            {page?.heroTitle || 'Impact in Action'}
           </h1>
           <p className="text-xl md:text-2xl text-lime-100 font-medium max-w-3xl mx-auto leading-relaxed opacity-90">
-            Beyond the music, we measure our success by the lives transformed, communities united, and cultural bridges built.
+            {page?.heroSubtitle || 'Beyond the music, we measure our success by the lives transformed, communities united, and cultural bridges built.'}
           </p>
         </div>
       </section>
 
       {/* Key Metrics Grid */}
       <section className="py-20 container relative z-20 -mt-20 pt-[12rem]">
+        <div className="text-center mb-10">
+          <p className="text-lg text-green-700 font-semibold mb-3">
+            {content?.metricHeadline || 'Impact at a Glance'}
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-green-900">
+            {content?.impactIntro || 'Our metrics capture meaningful progress in education, events, arts access, and community support.'}
+          </h2>
+        </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {impactMetrics.map((metric, index) => (
             <div key={index} className="bg-white rounded-2xl p-8 shadow-xl border border-lime-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300 group">
@@ -75,7 +90,7 @@ export default function ImpactPage() {
         <div className="container">
           <div className="text-center mb-16 space-y-4">
              <span className="text-green-600 font-bold tracking-wider uppercase text-sm">Real Stories</span>
-             <h2 className="text-3xl md:text-5xl font-black tracking-tight text-green-900">Voices of Change</h2>
+             <h2 className="text-3xl md:text-5xl font-black tracking-tight text-green-900">{content?.storiesHeadline || 'Voices of Change'}</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
@@ -83,7 +98,7 @@ export default function ImpactPage() {
                  <div className="absolute inset-0 bg-gradient-to-br from-lime-400 to-green-500 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
                  <div className="aspect-square bg-green-900 rounded-[2rem] overflow-hidden relative shadow-2xl border-4 border-white transform group-hover:rotate-1 transition-transform duration-500">
                      <Image
-                       src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop"
+                       src={content?.storyOneImage || 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop'}
                        alt="Youth music workshop"
                        fill
                        className="object-cover"
@@ -94,15 +109,15 @@ export default function ImpactPage() {
              <div className="space-y-8">
                <Quote className="h-12 w-12 text-lime-400 opacity-50" />
                <blockquote className="text-2xl md:text-3xl font-bold text-green-900 leading-tight">
-               &quot;Before attending the Afrokokoroot youth music workshop, I was shy and unsure of myself. Being surrounded by music and creative expression helped me find my confidence and connect with others through rhythm.&quot;
+               &quot;{content?.storyOneQuote || 'Before attending the Afrokokoroot youth music workshop, I was shy and unsure of myself. Being surrounded by music and creative expression helped me find my confidence and connect with others through rhythm.'}&quot;
               </blockquote>
                <div>
-                 <p className="font-bold text-lg text-green-900">– Michael, Age 16</p>
-                 <p className="text-green-600">Community Program Participant</p>
+                 <p className="font-bold text-lg text-green-900">– {content?.storyOneAuthor || 'Michael, Age 16'}</p>
+                 <p className="text-green-600">{content?.storyOneRole || 'Community Program Participant'}</p>
                </div>
                <div className="h-1 w-20 bg-gradient-to-r from-lime-400 to-green-500 rounded-full" />
                <p className="text-lg text-green-800/80 leading-relaxed">
-                 Through our youth engagement programs, we provide opportunities for young people in Nashville to explore music, creativity, and cultural expression while building confidence and leadership.
+                 {content?.storyOneBody || 'Through our youth engagement programs, we provide opportunities for young people in Nashville to explore music, creativity, and cultural expression while building confidence and leadership.'}
                </p>
              </div>
           </div>
@@ -111,22 +126,22 @@ export default function ImpactPage() {
              <div className="order-2 md:order-1 space-y-8">
                <Quote className="h-12 w-12 text-emerald-400 opacity-50" />
                <blockquote className="text-2xl md:text-3xl font-bold text-green-900 leading-tight">
-               &quot;The World Peace Music & Arts event opened my eyes to how powerful music and culture can be in bringing people together. Seeing people from different backgrounds celebrate together was unforgettable.&quot;
+               &quot;{content?.storyTwoQuote || 'The World Peace Music & Arts event opened my eyes to how powerful music and culture can be in bringing people together. Seeing people from different backgrounds celebrate together was unforgettable.'}&quot;
               </blockquote>
                <div>
-                 <p className="font-bold text-lg text-green-900">– Sarah J.</p>
-                 <p className="text-green-600">Event Attendee</p>
+                 <p className="font-bold text-lg text-green-900">– {content?.storyTwoAuthor || 'Sarah J.'}</p>
+                 <p className="text-green-600">{content?.storyTwoRole || 'Event Attendee'}</p>
                </div>
                <div className="h-1 w-20 bg-gradient-to-r from-emerald-400 to-lime-500 rounded-full" />
                <p className="text-lg text-green-800/80 leading-relaxed">
-                 Our events create spaces where diverse communities come together through music, art, and shared cultural experiences—building understanding and lasting connections.
+                 {content?.storyTwoBody || 'Our events create spaces where diverse communities come together through music, art, and shared cultural experiences—building understanding and lasting connections.'}
                </p>
              </div>
              <div className="order-1 md:order-2 relative group">
                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-lime-500 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
                  <div className="aspect-square bg-green-900 rounded-[2rem] overflow-hidden relative shadow-2xl border-4 border-white transform group-hover:-rotate-1 transition-transform duration-500">
                      <Image
-                       src="https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/P1016432.JPG"
+                       src={content?.storyTwoImage || 'https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/P1016432.JPG'}
                        alt="World Peace Music & Arts event"
                        fill
                        className="object-cover"
@@ -147,17 +162,17 @@ export default function ImpactPage() {
              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-lime-400 via-green-500 to-emerald-600" />
              
              <BarChart className="h-16 w-16 text-green-500 mx-auto mb-6" />
-             <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6 text-green-900">Radical Transparency</h2>
+             <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6 text-green-900">{content?.transparencyHeadline || 'Radical Transparency'}</h2>
              <p className="text-xl text-green-800/70 mb-10 max-w-2xl mx-auto">
-               We believe in full accountability. Every dollar donated helps us keep the rhythm alive. Review our annual impact reports to see exactly how your support is being used.
+               {content?.transparencyDescription || 'We believe in full accountability. Every dollar donated helps us keep the rhythm alive. Review our annual impact reports to see exactly how your support is being used.'}
              </p>
              
              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                <Button size="lg" variant="outline" className="border-2 border-green-100 text-green-700 hover:bg-green-50 hover:border-green-300 h-14 px-8 rounded-full text-lg font-bold">
-                 Download 2024 Report (PDF)
+                 {content?.reportButtonLabel || 'Download 2024 Report (PDF)'}
                </Button>
                <Button size="lg" className="bg-green-900 text-white hover:bg-green-800 h-14 px-8 rounded-full text-lg font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
-                 View IRS 990 Form <ArrowRight className="ml-2 h-5 w-5" />
+                 {content?.taxButtonLabel || 'View IRS 990 Form'} <ArrowRight className="ml-2 h-5 w-5" />
                </Button>
              </div>
           </div>
@@ -175,16 +190,16 @@ export default function ImpactPage() {
         <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-lime-500/20 rounded-full blur-3xl animate-pulse" />
         
         <div className="container max-w-3xl relative z-10">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-8 drop-shadow-sm">Be Part of Our Story</h2>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-8 drop-shadow-sm">{content?.ctaHeadline || 'Be Part of Our Story'}</h2>
           <p className="text-xl md:text-2xl text-lime-100/90 mb-10 font-medium max-w-2xl mx-auto">
-            Your contribution empowers us to reach more students, host more community events, and keep the culture alive.
+            {content?.ctaDescription || 'Your contribution empowers us to reach more students, host more community events, and keep the culture alive.'}
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Button variant="secondary" size="lg" className="shadow-2xl hover:scale-105 transition-transform font-bold px-10 h-16 text-lg rounded-full bg-white text-green-900 hover:bg-lime-50" asChild>
-              <Link href="/donate">Make a Donation</Link>
+              <Link href="/donate">{content?.ctaPrimaryLabel || 'Make a Donation'}</Link>
             </Button>
             <Button variant="outline" size="lg" className="bg-transparent border-2 border-lime-200/30 text-white hover:bg-white/10 hover:text-white font-bold px-10 h-16 text-lg rounded-full backdrop-blur-sm" asChild>
-              <Link href="/get-involved">Volunteer With Us</Link>
+              <Link href="/get-involved">{content?.ctaSecondaryLabel || 'Volunteer With Us'}</Link>
             </Button>
           </div>
         </div>

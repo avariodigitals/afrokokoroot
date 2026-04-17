@@ -2,7 +2,7 @@
 
 import { getData, updateData } from './api';
 import { revalidatePath } from 'next/cache';
-import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead, GalleryItem } from '@/lib/types';
+import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead, GalleryItem, PageContent } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function saveEvent(eventData: Event) {
@@ -148,6 +148,26 @@ export async function saveContactInfo(infoData: ContactInfo) {
   data.contactInfo = { ...data.contactInfo, ...infoData };
   
   await updateData(data);
+  revalidatePath('/');
+  return { success: true };
+}
+
+// Page content
+export async function savePageContent(pageData: PageContent) {
+  const data = await getData();
+  const pages: PageContent[] = data.pageContents || [];
+  const existingIndex = pages.findIndex((page) => page.slug === pageData.slug);
+
+  if (existingIndex >= 0) {
+    pages[existingIndex] = pageData;
+  } else {
+    pages.push(pageData);
+  }
+
+  data.pageContents = pages;
+  await updateData(data);
+  revalidatePath('/about');
+  revalidatePath('/admin/pages');
   revalidatePath('/');
   return { success: true };
 }

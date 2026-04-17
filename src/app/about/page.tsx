@@ -3,6 +3,8 @@ import { Metadata } from "next"
 import { ShieldCheck, Heart, Users, FileText, Globe, BookOpen, Scale, Leaf, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/lib/site-config"
+import { getPageContent, getTeam } from "@/lib/api"
+import type { PageContent, TeamMember } from "@/lib/types"
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -15,32 +17,37 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
-  const boardMembers = [
-    {
-      name: "Sunny Dada",
-      role: "Founder and Director",
-      image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Sunny%20Dada%20-%20Founder%20and%20Director.jpeg",
-      bio: "Dedicated leader committed to preserving African heritage and fostering community unity through music and education."
-    },
-    {
-      name: "Chujuana Harris",
-      role: "Secretary",
-      image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Chujuana%20Harris%20-%20Secreatary.jpeg",
-      bio: "Organized and passionate professional ensuring smooth operations and clear communication within the foundation."
-    },
-    {
-      name: "Terry Hardin",
-      role: "Director",
-      image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Terry%20Hardin%20-%20Director.jpeg",
-      bio: "Strategic director focused on expanding the reach and impact of the Afrokokoroot Foundation."
-    },
-    {
-      name: "Nelson Guillen",
-      role: "Member",
-      image: "https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/Nelson%20Guillen%20-%20Member.jpeg",
-      bio: "Active community member providing valuable insights and support to the foundation's initiatives."
-    }
+  const boardMembers = await getTeam()
+  const page = await getPageContent('about')
+  const pageContent = page?.content || {}
+  const boardRows: TeamMember[][] = []
+
+  for (let i = 0; i < boardMembers.length; i += 3) {
+    boardRows.push(boardMembers.slice(i, i + 3))
+  }
+
+  const heroTitle = page?.heroTitle || pageContent.heroTitle || 'Preserving Heritage, Inspiring Unity'
+  const heroSubtitle = page?.heroSubtitle || pageContent.heroSubtitle || 'The Afrokokoroot Foundation is a 501(c)(3) public charity dedicated to cultural education, wellness, and community empowerment through the universal language of community and nature.'
+  const heroImage = page?.heroImage || pageContent.heroImage || 'https://images.unsplash.com/photo-1504194921103-f8b80cadd5e4?q=80&w=2070&auto=format&fit=crop'
+  const missionIntro = pageContent.missionIntro || 'Afrokokoroot Foundation is structured as a 501(c)(3) public charity. We are legally and operationally separate from commercial entities. Our mission is purely charitable and educational, focused on serving underserved communities.'
+  const governanceText = pageContent.governanceText || 'We maintain strict compliance and credibility through a diverse Board of Directors with a majority of independent members. Our governance includes robust policies for conflict of interest, financial oversight, and transparency.'
+  const pillarItems = pageContent.pillarItems || [
+    { icon: 'book', title: 'Cultural Education', description: 'Arts, storytelling, and cultural expression.' },
+    { icon: 'leaf', title: 'Wellness & Nature', description: 'Outdoor recreation and land-based learning.' },
+    { icon: 'heart', title: 'Food Security', description: 'Sustainable agriculture and nutrition.' },
+    { icon: 'users', title: 'Community Peace', description: 'Cross-cultural engagement and unity.' }
   ]
+  const leadershipHeadline = pageContent.leadershipHeadline || 'Board of Directors'
+  const leadershipCopy = pageContent.leadershipCopy || 'Our independent board ensures we stay true to our mission and serve the public interest.'
+  const transparencyHeadline = pageContent.transparencyHeadline || 'Financial Transparency'
+  const transparencyCopy = pageContent.transparencyCopy || 'We are committed to open and honest financial reporting. Our funds are used strictly for charitable purposes, with clear separation from any commercial activities.'
+
+  const iconMap: Record<string, any> = {
+    book: BookOpen,
+    leaf: Leaf,
+    heart: Heart,
+    users: Users
+  }
 
   return (
     <div className="min-h-screen bg-lime-50 font-sans selection:bg-lime-200 selection:text-green-900">
@@ -49,7 +56,7 @@ export default async function AboutPage() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1504194921103-f8b80cadd5e4?q=80&w=2070&auto=format&fit=crop"
+            src={heroImage}
             alt="Community gathering and celebration"
             fill
             className="object-cover opacity-60"
@@ -65,10 +72,10 @@ export default async function AboutPage() {
 
         <div className="container relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-            Preserving Heritage, <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-300">Inspiring Unity</span>
+            {heroTitle}
           </h1>
           <p className="text-xl md:text-2xl text-lime-50 max-w-3xl mx-auto font-light leading-relaxed">
-            The Afrokokoroot Foundation is a 501(c)(3) public charity dedicated to cultural education, wellness, and community empowerment through the universal language of community and nature.
+            {heroSubtitle}
           </p>
         </div>
       </section>
@@ -85,7 +92,7 @@ export default async function AboutPage() {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-green-950">A Public Charity for Public Good</h2>
               <p className="text-lg text-slate-700 leading-relaxed">
-                Afrokokoroot Foundation is structured as a <strong>501(c)(3) public charity</strong>. We are legally and operationally separate from any commercial entities. Our mission is purely charitable and educational, focused on serving underserved communities.
+                {missionIntro}
               </p>
               <ul className="mt-6 space-y-3">
                 {[
@@ -108,7 +115,7 @@ export default async function AboutPage() {
                 Our Governance
               </h3>
               <p className="text-slate-600 mb-4">
-                We maintain strict compliance and credibility through a diverse <strong>Board of Directors</strong>, with a majority of independent members. Our governance includes robust policies for conflict of interest, financial oversight, and transparency.
+                {governanceText}
               </p>
             </div>
           </div>
@@ -125,42 +132,20 @@ export default async function AboutPage() {
                 We empower youth and families through four integrated pathways:
               </p>
               <ul className="space-y-4">
-                <li className="flex items-start gap-4 p-4 rounded-xl bg-lime-50 hover:bg-lime-100 transition-colors">
-                  <div className="bg-white p-2 rounded-lg shadow-sm text-green-600 mt-1">
-                    <BookOpen className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-green-900 block">Cultural Education</span>
-                    <span className="text-sm text-slate-600">Arts, storytelling, and cultural expression.</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-4 p-4 rounded-xl bg-green-50 hover:bg-green-100 transition-colors">
-                  <div className="bg-white p-2 rounded-lg shadow-sm text-green-600 mt-1">
-                    <Leaf className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-green-900 block">Wellness & Nature</span>
-                    <span className="text-sm text-slate-600">Outdoor recreation and land-based learning.</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-4 p-4 rounded-xl bg-lime-50 hover:bg-lime-100 transition-colors">
-                  <div className="bg-white p-2 rounded-lg shadow-sm text-green-600 mt-1">
-                    <Heart className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-green-900 block">Food Security</span>
-                    <span className="text-sm text-slate-600">Sustainable agriculture and nutrition.</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-4 p-4 rounded-xl bg-green-50 hover:bg-green-100 transition-colors">
-                  <div className="bg-white p-2 rounded-lg shadow-sm text-green-600 mt-1">
-                    <Users className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-green-900 block">Community Peace</span>
-                    <span className="text-sm text-slate-600">Cross-cultural engagement and unity.</span>
-                  </div>
-                </li>
+                {pillarItems.map((item: any) => {
+                  const Icon = iconMap[item.icon] || CheckCircle2
+                  return (
+                    <li key={item.title} className="flex items-start gap-4 p-4 rounded-xl bg-lime-50 hover:bg-lime-100 transition-colors">
+                      <div className="bg-white p-2 rounded-lg shadow-sm text-green-600 mt-1">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <span className="font-bold text-green-900 block">{item.title}</span>
+                        <span className="text-sm text-slate-600">{item.description}</span>
+                      </div>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           </div>
@@ -171,39 +156,46 @@ export default async function AboutPage() {
       <section className="py-24 bg-white relative overflow-hidden rounded-3xl mx-4 shadow-sm border border-lime-100">
         <div className="container relative z-10 text-center">
           <span className="inline-block py-1 px-3 rounded-full bg-lime-100 text-green-800 font-bold text-sm mb-4">Leadership</span>
-          <h2 className="text-4xl font-bold tracking-tight mb-4 text-green-950">Board of Directors</h2>
+          <h2 className="text-4xl font-bold tracking-tight mb-4 text-green-950">{leadershipHeadline}</h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-16">
-            Our independent board ensures we stay true to our mission and serve the public interest.
+            {leadershipCopy}
           </p>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-7xl mx-auto">
-            {boardMembers.map((member) => (
-              <div key={member.name} className="group flex flex-col items-center text-center space-y-6 p-6 rounded-3xl hover:bg-lime-50 transition-all duration-300">
-                <div className="h-48 w-48 rounded-full bg-gradient-to-br from-[#E9A907] to-lime-500 p-1 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                  <div className="w-full h-full rounded-full bg-white overflow-hidden relative border-4 border-white flex items-center justify-center">
-                    {member.image ? (
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover rounded-full"
-                      />
-                    ) : (
-                      <span className="text-4xl font-black text-green-900 tracking-tighter">
-                        {member.name.split(' ').map(n => n[0]).join('')}
-                      </span>
-                    )}
+          <div className="space-y-10 max-w-7xl mx-auto">
+            {boardRows.map((row, rowIndex) => (
+              <div
+                key={rowIndex}
+                className={`grid gap-10 ${row.length === 1 ? 'grid-cols-1 justify-items-center' : row.length === 2 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 justify-items-center' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}
+              >
+                {row.map((member) => (
+                  <div key={member.name} className="group flex flex-col items-center text-center space-y-6 p-6 rounded-3xl hover:bg-lime-50 transition-all duration-300">
+                    <div className="h-48 w-48 rounded-full bg-gradient-to-br from-[#E9A907] to-lime-500 p-1 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                      <div className="w-full h-full rounded-full bg-white overflow-hidden relative border-4 border-white flex items-center justify-center">
+                        {member.image ? (
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            fill
+                            className="object-cover rounded-full"
+                          />
+                        ) : (
+                          <span className="text-4xl font-black text-green-900 tracking-tighter">
+                            {member.name.split(' ').map(n => n[0]).join('')}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <h3 className="text-2xl font-bold text-green-900">{member.name}</h3>
+                      <p className="text-lime-600 font-bold uppercase tracking-wider text-sm">{member.role}</p>
+                    </div>
+                    
+                    <p className="text-slate-600 leading-relaxed text-sm">
+                      {member.bio}
+                    </p>
                   </div>
-                </div>
-                
-                <div className="space-y-1">
-                  <h3 className="text-2xl font-bold text-green-900">{member.name}</h3>
-                  <p className="text-lime-600 font-bold uppercase tracking-wider text-sm">{member.role}</p>
-                </div>
-                
-                <p className="text-slate-600 leading-relaxed text-sm">
-                  {member.bio}
-                </p>
+                ))}
               </div>
             ))}
           </div>
@@ -216,9 +208,9 @@ export default async function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-green-950 to-green-800 opacity-90" />
         
         <div className="container relative z-10 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-8">Financial Transparency</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-8">{transparencyHeadline}</h2>
           <p className="text-xl text-lime-100 max-w-3xl mx-auto mb-12">
-            We are committed to open and honest financial reporting. Our funds are used strictly for charitable purposes, with clear separation from any commercial activities.
+            {transparencyCopy}
           </p>
           
           <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
