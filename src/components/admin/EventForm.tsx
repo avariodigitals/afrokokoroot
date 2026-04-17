@@ -30,7 +30,8 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
     image: '',
     highlights: [],
     artists: [],
-    sponsors: []
+    sponsors: [],
+    partners: []
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -80,7 +81,7 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
   }
 
   const addArtist = () => {
-    setFormData((prev: Event) => ({ ...prev, artists: [...(prev.artists || []), { name: '', image: '' }] }))
+    setFormData((prev: Event) => ({ ...prev, artists: [...(prev.artists || []), { name: '', image: '', stage: '' }] }))
   }
 
   const removeArtist = (index: number) => {
@@ -167,6 +168,54 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
         return { ...prev, sponsors: newSponsors }
       })
       toast.success('Sponsor image uploaded')
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload image')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const addPartner = () => {
+    setFormData((prev: Event) => ({ ...prev, partners: [...(prev.partners || []), { name: '', image: '' }] }))
+  }
+
+  const removePartner = (index: number) => {
+    setFormData((prev: Event) => ({ ...prev, partners: prev.partners?.filter((_, i) => i !== index) || [] }))
+  }
+
+  const handlePartnerChange = (index: number, field: keyof Sponsor, value: string) => {
+    setFormData((prev: Event) => {
+      const newPartners = [...(prev.partners || [])]
+      newPartners[index] = { ...newPartners[index], [field]: value }
+      return { ...prev, partners: newPartners }
+    })
+  }
+
+  const handlePartnerImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('file', file)
+      formDataToSend.append('category', 'events')
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataToSend
+      })
+
+      if (!response.ok) throw new Error('Upload failed')
+
+      const data = await response.json()
+      setFormData((prev: Event) => {
+        const newPartners = [...(prev.partners || [])]
+        newPartners[index] = { ...newPartners[index], image: data.path }
+        return { ...prev, partners: newPartners }
+      })
+      toast.success('Partner image uploaded')
     } catch (error) {
       console.error('Upload error:', error)
       toast.error('Failed to upload image')
@@ -380,6 +429,14 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
                   )}
                 </div>
               </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Stage / Section</label>
+                <Input
+                  value={artist.stage || ''}
+                  onChange={(e) => handleArtistChange(index, 'stage', e.target.value)}
+                  placeholder="e.g. BESE SAKA STAGE or AKOMA LOUNGE STAGE"
+                />
+              </div>
               <Button type="button" variant="destructive" size="sm" onClick={() => removeArtist(index)}>
                 Remove
               </Button>
@@ -432,6 +489,50 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
           ))}
           <Button type="button" variant="outline" onClick={addSponsor}>
             Add Sponsor
+          </Button>
+        </div>
+
+        <div className="space-y-4 rounded-lg border border-slate-200 p-4">
+          <h3 className="text-lg font-medium text-slate-800">Community Partners</h3>
+          {formData.partners?.map((partner, index) => (
+            <div key={index} className="space-y-3 p-3 bg-slate-50 rounded-md">
+              <div>
+                <label className="block text-sm font-medium mb-1">Partner Name</label>
+                <Input
+                  value={partner.name}
+                  onChange={(e) => handlePartnerChange(index, 'name', e.target.value)}
+                  placeholder="Partner Name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Partner Logo</label>
+                <div className="flex flex-col gap-2">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handlePartnerImageUpload(e, index)}
+                    disabled={uploading}
+                    className="cursor-pointer"
+                  />
+                  {partner.image && (
+                    <div className="relative w-24 h-24 rounded-lg overflow-hidden border-2 border-slate-200">
+                      <Image
+                        src={partner.image}
+                        alt={partner.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+              <Button type="button" variant="destructive" size="sm" onClick={() => removePartner(index)}>
+                Remove
+              </Button>
+            </div>
+          ))}
+          <Button type="button" variant="outline" onClick={addPartner}>
+            Add Community Partner
           </Button>
         </div>
       </div>

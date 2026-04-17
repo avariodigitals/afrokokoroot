@@ -9,6 +9,31 @@ import Image from "next/image"
 
 export const dynamic = "force-dynamic"
 
+function hasHtmlMarkup(content: string) {
+  return /<\/?[a-z][\s\S]*>/i.test(content)
+}
+
+function renderBlogContent(content: string) {
+  if (hasHtmlMarkup(content)) {
+    return <div dangerouslySetInnerHTML={{ __html: content }} />
+  }
+
+  const paragraphs = content
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+
+  return (
+    <div className="space-y-6">
+      {paragraphs.map((paragraph, index) => (
+        <p key={index} className="leading-relaxed whitespace-pre-line">
+          {paragraph}
+        </p>
+      ))}
+    </div>
+  )
+}
+
 interface BlogPostPageProps {
   params: Promise<{
     slug: string
@@ -167,7 +192,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </p>
             
             {post.content ? (
-              <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              renderBlogContent(post.content)
             ) : (
               <div className="space-y-6">
                 <p>Content coming soon...</p>
