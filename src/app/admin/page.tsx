@@ -1,7 +1,8 @@
 import Link from "next/link"
 import { Calendar, FileText, Users, Globe } from "lucide-react"
-import { getEvents, getBlogPosts, getPrograms, getTeam, getPages } from "@/lib/api"
+import { getEvents, getBlogPosts, getPrograms, getTeam, getPages, getStorageStatus } from "@/lib/api"
 import { Event, BlogPost } from "@/lib/types"
+import AdminStorageNotice from "@/components/admin/AdminStorageNotice"
 
 export default async function AdminDashboard() {
   const events = await getEvents()
@@ -9,6 +10,7 @@ export default async function AdminDashboard() {
   const programs = await getPrograms()
   const team = await getTeam()
   const pages = await getPages()
+  const storageStatus = getStorageStatus()
 
   const stats = [
     {
@@ -50,6 +52,8 @@ export default async function AdminDashboard() {
 
   return (
     <div className="space-y-8">
+      <AdminStorageNotice status={storageStatus} />
+
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-2xl sm:text-3xl font-bold text-green-900">Dashboard Overview</h1>
         <div className="flex items-center gap-2 text-sm text-green-700">

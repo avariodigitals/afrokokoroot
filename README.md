@@ -20,6 +20,20 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Production Storage
+
+The admin CMS features in this app write content and uploaded media at runtime. Local filesystem storage works during local development, but it does not persist on Vercel.
+
+For deployed environments, create a Vercel Blob store and attach it to this project so Vercel provides the `BLOB_READ_WRITE_TOKEN` environment variable.
+
+Once that variable is present:
+
+- Uploaded images and videos are stored in Vercel Blob.
+- Admin content updates are stored in a Blob-backed `cms/db.json` document.
+- Local development still uses `src/lib/db.json` and `public/uploads`.
+
+If `BLOB_READ_WRITE_TOKEN` is missing in production, admin writes will fail instead of silently pretending to save.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

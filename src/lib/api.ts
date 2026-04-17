@@ -1,9 +1,25 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { get, put } from '@vercel/blob';
 import { Event, Program, TeamMember, ContactInfo, ImpactMetric, BlogPost, Lead, GalleryItem, PageContent } from './types';
 import dbData from './db.json';
 
 const DB_PATH = path.join(process.cwd(), 'src/lib/db.json');
+const DB_BLOB_PATH = 'cms/db.json';
+const canUseBlobStorage = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+
+export function getStorageStatus() {
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  return {
+    environment: process.env.NODE_ENV || 'development',
+    usesBlobStorage: canUseBlobStorage,
+    hasPersistentStorage: canUseBlobStorage,
+    warning: isProduction && !canUseBlobStorage
+      ? 'Persistent storage is not configured. Uploads and CMS edits will not persist on Vercel until BLOB_READ_WRITE_TOKEN is available.'
+      : null,
+  };
+}
 
 export interface DatabaseSchema {
   events: Event[];
@@ -17,7 +33,43 @@ export interface DatabaseSchema {
   gallery: GalleryItem[];
 }
 
+async function readBlobDatabase(): Promise<DatabaseSchema | null> {
+  try {
+    const blob = await get(DB_BLOB_PATH, { access: 'public' });
+
+    if (!blob?.stream) {
+      return null;
+    }
+
+    const text = await new Response(blob.stream).text();
+    return JSON.parse(text) as DatabaseSchema;
+  } catch (error) {
+    console.warn('Error reading database from Vercel Blob, falling back to local data:', error);
+    return null;
+  }
+}
+
+async function writeBlobDatabase(newData: DatabaseSchema) {
+  await put(DB_BLOB_PATH, JSON.stringify(newData, null, 2), {
+    access: 'public',
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: 'application/json',
+    cacheControlMaxAge: 60,
+  });
+
+  return { success: true };
+}
+
 export async function getData(): Promise<DatabaseSchema> {
+  if (canUseBlobStorage) {
+    const blobData = await readBlobDatabase();
+
+    if (blobData) {
+      return blobData;
+    }
+  }
+
   // In development, read from file system to allow real-time updates
   if (process.env.NODE_ENV === 'development') {
     try {
@@ -28,17 +80,26 @@ export async function getData(): Promise<DatabaseSchema> {
     }
   }
   
-  // In production (Netlify), use the bundled data (Read-Only)
+  // In production without external storage, fall back to the bundled read-only data.
   return dbData as unknown as DatabaseSchema;
 }
 
 export async function updateData(newData: DatabaseSchema) {
+  if (canUseBlobStorage) {
+    try {
+      return await writeBlobDatabase(newData);
+    } catch (error) {
+      console.error('Error writing database to Vercel Blob:', error);
+      throw new Error('Failed to persist data to Vercel Blob.');
+    }
+  }
+
   try {
     await fs.writeFile(DB_PATH, JSON.stringify(newData, null, 2), 'utf-8');
     return { success: true };
   } catch (error) {
     console.error("Error writing database:", error);
-    return { success: false, error };
+    throw new Error('Failed to write database. Configure BLOB_READ_WRITE_TOKEN for persistent Vercel storage.');
   }
 }
 

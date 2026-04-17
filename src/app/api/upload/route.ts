@@ -2,6 +2,9 @@ import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { NextRequest, NextResponse } from 'next/server';
+import { put } from '@vercel/blob';
+
+const canUseBlobStorage = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,12 +38,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
     // Generate unique filename
     const ext = file.name.split('.').pop();
     const filename = `${uuidv4()}.${ext}`;
+
+    if (canUseBlobStorage) {
+      const blob = await put(`uploads/${category}/${filename}`, file, {
+        access: 'public',
+        addRandomSuffix: false,
+        contentType: file.type,
+        multipart: isVideo || file.size > 5 * 1024 * 1024,
+      });
+
+      return NextResponse.json(
+        {
+          success: true,
+          path: blob.url,
+          filename,
+        },
+        { status: 201 }
+      );
+    }
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
 
     // Create category directory if it doesn't exist
     const uploadsDir = join(process.cwd(), 'public/uploads', category);
@@ -64,7 +85,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json(
-      { error: 'Upload failed' },
+      { error: error instanceof Error ? error.message : 'Upload failed' },
       { status: 500 }
     );
   }
