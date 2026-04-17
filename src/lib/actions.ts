@@ -107,6 +107,9 @@ export async function saveProgram(programData: Program) {
   data.programs = programs;
   await updateData(data);
   revalidatePath('/programs');
+  revalidatePath('/admin/programs');
+  revalidatePath('/admin');
+  revalidatePath(`/programs/${programData.slug}`);
   revalidatePath('/');
   return { success: true };
 }
@@ -120,6 +123,9 @@ export async function deleteProgram(slug: string) {
   
   await updateData(data);
   revalidatePath('/programs');
+  revalidatePath('/admin/programs');
+  revalidatePath('/admin');
+  revalidatePath(`/programs/${slug}`);
   revalidatePath('/');
   return { success: true };
 }

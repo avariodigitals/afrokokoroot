@@ -148,10 +148,29 @@
   "programs": [
     {
       "slug": "cultural-arts",
-      "title": "Cultural Arts Workshops",
+      "title": "Cultural Arts Workshopsg",
       "description": "Dance, drumming, and storytelling sessions for all ages.",
       "content": "Our workshops provide immersive experiences in traditional African arts, fostering appreciation and skill development.",
-      "image": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop"
+      "image": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop",
+      "overviewSecondary": "",
+      "offerItems": [
+        "Professional Instruction",
+        "Cultural Immersion",
+        "Performance Opportunities",
+        "Community Building",
+        "Skill Development",
+        "Mentorship"
+      ],
+      "getInvolvedTitle": "Get Involved",
+      "getInvolvedText": "Ready to join the experience? Sign up for upcoming workshops, bring a session to your school or organization, or connect with us to learn more.",
+      "getInvolvedPrimaryLabel": "Register Now",
+      "getInvolvedPrimaryHref": "/contact",
+      "getInvolvedSecondaryLabel": "Request Information",
+      "getInvolvedSecondaryHref": "/contact",
+      "supportTitle": "Support This Program",
+      "supportText": "Your donation helps provide scholarships and instruments for students in need.",
+      "supportButtonLabel": "Donate to Cultural Arts Workshops",
+      "supportButtonHref": "/donate"
     },
     {
       "slug": "youth-mentorship",
@@ -429,8 +448,8 @@
       "isActive": true,
       "isOwner": true,
       "createdAt": "2026-04-17T00:00:00.000Z",
-      "updatedAt": "2026-04-17T18:34:09.554Z",
-      "lastLoginAt": "2026-04-17T18:34:09.554Z"
+      "updatedAt": "2026-04-17T20:11:15.396Z",
+      "lastLoginAt": "2026-04-17T20:11:15.396Z"
     },
     {
       "id": "a61e6618-a1a4-406e-9a87-4afd0db4e24f",

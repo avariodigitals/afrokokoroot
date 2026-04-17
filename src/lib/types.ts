@@ -32,6 +32,18 @@ export interface Program {
   description: string;
   content: string;
   image?: string;
+  overviewSecondary?: string;
+  offerItems?: string[];
+  getInvolvedTitle?: string;
+  getInvolvedText?: string;
+  getInvolvedPrimaryLabel?: string;
+  getInvolvedPrimaryHref?: string;
+  getInvolvedSecondaryLabel?: string;
+  getInvolvedSecondaryHref?: string;
+  supportTitle?: string;
+  supportText?: string;
+  supportButtonLabel?: string;
+  supportButtonHref?: string;
 }
 
 export interface TeamMember {

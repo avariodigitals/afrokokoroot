@@ -7,6 +7,15 @@ import { getPrograms } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
 import JsonLd from "@/components/ui/JSONLD"
 
+const DEFAULT_OFFER_ITEMS = [
+  'Professional Instruction',
+  'Cultural Immersion',
+  'Performance Opportunities',
+  'Community Building',
+  'Skill Development',
+  'Mentorship',
+]
+
 interface ProgramPageProps {
   params: Promise<{
     slug: string
@@ -80,6 +89,19 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
     url: `${siteConfig.url}/programs/${program.slug}`,
   }
 
+  const offerItems = program.offerItems?.length ? program.offerItems : DEFAULT_OFFER_ITEMS
+  const overviewSecondary = program.overviewSecondary || `Our ${program.title} is designed to foster creativity, build confidence, and deepen cultural understanding. Through hands-on learning and expert guidance, participants explore the rich traditions of Afrobeat music and dance.`
+  const getInvolvedTitle = program.getInvolvedTitle || 'Get Involved'
+  const getInvolvedText = program.getInvolvedText || 'Ready to join the experience? Sign up for upcoming workshops, bring a session to your school or organization, or connect with us to learn more.'
+  const getInvolvedPrimaryLabel = program.getInvolvedPrimaryLabel || 'Register Now'
+  const getInvolvedPrimaryHref = program.getInvolvedPrimaryHref || '/contact'
+  const getInvolvedSecondaryLabel = program.getInvolvedSecondaryLabel || 'Request Information'
+  const getInvolvedSecondaryHref = program.getInvolvedSecondaryHref || '/contact'
+  const supportTitle = program.supportTitle || 'Support This Program'
+  const supportText = program.supportText || 'Your donation helps provide scholarships and instruments for students in need.'
+  const supportButtonLabel = program.supportButtonLabel || `Donate to ${program.title}`
+  const supportButtonHref = program.supportButtonHref || '/donate'
+
   return (
     <div className="min-h-screen bg-orange-50/30 font-sans selection:bg-orange-200">
       <JsonLd data={jsonLd} />
@@ -141,24 +163,14 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
               </h2>
               <div className="prose prose-lg text-slate-600 max-w-none">
                 <p className="leading-relaxed">{program.content}</p>
-                <p className="leading-relaxed mt-4">
-                  Our {program.title} is designed to foster creativity, build confidence, and deepen cultural understanding.
-                  Through hands-on learning and expert guidance, participants explore the rich traditions of Afrobeat music and dance.
-                </p>
+                <p className="leading-relaxed mt-4">{overviewSecondary}</p>
               </div>
             </section>
 
             <section className="relative">
               <h2 className="text-2xl font-bold mb-6 text-indigo-950">What We Offer</h2>
               <ul className="grid sm:grid-cols-2 gap-4">
-                {[
-                  "Professional Instruction",
-                  "Cultural Immersion",
-                  "Performance Opportunities",
-                  "Community Building",
-                  "Skill Development",
-                  "Mentorship"
-                ].map((item, index) => (
+                {offerItems.map((item, index) => (
                   <li key={index} className="flex items-center gap-3 bg-orange-50/50 p-4 rounded-xl border border-orange-100 hover:border-orange-200 transition-colors">
                     <div className="h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 text-orange-600">
                       <CheckCircle2 className="h-5 w-5" />
@@ -192,27 +204,27 @@ export default async function ProgramPage({ params }: ProgramPageProps) {
         <div className="space-y-8">
           <div className="sticky top-24 space-y-6">
             <div className="bg-white rounded-3xl p-8 shadow-xl border border-orange-100/50">
-              <h3 className="text-xl font-bold mb-4 text-indigo-950">Get Involved</h3>
+              <h3 className="text-xl font-bold mb-4 text-indigo-950">{getInvolvedTitle}</h3>
               <p className="text-slate-600 mb-8 leading-relaxed">
-                Ready to join the rhythm? Register for upcoming sessions or support this program.
+                {getInvolvedText}
               </p>
               <div className="space-y-4">
-                <Button className="w-full h-12 text-lg font-bold shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:-translate-y-0.5 transition-all" size="lg">
-                  Register Now
+                <Button className="w-full h-12 text-lg font-bold shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:-translate-y-0.5 transition-all" size="lg" asChild>
+                  <Link href={getInvolvedPrimaryHref}>{getInvolvedPrimaryLabel}</Link>
                 </Button>
                 <Button variant="outline" className="w-full h-12 text-lg font-bold border-2 hover:bg-orange-50" asChild>
-                  <Link href="/contact">Request Information</Link>
+                  <Link href={getInvolvedSecondaryHref}>{getInvolvedSecondaryLabel}</Link>
                 </Button>
               </div>
             </div>
 
             <div className="bg-gradient-to-br from-orange-100 to-white rounded-3xl p-8 shadow-lg border border-orange-200">
-              <h3 className="text-xl font-bold mb-2 text-indigo-950">Support This Program</h3>
+              <h3 className="text-xl font-bold mb-2 text-indigo-950">{supportTitle}</h3>
               <p className="text-slate-600 mb-6 text-sm">
-                Your donation helps provide scholarships and instruments for students in need.
+                {supportText}
               </p>
               <Button variant="secondary" className="w-full bg-orange-500 text-white hover:bg-orange-600 border-none h-12 font-bold shadow-md" asChild>
-                <Link href="/donate">Donate to {program.title}</Link>
+                <Link href={supportButtonHref}>{supportButtonLabel}</Link>
               </Button>
             </div>
           </div>
