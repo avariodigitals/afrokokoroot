@@ -33,12 +33,17 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
     paypalClientId: initialData.donationSettings?.paypalClientId || '',
     paypalMerchantId: initialData.donationSettings?.paypalMerchantId || '',
     currencyCode: initialData.donationSettings?.currencyCode || 'USD',
+    monthlyPlan5: monthlyPlanIds['5'] || '',
+    monthlyPlan10: monthlyPlanIds['10'] || '',
+    monthlyPlan15: monthlyPlanIds['15'] || '',
+    monthlyPlan20: monthlyPlanIds['20'] || '',
     monthlyPlan25: monthlyPlanIds['25'] || '',
     monthlyPlan50: monthlyPlanIds['50'] || '',
     monthlyPlan100: monthlyPlanIds['100'] || '',
     monthlyPlan250: monthlyPlanIds['250'] || '',
     monthlyPlan500: monthlyPlanIds['500'] || '',
   });
+  const missingPayPalClientId = formData.donationsEnabled && !formData.paypalClientId.trim();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -69,6 +74,10 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
           paypalMerchantId: formData.paypalMerchantId.trim(),
           currencyCode: formData.currencyCode.trim().toUpperCase() || 'USD',
           monthlyPlanIds: {
+            '5': formData.monthlyPlan5.trim(),
+            '10': formData.monthlyPlan10.trim(),
+            '15': formData.monthlyPlan15.trim(),
+            '20': formData.monthlyPlan20.trim(),
             '25': formData.monthlyPlan25.trim(),
             '50': formData.monthlyPlan50.trim(),
             '100': formData.monthlyPlan100.trim(),
@@ -212,6 +221,12 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
           />
         </div>
 
+        {missingPayPalClientId && (
+          <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+            Donations are enabled, but checkout will stay unavailable until you add a PayPal Client ID below.
+          </p>
+        )}
+
         <div className="grid gap-2">
           <Label htmlFor="paypalClientId">PayPal Client ID</Label>
           <Input
@@ -255,6 +270,22 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="grid gap-2">
+              <Label htmlFor="monthlyPlan5">$5 monthly plan ID</Label>
+              <Input id="monthlyPlan5" name="monthlyPlan5" value={formData.monthlyPlan5} onChange={handleChange} placeholder="P-..." />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="monthlyPlan10">$10 monthly plan ID</Label>
+              <Input id="monthlyPlan10" name="monthlyPlan10" value={formData.monthlyPlan10} onChange={handleChange} placeholder="P-..." />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="monthlyPlan15">$15 monthly plan ID</Label>
+              <Input id="monthlyPlan15" name="monthlyPlan15" value={formData.monthlyPlan15} onChange={handleChange} placeholder="P-..." />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="monthlyPlan20">$20 monthly plan ID</Label>
+              <Input id="monthlyPlan20" name="monthlyPlan20" value={formData.monthlyPlan20} onChange={handleChange} placeholder="P-..." />
+            </div>
+            <div className="grid gap-2">
               <Label htmlFor="monthlyPlan25">$25 monthly plan ID</Label>
               <Input id="monthlyPlan25" name="monthlyPlan25" value={formData.monthlyPlan25} onChange={handleChange} placeholder="P-..." />
             </div>
@@ -270,7 +301,7 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
               <Label htmlFor="monthlyPlan250">$250 monthly plan ID</Label>
               <Input id="monthlyPlan250" name="monthlyPlan250" value={formData.monthlyPlan250} onChange={handleChange} placeholder="P-..." />
             </div>
-            <div className="grid gap-2 md:col-span-2">
+            <div className="grid gap-2">
               <Label htmlFor="monthlyPlan500">$500 monthly plan ID</Label>
               <Input id="monthlyPlan500" name="monthlyPlan500" value={formData.monthlyPlan500} onChange={handleChange} placeholder="P-..." />
             </div>

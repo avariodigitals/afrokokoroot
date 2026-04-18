@@ -370,15 +370,21 @@
     "socials": {
       "facebook": "https://www.facebook.com/Afrokokoroot",
       "instagram": "https://www.instagram.com/afrokokoroot_foundation",
-      "threads": "https://www.threads.net/@afrokokoroot_foundation"
+      "threads": "https://www.threads.net/@afrokokoroot_foundation",
+      "twitter": "",
+      "linkedin": ""
     }
   },
   "donationSettings": {
-    "donationsEnabled": false,
+    "donationsEnabled": true,
     "paypalClientId": "",
     "paypalMerchantId": "",
     "currencyCode": "USD",
     "monthlyPlanIds": {
+      "5": "",
+      "10": "",
+      "15": "",
+      "20": "",
       "25": "",
       "50": "",
       "100": "",

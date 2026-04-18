@@ -14,6 +14,10 @@ export const DEFAULT_DONATION_SETTINGS: DonationSettings = {
   paypalMerchantId: '',
   currencyCode: 'USD',
   monthlyPlanIds: {
+    '5': '',
+    '10': '',
+    '15': '',
+    '20': '',
     '25': '',
     '50': '',
     '100': '',

@@ -9,7 +9,10 @@ import { Button } from "@/components/ui/button"
 import { DonationSettings } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
-const donationAmounts = [25, 50, 100, 250, 500]
+const oneTimeDonationAmounts = [5, 10, 15, 20, 25, 50, 100, 250, 500]
+const monthlyDonationAmounts = [5, 10, 15, 20, 25, 50, 100, 250, 500]
+const defaultOneTimeAmount = 50
+const defaultMonthlyAmount = 25
 
 interface DonateClientProps {
   donationSettings: DonationSettings
@@ -17,13 +20,14 @@ interface DonateClientProps {
 
 export default function DonateClient({ donationSettings }: DonateClientProps) {
   const [frequency, setFrequency] = React.useState<"one-time" | "monthly">("one-time")
-  const [amount, setAmount] = React.useState<number | "custom">(50)
+  const [amount, setAmount] = React.useState<number | "custom">(defaultOneTimeAmount)
   const [customAmount, setCustomAmount] = React.useState("")
-  const [paymentState, setPaymentState] = React.useState<"idle" | "success" | "error">("idle")
+  const [paymentState, setPaymentState] = React.useState<"idle" | "success">("idle")
 
   const resolvedAmount = amount === "custom" ? Number(customAmount) : amount
   const hasValidAmount = Number.isFinite(resolvedAmount) && resolvedAmount > 0
   const formattedAmount = hasValidAmount ? resolvedAmount.toFixed(2) : "0.00"
+  const presetAmounts = frequency === "monthly" ? monthlyDonationAmounts : oneTimeDonationAmounts
   const monthlyPlanId = amount === "custom" ? "" : donationSettings.monthlyPlanIds?.[String(amount)] || ""
   const canShowOneTimePayPal = donationSettings.donationsEnabled && Boolean(donationSettings.paypalClientId) && frequency === "one-time" && hasValidAmount
   const canShowMonthlyPayPal = donationSettings.donationsEnabled && Boolean(donationSettings.paypalClientId) && frequency === "monthly" && amount !== "custom" && Boolean(monthlyPlanId)
@@ -76,6 +80,11 @@ export default function DonateClient({ donationSettings }: DonateClientProps) {
                   onClick={() => {
                     setFrequency("one-time")
                     setPaymentState("idle")
+                    setAmount((currentAmount) =>
+                      typeof currentAmount === "number" && oneTimeDonationAmounts.includes(currentAmount)
+                        ? currentAmount
+                        : defaultOneTimeAmount
+                    )
                   }}
                   className={cn(
                     "flex-1 py-4 text-base font-bold rounded-lg transition-all duration-300",
@@ -90,6 +99,11 @@ export default function DonateClient({ donationSettings }: DonateClientProps) {
                   onClick={() => {
                     setFrequency("monthly")
                     setPaymentState("idle")
+                    setAmount((currentAmount) =>
+                      typeof currentAmount === "number" && monthlyDonationAmounts.includes(currentAmount)
+                        ? currentAmount
+                        : defaultMonthlyAmount
+                    )
                   }}
                   className={cn(
                     "flex-1 py-4 text-base font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2",
@@ -111,7 +125,7 @@ export default function DonateClient({ donationSettings }: DonateClientProps) {
                 </div>
                 
                 <div className="grid grid-cols-3 gap-4">
-                  {donationAmounts.map((val) => (
+                  {presetAmounts.map((val) => (
                     <button
                       key={val}
                       onClick={() => {
@@ -194,7 +208,7 @@ export default function DonateClient({ donationSettings }: DonateClientProps) {
                         }}
                         onError={(error) => {
                           console.error("PayPal donation error:", error)
-                          setPaymentState("error")
+                          setPaymentState("idle")
                         }}
                       />
                     </PayPalScriptProvider>
@@ -216,7 +230,7 @@ export default function DonateClient({ donationSettings }: DonateClientProps) {
                         }}
                         onError={(error) => {
                           console.error("PayPal subscription error:", error)
-                          setPaymentState("error")
+                          setPaymentState("idle")
                         }}
                       />
                     </PayPalScriptProvider>
@@ -231,21 +245,9 @@ export default function DonateClient({ donationSettings }: DonateClientProps) {
                   </Button>
                 )}
 
-                {frequency === "monthly" && (
-                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
-                    Monthly giving uses PayPal subscription plans. Select one of the preset amounts and make sure that amount has a plan ID configured in admin settings.
-                  </p>
-                )}
-
                 {frequency === "monthly" && amount === "custom" && (
                   <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
                     Custom monthly amounts are not supported with the current PayPal setup. Choose one of the preset monthly amounts instead.
-                  </p>
-                )}
-
-                {frequency === "monthly" && amount !== "custom" && donationSettings.donationsEnabled && donationSettings.paypalClientId && !monthlyPlanId && (
-                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
-                    No PayPal monthly plan is configured for ${amount}. Add that plan ID in admin settings to activate this recurring option.
                   </p>
                 )}
 
@@ -255,29 +257,11 @@ export default function DonateClient({ donationSettings }: DonateClientProps) {
                   </p>
                 )}
 
-                {!donationSettings.donationsEnabled && (
-                  <p className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700">
-                    Online donations are currently turned off. Enable them in the admin settings when you are ready to accept payments.
-                  </p>
-                )}
-
-                {donationSettings.donationsEnabled && !donationSettings.paypalClientId && (
-                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
-                    PayPal is missing a Client ID. Add it in the admin settings to activate the donation button.
-                  </p>
-                )}
-
                 {paymentState === "success" && (
                   <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
                     {frequency === "monthly"
                       ? "Subscription started. Thank you for becoming a monthly supporter of Afrokokoroot Foundation."
                       : "Donation received. Thank you for supporting Afrokokoroot Foundation."}
-                  </p>
-                )}
-
-                {paymentState === "error" && (
-                  <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800">
-                    PayPal could not process the donation. Please try again or contact the team directly.
                   </p>
                 )}
 
