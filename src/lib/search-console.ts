@@ -8,6 +8,11 @@ export interface SearchConsoleConfigInput {
   serviceAccountJson?: string;
 }
 
+interface AccessibleSiteEntry {
+  siteUrl: string;
+  permissionLevel?: string;
+}
+
 function parseServiceAccountJson(rawJson?: string) {
   const trimmed = rawJson?.trim();
 
@@ -102,18 +107,51 @@ export function normalizeSearchConsoleConfig(config: SearchConsoleConfigInput | 
   } satisfies SearchConsoleConfigInput;
 }
 
-async function createWebmastersClient(config: SearchConsoleConfigInput | SearchConsoleSettings) {
-  const normalized = normalizeSearchConsoleConfig(config);
-  const accessToken = await getGoogleAccessToken(normalized.serviceAccountJson);
+function normalizeSearchConsoleProperty(siteUrl: string) {
+  const trimmed = siteUrl.trim();
 
-  return {
-    accessToken,
-    siteUrl: normalized.siteUrl,
-  };
+  if (!trimmed) {
+    return '';
+  }
+
+  if (trimmed.startsWith('sc-domain:')) {
+    return `sc-domain:${trimmed.slice('sc-domain:'.length).toLowerCase()}`;
+  }
+
+  try {
+    const parsed = new URL(trimmed);
+    const pathname = parsed.pathname === '/' ? '/' : parsed.pathname.replace(/\/+$/, '') + '/';
+    return `${parsed.protocol}//${parsed.host.toLowerCase()}${pathname}`;
+  } catch {
+    return trimmed.toLowerCase();
+  }
 }
 
-export async function testSearchConsoleAccess(config: SearchConsoleConfigInput | SearchConsoleSettings) {
-  const { accessToken, siteUrl } = await createWebmastersClient(config);
+function getDomainPropertyIdentifier(siteUrl: string) {
+  if (!siteUrl || siteUrl.startsWith('sc-domain:')) {
+    return normalizeSearchConsoleProperty(siteUrl);
+  }
+
+  try {
+    return `sc-domain:${new URL(siteUrl).hostname.toLowerCase()}`;
+  } catch {
+    return '';
+  }
+}
+
+function resolveMatchingSite(siteUrl: string, sites: AccessibleSiteEntry[]) {
+  const normalizedRequestedSite = normalizeSearchConsoleProperty(siteUrl);
+  const requestedDomainProperty = getDomainPropertyIdentifier(siteUrl);
+
+  return sites.find((entry) => {
+    const normalizedAccessibleSite = normalizeSearchConsoleProperty(entry.siteUrl);
+
+    return normalizedAccessibleSite === normalizedRequestedSite
+      || (requestedDomainProperty && normalizedAccessibleSite === requestedDomainProperty);
+  }) || null;
+}
+
+async function listAccessibleSites(accessToken: string) {
   const response = await fetch('https://www.googleapis.com/webmasters/v3/sites', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -129,19 +167,38 @@ export async function testSearchConsoleAccess(config: SearchConsoleConfigInput |
     throw new Error(payload.error?.message || 'Search Console site listing failed.');
   }
 
-  const sites = payload.siteEntry || [];
-  const matchingSite = sites.find((entry) => entry.siteUrl === siteUrl);
+  return (payload.siteEntry || [])
+    .map((entry) => ({
+      siteUrl: entry.siteUrl || '',
+      permissionLevel: entry.permissionLevel || '',
+    }))
+    .filter((entry) => entry.siteUrl);
+}
+
+async function createWebmastersClient(config: SearchConsoleConfigInput | SearchConsoleSettings) {
+  const normalized = normalizeSearchConsoleConfig(config);
+  const accessToken = await getGoogleAccessToken(normalized.serviceAccountJson);
+  const accessibleSites = await listAccessibleSites(accessToken);
+  const matchingSite = resolveMatchingSite(normalized.siteUrl, accessibleSites);
 
   return {
-    siteUrl,
+    accessToken,
+    siteUrl: matchingSite?.siteUrl || normalized.siteUrl,
+    requestedSiteUrl: normalized.siteUrl,
+    matchingSite,
+    accessibleSites,
+  };
+}
+
+export async function testSearchConsoleAccess(config: SearchConsoleConfigInput | SearchConsoleSettings) {
+  const { requestedSiteUrl, matchingSite, accessibleSites } = await createWebmastersClient(config);
+
+  return {
+    siteUrl: requestedSiteUrl,
     propertyFound: Boolean(matchingSite),
+    matchedSiteUrl: matchingSite?.siteUrl || null,
     permissionLevel: matchingSite?.permissionLevel || null,
-    accessibleSites: sites
-      .map((entry) => ({
-        siteUrl: entry.siteUrl || '',
-        permissionLevel: entry.permissionLevel || '',
-      }))
-      .filter((entry) => entry.siteUrl),
+    accessibleSites,
     checkedAt: new Date().toISOString(),
   };
 }

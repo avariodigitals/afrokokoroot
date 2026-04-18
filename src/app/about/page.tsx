@@ -4,17 +4,21 @@ import { ShieldCheck, Heart, Users, FileText, Globe, BookOpen, Scale, Leaf, Chec
 import { Button } from "@/components/ui/button"
 import DecorativeTitle from "@/components/ui/DecorativeTitle"
 import { siteConfig } from "@/lib/site-config"
-import { getPageContent, getTeam } from "@/lib/api"
+import { getPageContent, getPublicSiteUrl, getTeam } from "@/lib/api"
 import type { PageContent, TeamMember } from "@/lib/types"
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description: "Learn about the Afrokokoroot Foundation's mission, governance, and commitment to preserving African heritage and empowering communities.",
-  openGraph: {
-    title: "About Us | Afrokokoroot Foundation",
+export async function generateMetadata(): Promise<Metadata> {
+  const publicSiteUrl = await getPublicSiteUrl()
+
+  return {
+    title: "About Us",
     description: "Learn about the Afrokokoroot Foundation's mission, governance, and commitment to preserving African heritage and empowering communities.",
-    url: `${siteConfig.url}/about`,
-  },
+    openGraph: {
+      title: "About Us | Afrokokoroot Foundation",
+      description: "Learn about the Afrokokoroot Foundation's mission, governance, and commitment to preserving African heritage and empowering communities.",
+      url: `${publicSiteUrl}/about`,
+    },
+  }
 }
 
 export default async function AboutPage() {

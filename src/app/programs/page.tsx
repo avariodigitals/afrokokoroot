@@ -4,18 +4,21 @@ import { Metadata } from "next"
 import { ArrowRight, Heart, Sparkles, Sprout, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import DecorativeTitle from "@/components/ui/DecorativeTitle"
-import { siteConfig } from "@/lib/site-config"
-import { getPageContent, getPrograms } from "@/lib/api"
+import { getPageContent, getPrograms, getPublicSiteUrl } from "@/lib/api"
 import { Program } from "@/lib/types"
 
-export const metadata: Metadata = {
-  title: "Programs",
-  description: "Explore our diverse range of educational and artistic programs designed to preserve African heritage and empower communities.",
-  openGraph: {
-    title: "Programs | Afrokokoroot Foundation",
+export async function generateMetadata(): Promise<Metadata> {
+  const publicSiteUrl = await getPublicSiteUrl()
+
+  return {
+    title: "Programs",
     description: "Explore our diverse range of educational and artistic programs designed to preserve African heritage and empower communities.",
-    url: `${siteConfig.url}/programs`,
-  },
+    openGraph: {
+      title: "Programs | Afrokokoroot Foundation",
+      description: "Explore our diverse range of educational and artistic programs designed to preserve African heritage and empower communities.",
+      url: `${publicSiteUrl}/programs`,
+    },
+  }
 }
 
 const iconMap = [Sparkles, Heart, Sprout, Globe]

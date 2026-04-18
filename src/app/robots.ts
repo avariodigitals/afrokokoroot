@@ -1,9 +1,9 @@
 import { MetadataRoute } from "next";
-import { getSeoSettings } from "@/lib/api";
-import { siteConfig } from "@/lib/site-config";
+import { getPublicSiteUrl, getSeoSettings } from "@/lib/api";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const seoSettings = await getSeoSettings();
+  const publicSiteUrl = await getPublicSiteUrl();
 
   return {
     rules: seoSettings.indexingEnabled
@@ -16,6 +16,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
           userAgent: "*",
           disallow: "/",
         },
-    sitemap: `${siteConfig.url}/sitemap.xml`,
+    sitemap: `${publicSiteUrl}/sitemap.xml`,
   };
 }

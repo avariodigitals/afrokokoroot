@@ -81,6 +81,12 @@ export default function PageForm({ initialData }: PageFormProps) {
     setContentField(arrayKey, currentArray)
   }
 
+  const removeContentArrayValue = (arrayKey: string, index: number) => {
+    const currentArray = Array.isArray(formData.content[arrayKey]) ? [...formData.content[arrayKey]] : []
+    currentArray.splice(index, 1)
+    setContentField(arrayKey, currentArray)
+  }
+
   const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>, target: string, isHero = false) => {
     const file = event.target.files?.[0]
     if (!file) return
@@ -113,6 +119,47 @@ export default function PageForm({ initialData }: PageFormProps) {
       toast.error('Failed to upload image')
     } finally {
       setUploadingField(null)
+    }
+  }
+
+  const uploadImages = async (event: React.ChangeEvent<HTMLInputElement>, target: string) => {
+    const files = Array.from(event.target.files || [])
+    if (!files.length) return
+
+    setUploadingField(target)
+    try {
+      const uploadedPaths = await Promise.all(
+        files.map(async (file) => {
+          const uploadData = new FormData()
+          uploadData.append('file', file)
+          uploadData.append('category', 'pages')
+
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: uploadData,
+          })
+
+          if (!response.ok) {
+            throw new Error('Upload failed')
+          }
+
+          const data = await response.json()
+          return data.path as string
+        })
+      )
+
+      const currentImages = Array.isArray(formData.content[target])
+        ? formData.content[target].filter((value: unknown): value is string => typeof value === 'string' && value.trim().length > 0)
+        : []
+
+      setContentField(target, [...currentImages, ...uploadedPaths])
+      toast.success(`${uploadedPaths.length} image${uploadedPaths.length === 1 ? '' : 's'} uploaded successfully`)
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload images')
+    } finally {
+      setUploadingField(null)
+      event.target.value = ''
     }
   }
 
@@ -179,6 +226,38 @@ export default function PageForm({ initialData }: PageFormProps) {
     </Field>
   )
 
+  const renderMultiImageField = (label: string, target: string, values?: string[]) => {
+    const imageValues = Array.isArray(values)
+      ? values.filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+      : []
+
+    return (
+      <Field label={label}>
+        <div className="space-y-4">
+          <Input type="file" accept="image/*" multiple onChange={(event) => uploadImages(event, target)} disabled={uploadingField === target} className="cursor-pointer" />
+          {uploadingField === target ? <p className="text-sm text-slate-500">Uploading images…</p> : null}
+          {imageValues.length > 0 ? (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {imageValues.map((value, index) => (
+                <div key={`${value}-${index}`} className="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                  <div className="relative h-40 w-full overflow-hidden rounded-xl bg-white">
+                    <Image src={value} alt={`${label} ${index + 1}`} fill className="object-cover" />
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="min-w-0 flex-1 truncate text-sm text-slate-600">{value}</p>
+                    <Button type="button" variant="outline" size="sm" onClick={() => removeContentArrayValue(target, index)}>
+                      Remove
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </Field>
+    )
+  }
+
   const renderHomeFields = () => (
     <>
       <Section title="Mission Section" description="Edit the content shown in the homepage mission block.">
@@ -241,6 +320,11 @@ export default function PageForm({ initialData }: PageFormProps) {
 
   const renderGetInvolvedFields = () => (
     <>
+      {Array.isArray(formData.content.partnerImages) && formData.content.partnerImages.length > 0 && formData.content.partnerImage ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          Legacy single partner image is still stored, but the tiled partner image gallery now uses the multiple-image field below.
+        </div>
+      ) : null}
       <Section title="Volunteer Section">
         <Field label="Volunteer Title">
           <Input value={formData.content.volunteerTitle || 'Volunteer With Us'} onChange={(event) => setContentField('volunteerTitle', event.target.value)} />
@@ -264,7 +348,15 @@ export default function PageForm({ initialData }: PageFormProps) {
         <Field label="Partner Bullet Points">
           <Textarea value={Array.isArray(formData.content.partnerBullets) ? formData.content.partnerBullets.join('\n') : 'School Residencies & Workshops\nCorporate Sponsorships\nCross-Promotional Events'} onChange={(event) => setContentField('partnerBullets', splitLines(event.target.value))} rows={4} />
         </Field>
-        {renderImageField('Partner Image', 'partnerImage', formData.content.partnerImage)}
+        {renderMultiImageField(
+          'Partner Images',
+          'partnerImages',
+          Array.isArray(formData.content.partnerImages)
+            ? formData.content.partnerImages
+            : formData.content.partnerImage
+              ? [formData.content.partnerImage]
+              : []
+        )}
       </Section>
 
       <Section title="Donate Call To Action">

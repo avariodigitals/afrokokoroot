@@ -24,12 +24,13 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seoSettings } = await getSiteSettings();
+  const publicSiteUrl = seoSettings.publicSiteUrl || siteConfig.url;
   const defaultTitle = seoSettings.defaultTitle || siteConfig.name;
   const defaultDescription = seoSettings.defaultDescription || siteConfig.description;
   const defaultKeywords = seoSettings.defaultKeywords?.length ? seoSettings.defaultKeywords : siteConfig.keywords;
 
   return {
-    metadataBase: new URL(siteConfig.url),
+    metadataBase: new URL(publicSiteUrl),
     title: {
       default: defaultTitle,
       template: `%s | ${defaultTitle}`,
@@ -39,14 +40,14 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [
       {
         name: defaultTitle,
-        url: siteConfig.url,
+        url: publicSiteUrl,
       },
     ],
     creator: defaultTitle,
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: siteConfig.url,
+      url: publicSiteUrl,
       title: defaultTitle,
       description: defaultDescription,
       siteName: defaultTitle,
@@ -89,6 +90,7 @@ export default async function RootLayout({
   const currentPath = headerStore.get("x-current-path") || "";
   const isAdminRoute = currentPath.startsWith("/admin");
   const { contactInfo, seoSettings, marketingSettings } = await getSiteSettings();
+  const publicSiteUrl = seoSettings.publicSiteUrl || siteConfig.url;
   const organizationName = seoSettings.defaultTitle || siteConfig.name;
   const organizationDescription = seoSettings.defaultDescription || siteConfig.description;
   const organizationSchema = {
@@ -96,7 +98,7 @@ export default async function RootLayout({
     "@type": "Organization",
     name: organizationName,
     description: organizationDescription,
-    url: siteConfig.url,
+    url: publicSiteUrl,
     logo: siteConfig.ogImage,
     email: contactInfo.email,
     telephone: contactInfo.phone,

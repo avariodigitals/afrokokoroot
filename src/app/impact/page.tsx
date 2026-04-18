@@ -4,17 +4,20 @@ import { Metadata } from "next"
 import { BarChart, Heart, Users, Globe, ArrowRight, Quote } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import DecorativeTitle from "@/components/ui/DecorativeTitle"
-import { getImpactMetrics, getPageContent } from "@/lib/api"
-import { siteConfig } from "@/lib/site-config"
+import { getImpactMetrics, getPageContent, getPublicSiteUrl } from "@/lib/api"
 
-export const metadata: Metadata = {
-  title: "Our Impact",
-  description: "See the measurable change we are making in the community through music education and cultural events.",
-  openGraph: {
-    title: "Our Impact | Afrokokoroot Foundation",
+export async function generateMetadata(): Promise<Metadata> {
+  const publicSiteUrl = await getPublicSiteUrl()
+
+  return {
+    title: "Our Impact",
     description: "See the measurable change we are making in the community through music education and cultural events.",
-    url: `${siteConfig.url}/impact`,
-  },
+    openGraph: {
+      title: "Our Impact | Afrokokoroot Foundation",
+      description: "See the measurable change we are making in the community through music education and cultural events.",
+      url: `${publicSiteUrl}/impact`,
+    },
+  }
 }
 
 export default async function ImpactPage() {

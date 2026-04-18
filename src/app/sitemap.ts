@@ -1,9 +1,8 @@
 import { MetadataRoute } from "next";
-import { siteConfig } from "@/lib/site-config";
-import { getEvents, getPrograms, getBlogPosts } from "@/lib/api";
+import { getEvents, getPrograms, getBlogPosts, getPublicSiteUrl } from "@/lib/api";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = siteConfig.url;
+  const baseUrl = await getPublicSiteUrl();
 
   // Static routes
   const routes = [

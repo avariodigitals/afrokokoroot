@@ -78,6 +78,7 @@ export interface DonationSettings {
 }
 
 export interface SeoSettings {
+  publicSiteUrl: string;
   defaultTitle: string;
   defaultDescription: string;
   defaultKeywords: string[];

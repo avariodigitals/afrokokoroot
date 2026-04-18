@@ -28,6 +28,7 @@ export const DEFAULT_DONATION_SETTINGS: DonationSettings = {
 };
 
 export const DEFAULT_SEO_SETTINGS: SeoSettings = {
+  publicSiteUrl: siteConfig.url,
   defaultTitle: siteConfig.name,
   defaultDescription: siteConfig.description,
   defaultKeywords: siteConfig.keywords,
@@ -201,10 +202,16 @@ export async function getSeoSettings(): Promise<SeoSettings> {
   return {
     ...DEFAULT_SEO_SETTINGS,
     ...data.seoSettings,
+    publicSiteUrl: (data.seoSettings?.publicSiteUrl || DEFAULT_SEO_SETTINGS.publicSiteUrl).replace(/\/+$/, ''),
     defaultKeywords: data.seoSettings?.defaultKeywords?.length
       ? data.seoSettings.defaultKeywords
       : DEFAULT_SEO_SETTINGS.defaultKeywords,
   };
+}
+
+export async function getPublicSiteUrl(): Promise<string> {
+  const seoSettings = await getSeoSettings();
+  return seoSettings.publicSiteUrl || siteConfig.url;
 }
 
 export async function getMarketingSettings(): Promise<MarketingSettings> {

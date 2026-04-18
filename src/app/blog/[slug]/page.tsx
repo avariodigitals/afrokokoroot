@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Metadata } from "next"
-import { ArrowLeft, Calendar, User, Share2 } from "lucide-react"
+import { ArrowLeft, Calendar, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { BlogShareButton } from "@/components/blog/BlogShareButton"
 import { getBlogPosts } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
 import Image from "next/image"
@@ -218,9 +219,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
              <div className="flex items-center gap-4">
                <span className="text-sm font-bold text-green-800 uppercase tracking-wider">Share this story</span>
                <div className="flex gap-2">
-                 <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-green-200 text-green-700 hover:bg-green-50 hover:text-green-900 transition-colors">
-                   <Share2 className="h-4 w-4" />
-                 </Button>
+                 <BlogShareButton title={post.title} excerpt={post.excerpt} />
                </div>
              </div>
              <Button variant="default" asChild className="rounded-full px-8 bg-green-700 hover:bg-green-800 text-white shadow-lg shadow-green-900/20">

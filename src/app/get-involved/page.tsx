@@ -5,22 +5,30 @@ import { Users, Heart, Briefcase, Mail, ArrowRight, CheckCircle2 } from "lucide-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import DecorativeTitle from "@/components/ui/DecorativeTitle"
-import { siteConfig } from "@/lib/site-config"
-import { getPageContent } from "@/lib/api"
+import { getPageContent, getPublicSiteUrl } from "@/lib/api"
 
-export const metadata: Metadata = {
-  title: "Get Involved",
-  description: "Join the Afrokokoroot movement. Volunteer, partner, or contribute to our mission.",
-  openGraph: {
-    title: "Get Involved | Afrokokoroot Foundation",
+export async function generateMetadata(): Promise<Metadata> {
+  const publicSiteUrl = await getPublicSiteUrl()
+
+  return {
+    title: "Get Involved",
     description: "Join the Afrokokoroot movement. Volunteer, partner, or contribute to our mission.",
-    url: `${siteConfig.url}/get-involved`,
-  },
+    openGraph: {
+      title: "Get Involved | Afrokokoroot Foundation",
+      description: "Join the Afrokokoroot movement. Volunteer, partner, or contribute to our mission.",
+      url: `${publicSiteUrl}/get-involved`,
+    },
+  }
 }
 
 export default async function GetInvolvedPage() {
   const page = await getPageContent('get-involved')
   const content = page?.content || {}
+  const partnerImages = Array.isArray(content?.partnerImages)
+    ? content.partnerImages.filter((image: unknown): image is string => typeof image === 'string' && image.trim().length > 0)
+    : content?.partnerImage
+      ? [content.partnerImage]
+      : []
   const volunteerBullets = content?.volunteerBullets || [
     "Event Staff & Logistics",
     "Teaching Assistants (Music/Art)",
@@ -110,9 +118,27 @@ export default async function GetInvolvedPage() {
         <div className="flex flex-col md:flex-row-reverse gap-16 items-center">
           <div className="w-full md:w-1/2 relative group">
              <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-lime-500 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
-             <div className="relative aspect-video bg-white rounded-[2rem] overflow-hidden shadow-xl border-4 border-white transform group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center bg-green-50">
-                {content?.partnerImage ? (
-                  <Image src={content.partnerImage} alt={content?.partnerTitle || 'Partner'} fill className="object-cover" />
+             <div className="relative aspect-video bg-white rounded-[2rem] overflow-hidden shadow-xl border-4 border-white transform group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center bg-green-50 p-3 md:p-4">
+                {partnerImages.length > 0 ? (
+                  <div className="grid h-full w-full grid-cols-2 gap-3">
+                    {partnerImages.slice(0, 4).map((image: string, index: number) => (
+                      <div
+                        key={`${image}-${index}`}
+                        className={[
+                          'relative overflow-hidden rounded-[1.25rem] bg-lime-100 shadow-md',
+                          partnerImages.length === 1 ? 'col-span-2' : '',
+                          partnerImages.length === 3 && index === 0 ? 'row-span-2' : '',
+                        ].filter(Boolean).join(' ')}
+                      >
+                        <Image
+                          src={image}
+                          alt={`${content?.partnerTitle || 'Partner'} ${index + 1}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 ) : (
                   <Briefcase className="h-24 w-24 text-green-200" />
                 )}

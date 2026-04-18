@@ -1,6 +1,6 @@
 'use server';
 
-import { DEFAULT_DONATION_SETTINGS, DEFAULT_MARKETING_SETTINGS, DEFAULT_SEARCH_CONSOLE_SETTINGS, DEFAULT_SEO_SETTINGS, getData, updateData } from './api';
+import { DEFAULT_DONATION_SETTINGS, DEFAULT_MARKETING_SETTINGS, DEFAULT_SEARCH_CONSOLE_SETTINGS, DEFAULT_SEO_SETTINGS, getData, getPublicSiteUrl, updateData } from './api';
 import { revalidatePath } from 'next/cache';
 import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead, GalleryItem, PageContent, AdminUserInput, SiteSettings } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
@@ -211,6 +211,7 @@ export async function saveSiteSettings(settingsData: SiteSettings) {
     ...DEFAULT_SEO_SETTINGS,
     ...(data.seoSettings || {}),
     ...(settingsData.seoSettings || {}),
+    publicSiteUrl: (settingsData.seoSettings?.publicSiteUrl || data.seoSettings?.publicSiteUrl || DEFAULT_SEO_SETTINGS.publicSiteUrl).replace(/\/+$/, ''),
     defaultKeywords: settingsData.seoSettings?.defaultKeywords?.length
       ? settingsData.seoSettings.defaultKeywords
       : DEFAULT_SEO_SETTINGS.defaultKeywords,
@@ -245,17 +246,22 @@ export async function testSearchConsoleConnectionAction(searchConsoleSettings: S
 
   const result = await testSearchConsoleAccess(searchConsoleSettings);
   const data = await getData();
+  const resolvedSiteUrl = result.matchedSiteUrl || searchConsoleSettings.siteUrl;
+  const connectionMessage = result.propertyFound
+    ? result.matchedSiteUrl && result.matchedSiteUrl !== result.siteUrl
+      ? `Connected to Search Console with ${result.permissionLevel || 'verified'} access. Using the matched property ${result.matchedSiteUrl}.`
+      : `Connected to Search Console with ${result.permissionLevel || 'verified'} access for ${result.siteUrl}.`
+    : `The service account can authenticate, but it does not have access to ${result.siteUrl}. Add the service account as an owner or full user in Search Console.`;
 
   data.searchConsoleSettings = {
     ...DEFAULT_SEARCH_CONSOLE_SETTINGS,
     ...(data.searchConsoleSettings || {}),
     ...(searchConsoleSettings || {}),
+    siteUrl: resolvedSiteUrl,
     accessibleSites: result.accessibleSites,
     lastConnectionCheckedAt: result.checkedAt,
     lastConnectionStatus: result.propertyFound ? 'success' : 'warning',
-    lastConnectionMessage: result.propertyFound
-      ? `Connected to Search Console with ${result.permissionLevel || 'verified'} access for ${result.siteUrl}.`
-      : `The service account can authenticate, but it does not have access to ${result.siteUrl}. Add the service account as an owner or full user in Search Console.`,
+    lastConnectionMessage: connectionMessage,
     lastConnectionPermissionLevel: result.permissionLevel || '',
   };
 
@@ -273,14 +279,18 @@ export async function testSearchConsoleConnectionAction(searchConsoleSettings: S
   return {
     success: true,
     message: data.searchConsoleSettings.lastConnectionMessage,
-    result,
+    result: {
+      ...result,
+      matchedSiteUrl: resolvedSiteUrl,
+    },
   };
 }
 
 export async function submitSearchConsoleSitemapAction(searchConsoleSettings: SiteSettings['searchConsoleSettings']) {
   await assertAdminPermission('settings');
 
-  const submission = await submitSearchConsoleSitemap(searchConsoleSettings);
+  const publicSiteUrl = await getPublicSiteUrl();
+  const submission = await submitSearchConsoleSitemap(searchConsoleSettings, `${publicSiteUrl}/sitemap.xml`);
   const data = await getData();
 
   data.searchConsoleSettings = {

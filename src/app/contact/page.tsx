@@ -6,18 +6,21 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
 import DecorativeTitle from "@/components/ui/DecorativeTitle"
-import { getContactInfo, getPageContent } from "@/lib/api"
-import { siteConfig } from "@/lib/site-config"
+import { getContactInfo, getPageContent, getPublicSiteUrl } from "@/lib/api"
 import { ThreadsIcon } from "@/components/icons"
 
-export const metadata: Metadata = {
-  title: "Contact Us",
-  description: "Get in touch with the Afrokokoroot Foundation. We'd love to hear from you.",
-  openGraph: {
-    title: "Contact Us | Afrokokoroot Foundation",
+export async function generateMetadata(): Promise<Metadata> {
+  const publicSiteUrl = await getPublicSiteUrl()
+
+  return {
+    title: "Contact Us",
     description: "Get in touch with the Afrokokoroot Foundation. We'd love to hear from you.",
-    url: `${siteConfig.url}/contact`,
-  },
+    openGraph: {
+      title: "Contact Us | Afrokokoroot Foundation",
+      description: "Get in touch with the Afrokokoroot Foundation. We'd love to hear from you.",
+      url: `${publicSiteUrl}/contact`,
+    },
+  }
 }
 
 export default async function ContactPage() {

@@ -3,18 +3,21 @@ import Link from "next/link"
 import { Metadata } from "next"
 import { Calendar, MapPin, ArrowRight, Clock, Ticket } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { getEvents } from "@/lib/api"
+import { getEvents, getPublicSiteUrl } from "@/lib/api"
 import { Event } from "@/lib/types"
-import { siteConfig } from "@/lib/site-config"
 
-export const metadata: Metadata = {
-  title: "Events",
-  description: "Join us for our upcoming events, workshops, and performances celebrating African culture and community.",
-  openGraph: {
-    title: "Events | Afrokokoroot Foundation",
+export async function generateMetadata(): Promise<Metadata> {
+  const publicSiteUrl = await getPublicSiteUrl()
+
+  return {
+    title: "Events",
     description: "Join us for our upcoming events, workshops, and performances celebrating African culture and community.",
-    url: `${siteConfig.url}/events`,
-  },
+    openGraph: {
+      title: "Events | Afrokokoroot Foundation",
+      description: "Join us for our upcoming events, workshops, and performances celebrating African culture and community.",
+      url: `${publicSiteUrl}/events`,
+    },
+  }
 }
 
 export const dynamic = 'force-dynamic'

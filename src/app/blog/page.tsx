@@ -3,20 +3,23 @@ import Link from "next/link"
 import { Metadata } from "next"
 import { Calendar, User, ArrowRight, Tag } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { getBlogPosts } from "@/lib/api"
+import { getBlogPosts, getPublicSiteUrl } from "@/lib/api"
 import { BlogPost } from "@/lib/types"
-import { siteConfig } from "@/lib/site-config"
 
 export const dynamic = "force-dynamic"
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "Read our latest news, stories, and insights on African culture, arts, and community empowerment.",
-  openGraph: {
-    title: "Blog | Afrokokoroot Foundation",
+export async function generateMetadata(): Promise<Metadata> {
+  const publicSiteUrl = await getPublicSiteUrl()
+
+  return {
+    title: "Blog",
     description: "Read our latest news, stories, and insights on African culture, arts, and community empowerment.",
-    url: `${siteConfig.url}/blog`,
-  },
+    openGraph: {
+      title: "Blog | Afrokokoroot Foundation",
+      description: "Read our latest news, stories, and insights on African culture, arts, and community empowerment.",
+      url: `${publicSiteUrl}/blog`,
+    },
+  }
 }
 
 export default async function BlogPage() {

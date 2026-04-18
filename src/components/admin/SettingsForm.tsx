@@ -59,6 +59,7 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
     monthlyPlan100: monthlyPlanIds['100'] || '',
     monthlyPlan250: monthlyPlanIds['250'] || '',
     monthlyPlan500: monthlyPlanIds['500'] || '',
+    publicSiteUrl: initialData.seoSettings?.publicSiteUrl || siteConfig.url,
     defaultTitle: initialData.seoSettings?.defaultTitle || '',
     defaultDescription: initialData.seoSettings?.defaultDescription || '',
     defaultKeywords: initialData.seoSettings?.defaultKeywords?.join(', ') || '',
@@ -79,7 +80,8 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
     searchConsoleLastConnectionPermissionLevel: initialData.searchConsoleSettings?.lastConnectionPermissionLevel || '',
   });
   const missingPayPalClientId = formData.donationsEnabled && !formData.paypalClientId.trim();
-  const sitemapUrl = `${siteConfig.url}/sitemap.xml`;
+  const normalizedPublicSiteUrl = formData.publicSiteUrl.trim().replace(/\/+$/, '') || siteConfig.url;
+  const sitemapUrl = `${normalizedPublicSiteUrl}/sitemap.xml`;
 
   const buildSearchConsolePayload = () => ({
     enabled: formData.searchConsoleEnabled,
@@ -143,6 +145,7 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
           }
         },
         seoSettings: {
+          publicSiteUrl: normalizedPublicSiteUrl,
           defaultTitle: formData.defaultTitle.trim(),
           defaultDescription: formData.defaultDescription.trim(),
           defaultKeywords: formData.defaultKeywords
@@ -193,6 +196,7 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
         setAccessibleSites(response.result.accessibleSites || []);
         setFormData((prev) => ({
           ...prev,
+          searchConsoleSiteUrl: response.result.matchedSiteUrl || prev.searchConsoleSiteUrl,
           searchConsoleLastConnectionCheckedAt: response.result.checkedAt,
           searchConsoleLastConnectionStatus: response.success ? 'success' : 'warning',
           searchConsoleLastConnectionMessage: response.message ?? '',
@@ -471,6 +475,18 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
 
       <div className="space-y-4">
         <h3 className="text-lg font-medium text-slate-900 border-b pb-2">SEO & Search Console</h3>
+
+        <div className="grid gap-2">
+          <Label htmlFor="publicSiteUrl">Public Site URL</Label>
+          <Input
+            id="publicSiteUrl"
+            name="publicSiteUrl"
+            value={formData.publicSiteUrl}
+            onChange={handleChange}
+            placeholder="https://afrokokorootfoundation.org"
+          />
+          <p className="text-sm text-slate-500">Used for sitemap, canonical metadata, Search Console submissions, and social preview URLs.</p>
+        </div>
 
         <div className="flex items-center justify-between rounded-lg border border-slate-200 px-4 py-3">
           <div className="space-y-1">

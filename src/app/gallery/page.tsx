@@ -1,18 +1,21 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import { Gallery } from "@/components/sections/Gallery";
-import { siteConfig } from "@/lib/site-config";
-import { getGalleryItems } from "@/lib/api";
+import { getGalleryItems, getPublicSiteUrl } from "@/lib/api";
 
-export const metadata: Metadata = {
-  title: "Gallery",
-  description: "Explore moments of joy, rhythm, and connection from Afrokokoroot Foundation events and community gatherings.",
-  openGraph: {
-    title: "Gallery | Afrokokoroot Foundation",
+export async function generateMetadata(): Promise<Metadata> {
+  const publicSiteUrl = await getPublicSiteUrl();
+
+  return {
+    title: "Gallery",
     description: "Explore moments of joy, rhythm, and connection from Afrokokoroot Foundation events and community gatherings.",
-    url: `${siteConfig.url}/gallery`,
-  },
-};
+    openGraph: {
+      title: "Gallery | Afrokokoroot Foundation",
+      description: "Explore moments of joy, rhythm, and connection from Afrokokoroot Foundation events and community gatherings.",
+      url: `${publicSiteUrl}/gallery`,
+    },
+  };
+}
 
 export default async function GalleryPage() {
   const galleryItems = await getGalleryItems();

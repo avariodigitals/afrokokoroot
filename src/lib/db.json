@@ -393,6 +393,7 @@
     }
   },
   "seoSettings": {
+    "publicSiteUrl": "https://afrokokorootfoundation.org",
     "defaultTitle": "Afrokokoroot Foundation",
     "defaultDescription": "Empowering communities through education, art, and cultural exchange. A 501(c)(3) nonprofit organization.",
     "defaultKeywords": [
@@ -418,7 +419,7 @@
   },
   "searchConsoleSettings": {
     "enabled": false,
-    "siteUrl": "https://afrokokoroot-foundation.vercel.app",
+    "siteUrl": "https://afrokokorootfoundation.org",
     "serviceAccountJson": "",
     "lastSubmittedSitemapUrl": "",
     "lastSubmittedAt": "",
