@@ -1,10 +1,11 @@
 'use server';
 
-import { DEFAULT_DONATION_SETTINGS, getData, updateData } from './api';
+import { DEFAULT_DONATION_SETTINGS, DEFAULT_MARKETING_SETTINGS, DEFAULT_SEARCH_CONSOLE_SETTINGS, DEFAULT_SEO_SETTINGS, getData, updateData } from './api';
 import { revalidatePath } from 'next/cache';
 import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead, GalleryItem, PageContent, AdminUserInput, SiteSettings } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 import { assertAdminPermission, deleteAdminUserAccount, saveAdminUserAccount } from '@/lib/admin-auth';
+import { inspectSearchConsoleUrl, submitSearchConsoleSitemap, testSearchConsoleAccess } from '@/lib/search-console';
 
 export async function saveEvent(eventData: Event) {
   await assertAdminPermission('events');
@@ -206,14 +207,133 @@ export async function saveSiteSettings(settingsData: SiteSettings) {
     ...(settingsData.donationSettings || {}),
   };
 
+  data.seoSettings = {
+    ...DEFAULT_SEO_SETTINGS,
+    ...(data.seoSettings || {}),
+    ...(settingsData.seoSettings || {}),
+    defaultKeywords: settingsData.seoSettings?.defaultKeywords?.length
+      ? settingsData.seoSettings.defaultKeywords
+      : DEFAULT_SEO_SETTINGS.defaultKeywords,
+  };
+
+  data.marketingSettings = {
+    ...DEFAULT_MARKETING_SETTINGS,
+    ...(data.marketingSettings || {}),
+    ...(settingsData.marketingSettings || {}),
+  };
+
+  data.searchConsoleSettings = {
+    ...DEFAULT_SEARCH_CONSOLE_SETTINGS,
+    ...(data.searchConsoleSettings || {}),
+    ...(settingsData.searchConsoleSettings || {}),
+  };
+
   await updateData(data);
   revalidatePath('/');
   revalidatePath('/contact');
   revalidatePath('/privacy');
   revalidatePath('/terms');
   revalidatePath('/donate');
+  revalidatePath('/robots.txt');
+  revalidatePath('/sitemap.xml');
   revalidatePath('/admin/settings');
   return { success: true };
+}
+
+export async function testSearchConsoleConnectionAction(searchConsoleSettings: SiteSettings['searchConsoleSettings']) {
+  await assertAdminPermission('settings');
+
+  const result = await testSearchConsoleAccess(searchConsoleSettings);
+  const data = await getData();
+
+  data.searchConsoleSettings = {
+    ...DEFAULT_SEARCH_CONSOLE_SETTINGS,
+    ...(data.searchConsoleSettings || {}),
+    ...(searchConsoleSettings || {}),
+    accessibleSites: result.accessibleSites,
+    lastConnectionCheckedAt: result.checkedAt,
+    lastConnectionStatus: result.propertyFound ? 'success' : 'warning',
+    lastConnectionMessage: result.propertyFound
+      ? `Connected to Search Console with ${result.permissionLevel || 'verified'} access for ${result.siteUrl}.`
+      : `The service account can authenticate, but it does not have access to ${result.siteUrl}. Add the service account as an owner or full user in Search Console.`,
+    lastConnectionPermissionLevel: result.permissionLevel || '',
+  };
+
+  await updateData(data);
+  revalidatePath('/admin/settings');
+
+  if (!result.propertyFound) {
+    return {
+      success: false,
+      message: data.searchConsoleSettings.lastConnectionMessage,
+      result,
+    };
+  }
+
+  return {
+    success: true,
+    message: data.searchConsoleSettings.lastConnectionMessage,
+    result,
+  };
+}
+
+export async function submitSearchConsoleSitemapAction(searchConsoleSettings: SiteSettings['searchConsoleSettings']) {
+  await assertAdminPermission('settings');
+
+  const submission = await submitSearchConsoleSitemap(searchConsoleSettings);
+  const data = await getData();
+
+  data.searchConsoleSettings = {
+    ...DEFAULT_SEARCH_CONSOLE_SETTINGS,
+    ...(data.searchConsoleSettings || {}),
+    ...(searchConsoleSettings || {}),
+    lastSubmittedSitemapUrl: submission.sitemapUrl,
+    lastSubmittedAt: submission.submittedAt,
+    submissionHistory: [
+      {
+        siteUrl: submission.siteUrl,
+        sitemapUrl: submission.sitemapUrl,
+        submittedAt: submission.submittedAt,
+        message: `Submitted ${submission.sitemapUrl} to Search Console.`,
+      },
+      ...((data.searchConsoleSettings?.submissionHistory || []).slice(0, 9)),
+    ],
+  };
+
+  await updateData(data);
+  revalidatePath('/admin/settings');
+
+  return {
+    success: true,
+    message: `Submitted ${submission.sitemapUrl} to Search Console for ${submission.siteUrl}.`,
+    result: submission,
+  };
+}
+
+export async function inspectSearchConsoleUrlAction(
+  searchConsoleSettings: SiteSettings['searchConsoleSettings'],
+  inspectionUrl: string
+) {
+  await assertAdminPermission('settings');
+
+  const result = await inspectSearchConsoleUrl(searchConsoleSettings, inspectionUrl);
+  const data = await getData();
+
+  data.searchConsoleSettings = {
+    ...DEFAULT_SEARCH_CONSOLE_SETTINGS,
+    ...(data.searchConsoleSettings || {}),
+    ...(searchConsoleSettings || {}),
+    lastInspection: result,
+  };
+
+  await updateData(data);
+  revalidatePath('/admin/settings');
+
+  return {
+    success: true,
+    message: `Inspected ${result.inspectedUrl}.`,
+    result,
+  };
 }
 
 // Page content

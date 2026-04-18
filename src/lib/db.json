@@ -392,6 +392,43 @@
       "500": ""
     }
   },
+  "seoSettings": {
+    "defaultTitle": "Afrokokoroot Foundation",
+    "defaultDescription": "Empowering communities through education, art, and cultural exchange. A 501(c)(3) nonprofit organization.",
+    "defaultKeywords": [
+      "Nonprofit",
+      "Cultural Education",
+      "Cultural Exchange",
+      "Community Empowerment",
+      "Afrokokoroot",
+      "Arts",
+      "Culture",
+      "Africa",
+      "Heritage",
+      "Dance"
+    ],
+    "googleSiteVerification": "",
+    "bingSiteVerification": "",
+    "indexingEnabled": true
+  },
+  "marketingSettings": {
+    "googleAnalyticsId": "",
+    "microsoftClarityId": "",
+    "metaPixelId": ""
+  },
+  "searchConsoleSettings": {
+    "enabled": false,
+    "siteUrl": "https://afrokokoroot-foundation.vercel.app",
+    "serviceAccountJson": "",
+    "lastSubmittedSitemapUrl": "",
+    "lastSubmittedAt": "",
+    "accessibleSites": [],
+    "lastConnectionCheckedAt": "",
+    "lastConnectionStatus": "",
+    "lastConnectionMessage": "",
+    "lastConnectionPermissionLevel": "",
+    "submissionHistory": []
+  },
   "impactMetrics": [
     {
       "label": "Students Educated",

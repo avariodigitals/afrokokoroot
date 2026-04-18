@@ -77,9 +77,71 @@ export interface DonationSettings {
   monthlyPlanIds?: Record<string, string>;
 }
 
+export interface SeoSettings {
+  defaultTitle: string;
+  defaultDescription: string;
+  defaultKeywords: string[];
+  googleSiteVerification?: string;
+  bingSiteVerification?: string;
+  indexingEnabled: boolean;
+}
+
+export interface MarketingSettings {
+  googleAnalyticsId?: string;
+  microsoftClarityId?: string;
+  metaPixelId?: string;
+}
+
+export interface SearchConsoleProperty {
+  siteUrl: string;
+  permissionLevel?: string;
+}
+
+export interface SearchConsoleSubmissionEntry {
+  siteUrl: string;
+  sitemapUrl: string;
+  submittedAt: string;
+  message?: string;
+}
+
+export interface SearchConsoleInspectionResult {
+  inspectedUrl: string;
+  inspectedAt: string;
+  verdict?: string;
+  coverageState?: string;
+  crawlingState?: string;
+  indexingState?: string;
+  lastCrawlTime?: string;
+  pageFetchState?: string;
+  robotsTxtState?: string;
+  googleCanonical?: string;
+  userCanonical?: string;
+  referringUrls?: string[];
+  richResultsDetected?: boolean;
+  details?: string;
+}
+
+export interface SearchConsoleSettings {
+  enabled: boolean;
+  siteUrl: string;
+  serviceAccountJson?: string;
+  lastSubmittedSitemapUrl?: string;
+  lastSubmittedAt?: string;
+  accessibleSites?: SearchConsoleProperty[];
+  lastConnectionCheckedAt?: string;
+  lastConnectionStatus?: string;
+  lastConnectionMessage?: string;
+  lastConnectionPermissionLevel?: string;
+  submissionHistory?: SearchConsoleSubmissionEntry[];
+  lastInspection?: SearchConsoleInspectionResult;
+}
+
 export interface SiteSettings {
   contactInfo: ContactInfo;
   donationSettings: DonationSettings;
+  seoSettings: SeoSettings;
+  marketingSettings: MarketingSettings;
+  searchConsoleSettings: SearchConsoleSettings;
 }
 
 export interface ImpactMetric {

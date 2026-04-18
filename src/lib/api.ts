@@ -1,8 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { get, put } from '@vercel/blob';
-import { Event, Program, TeamMember, ContactInfo, DonationSettings, ImpactMetric, BlogPost, Lead, GalleryItem, PageContent, AdminUser } from './types';
+import { Event, Program, TeamMember, ContactInfo, DonationSettings, ImpactMetric, BlogPost, Lead, GalleryItem, PageContent, AdminUser, SeoSettings, MarketingSettings, SiteSettings, SearchConsoleSettings } from './types';
 import dbData from './db.json';
+import { siteConfig } from './site-config';
 
 const DB_PATH = path.join(process.cwd(), 'src/lib/db.json');
 const DB_BLOB_PATH = 'cms/db.json';
@@ -26,6 +27,36 @@ export const DEFAULT_DONATION_SETTINGS: DonationSettings = {
   },
 };
 
+export const DEFAULT_SEO_SETTINGS: SeoSettings = {
+  defaultTitle: siteConfig.name,
+  defaultDescription: siteConfig.description,
+  defaultKeywords: siteConfig.keywords,
+  googleSiteVerification: '',
+  bingSiteVerification: '',
+  indexingEnabled: true,
+};
+
+export const DEFAULT_MARKETING_SETTINGS: MarketingSettings = {
+  googleAnalyticsId: '',
+  microsoftClarityId: '',
+  metaPixelId: '',
+};
+
+export const DEFAULT_SEARCH_CONSOLE_SETTINGS: SearchConsoleSettings = {
+  enabled: false,
+  siteUrl: siteConfig.url,
+  serviceAccountJson: '',
+  lastSubmittedSitemapUrl: '',
+  lastSubmittedAt: '',
+  accessibleSites: [],
+  lastConnectionCheckedAt: '',
+  lastConnectionStatus: '',
+  lastConnectionMessage: '',
+  lastConnectionPermissionLevel: '',
+  submissionHistory: [],
+  lastInspection: undefined,
+};
+
 export function getStorageStatus() {
   const isProduction = process.env.NODE_ENV === 'production';
 
@@ -46,6 +77,9 @@ export interface DatabaseSchema {
   pageContents: PageContent[];
   contactInfo: ContactInfo;
   donationSettings: DonationSettings;
+  seoSettings: SeoSettings;
+  marketingSettings: MarketingSettings;
+  searchConsoleSettings: SearchConsoleSettings;
   impactMetrics: ImpactMetric[];
   blogPosts: BlogPost[];
   leads: Lead[];
@@ -159,6 +193,51 @@ export async function getDonationSettings(): Promise<DonationSettings> {
   return {
     ...DEFAULT_DONATION_SETTINGS,
     ...data.donationSettings,
+  };
+}
+
+export async function getSeoSettings(): Promise<SeoSettings> {
+  const data = await getData();
+  return {
+    ...DEFAULT_SEO_SETTINGS,
+    ...data.seoSettings,
+    defaultKeywords: data.seoSettings?.defaultKeywords?.length
+      ? data.seoSettings.defaultKeywords
+      : DEFAULT_SEO_SETTINGS.defaultKeywords,
+  };
+}
+
+export async function getMarketingSettings(): Promise<MarketingSettings> {
+  const data = await getData();
+  return {
+    ...DEFAULT_MARKETING_SETTINGS,
+    ...data.marketingSettings,
+  };
+}
+
+export async function getSearchConsoleSettings(): Promise<SearchConsoleSettings> {
+  const data = await getData();
+  return {
+    ...DEFAULT_SEARCH_CONSOLE_SETTINGS,
+    ...data.searchConsoleSettings,
+  };
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const [contactInfo, donationSettings, seoSettings, marketingSettings, searchConsoleSettings] = await Promise.all([
+    getContactInfo(),
+    getDonationSettings(),
+    getSeoSettings(),
+    getMarketingSettings(),
+    getSearchConsoleSettings(),
+  ]);
+
+  return {
+    contactInfo,
+    donationSettings,
+    seoSettings,
+    marketingSettings,
+    searchConsoleSettings,
   };
 }
 
