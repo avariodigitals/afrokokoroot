@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { getDonationSettings } from "@/lib/api"
 import { siteConfig } from "@/lib/site-config"
 import DonateClient from "./DonateClient"
 
@@ -12,6 +13,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default function DonatePage() {
-  return <DonateClient />
+export default async function DonatePage() {
+  const donationSettings = await getDonationSettings()
+
+  return <DonateClient donationSettings={donationSettings} />
 }

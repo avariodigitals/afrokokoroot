@@ -1,12 +1,26 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { get, put } from '@vercel/blob';
-import { Event, Program, TeamMember, ContactInfo, ImpactMetric, BlogPost, Lead, GalleryItem, PageContent, AdminUser } from './types';
+import { Event, Program, TeamMember, ContactInfo, DonationSettings, ImpactMetric, BlogPost, Lead, GalleryItem, PageContent, AdminUser } from './types';
 import dbData from './db.json';
 
 const DB_PATH = path.join(process.cwd(), 'src/lib/db.json');
 const DB_BLOB_PATH = 'cms/db.json';
 const canUseBlobStorage = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+
+export const DEFAULT_DONATION_SETTINGS: DonationSettings = {
+  donationsEnabled: false,
+  paypalClientId: '',
+  paypalMerchantId: '',
+  currencyCode: 'USD',
+  monthlyPlanIds: {
+    '25': '',
+    '50': '',
+    '100': '',
+    '250': '',
+    '500': '',
+  },
+};
 
 export function getStorageStatus() {
   const isProduction = process.env.NODE_ENV === 'production';
@@ -27,6 +41,7 @@ export interface DatabaseSchema {
   team: TeamMember[];
   pageContents: PageContent[];
   contactInfo: ContactInfo;
+  donationSettings: DonationSettings;
   impactMetrics: ImpactMetric[];
   blogPosts: BlogPost[];
   leads: Lead[];
@@ -132,6 +147,14 @@ export async function getContactInfo(): Promise<ContactInfo> {
     email: '',
     phone: '',
     socials: {}
+  };
+}
+
+export async function getDonationSettings(): Promise<DonationSettings> {
+  const data = await getData();
+  return {
+    ...DEFAULT_DONATION_SETTINGS,
+    ...data.donationSettings,
   };
 }
 

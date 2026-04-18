@@ -69,6 +69,19 @@ export interface ContactInfo {
   socials: Socials;
 }
 
+export interface DonationSettings {
+  donationsEnabled: boolean;
+  paypalClientId: string;
+  paypalMerchantId?: string;
+  currencyCode: string;
+  monthlyPlanIds?: Record<string, string>;
+}
+
+export interface SiteSettings {
+  contactInfo: ContactInfo;
+  donationSettings: DonationSettings;
+}
+
 export interface ImpactMetric {
   label: string;
   value: string;

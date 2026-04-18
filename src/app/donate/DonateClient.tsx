@@ -3,16 +3,31 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { Check, Heart, ShieldCheck, Lock, CreditCard, Sparkles, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { DonationSettings } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
 const donationAmounts = [25, 50, 100, 250, 500]
 
-export default function DonateClient() {
+interface DonateClientProps {
+  donationSettings: DonationSettings
+}
+
+export default function DonateClient({ donationSettings }: DonateClientProps) {
   const [frequency, setFrequency] = React.useState<"one-time" | "monthly">("one-time")
   const [amount, setAmount] = React.useState<number | "custom">(50)
   const [customAmount, setCustomAmount] = React.useState("")
+  const [paymentState, setPaymentState] = React.useState<"idle" | "success" | "error">("idle")
+
+  const resolvedAmount = amount === "custom" ? Number(customAmount) : amount
+  const hasValidAmount = Number.isFinite(resolvedAmount) && resolvedAmount > 0
+  const formattedAmount = hasValidAmount ? resolvedAmount.toFixed(2) : "0.00"
+  const monthlyPlanId = amount === "custom" ? "" : donationSettings.monthlyPlanIds?.[String(amount)] || ""
+  const canShowOneTimePayPal = donationSettings.donationsEnabled && Boolean(donationSettings.paypalClientId) && frequency === "one-time" && hasValidAmount
+  const canShowMonthlyPayPal = donationSettings.donationsEnabled && Boolean(donationSettings.paypalClientId) && frequency === "monthly" && amount !== "custom" && Boolean(monthlyPlanId)
+  const donateButtonLabel = frequency === "monthly" ? "Start Monthly Donation" : "Donate Now"
 
   return (
     <div className="min-h-screen bg-lime-50 pb-20 overflow-hidden">
@@ -58,7 +73,10 @@ export default function DonateClient() {
               {/* Frequency Toggle */}
               <div className="flex bg-lime-50 p-1.5 rounded-xl">
                 <button
-                  onClick={() => setFrequency("one-time")}
+                  onClick={() => {
+                    setFrequency("one-time")
+                    setPaymentState("idle")
+                  }}
                   className={cn(
                     "flex-1 py-4 text-base font-bold rounded-lg transition-all duration-300",
                     frequency === "one-time"
@@ -69,7 +87,10 @@ export default function DonateClient() {
                   One-Time Gift
                 </button>
                 <button
-                  onClick={() => setFrequency("monthly")}
+                  onClick={() => {
+                    setFrequency("monthly")
+                    setPaymentState("idle")
+                  }}
                   className={cn(
                     "flex-1 py-4 text-base font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2",
                     frequency === "monthly"
@@ -94,6 +115,7 @@ export default function DonateClient() {
                     <button
                       key={val}
                       onClick={() => {
+                        setPaymentState("idle")
                         setAmount(val)
                         setCustomAmount("")
                       }}
@@ -111,9 +133,12 @@ export default function DonateClient() {
                     <span className={cn("absolute left-4 top-1/2 -translate-y-1/2 font-black text-xl pointer-events-none transition-colors", amount === "custom" ? "text-green-700" : "text-green-300")}>$</span>
                     <input
                       type="number"
+                      min="1"
+                      step="1"
                       placeholder="Other"
                       value={customAmount}
                       onChange={(e) => {
+                        setPaymentState("idle")
                         setAmount("custom")
                         setCustomAmount(e.target.value)
                       }}
@@ -136,16 +161,126 @@ export default function DonateClient() {
                 <div>
                   <h4 className="font-bold text-green-900 mb-1">Your Impact</h4>
                   <p className="text-green-800/80 leading-relaxed">
-                    Your donation of <span className="font-black text-green-900">${amount === "custom" ? (customAmount || "0") : amount}</span> helps provide resources, educational materials, and mentorship for youth in our community.
+                    Your donation of <span className="font-black text-green-900">${formattedAmount}</span> helps provide resources, educational materials, and mentorship for youth in our community.
                   </p>
                 </div>
               </div>
 
-              {/* Payment Button Placeholder */}
+              {/* Payment Button */}
               <div className="pt-2 space-y-4">
-                <Button size="lg" className="w-full text-xl h-16 rounded-2xl font-bold bg-gradient-to-r from-green-600 to-lime-600 hover:from-green-700 hover:to-lime-700 shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all">
-                  {frequency === "monthly" ? "Start Monthly Donation" : "Donate Now"} <ArrowRight className="ml-2 h-6 w-6" />
-                </Button>
+                {canShowOneTimePayPal ? (
+                  <div className="rounded-2xl border border-lime-100 bg-lime-50/60 p-4 shadow-inner">
+                    <PayPalScriptProvider options={{ clientId: donationSettings.paypalClientId, currency: donationSettings.currencyCode }}>
+                      <PayPalButtons
+                        style={{ layout: "vertical", color: "gold", shape: "pill", label: "donate", height: 50, tagline: false }}
+                        forceReRender={[resolvedAmount, donationSettings.currencyCode]}
+                        createOrder={(_, actions) => {
+                          return actions.order.create({
+                            intent: "CAPTURE",
+                            purchase_units: [
+                              {
+                                description: "Donation to Afrokokoroot Foundation",
+                                amount: {
+                                  value: formattedAmount,
+                                  currency_code: donationSettings.currencyCode,
+                                },
+                              },
+                            ],
+                          })
+                        }}
+                        onApprove={async (_, actions) => {
+                          await actions.order?.capture()
+                          setPaymentState("success")
+                        }}
+                        onError={(error) => {
+                          console.error("PayPal donation error:", error)
+                          setPaymentState("error")
+                        }}
+                      />
+                    </PayPalScriptProvider>
+                  </div>
+                ) : canShowMonthlyPayPal ? (
+                  <div className="rounded-2xl border border-lime-100 bg-lime-50/60 p-4 shadow-inner">
+                    <PayPalScriptProvider options={{ clientId: donationSettings.paypalClientId, currency: donationSettings.currencyCode, vault: true, intent: "subscription" }}>
+                      <PayPalButtons
+                        style={{ layout: "vertical", color: "gold", shape: "pill", label: "subscribe", height: 50, tagline: false }}
+                        forceReRender={[monthlyPlanId, donationSettings.currencyCode]}
+                        createSubscription={(_, actions) => {
+                          return actions.subscription.create({
+                            plan_id: monthlyPlanId,
+                          })
+                        }}
+                        onApprove={async (data) => {
+                          console.log("PayPal subscription approved:", data.subscriptionID)
+                          setPaymentState("success")
+                        }}
+                        onError={(error) => {
+                          console.error("PayPal subscription error:", error)
+                          setPaymentState("error")
+                        }}
+                      />
+                    </PayPalScriptProvider>
+                  </div>
+                ) : (
+                  <Button
+                    size="lg"
+                    disabled
+                    className="w-full text-xl h-16 rounded-2xl font-bold bg-gradient-to-r from-green-600 to-lime-600 shadow-xl"
+                  >
+                    {donateButtonLabel} <ArrowRight className="ml-2 h-6 w-6" />
+                  </Button>
+                )}
+
+                {frequency === "monthly" && (
+                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+                    Monthly giving uses PayPal subscription plans. Select one of the preset amounts and make sure that amount has a plan ID configured in admin settings.
+                  </p>
+                )}
+
+                {frequency === "monthly" && amount === "custom" && (
+                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+                    Custom monthly amounts are not supported with the current PayPal setup. Choose one of the preset monthly amounts instead.
+                  </p>
+                )}
+
+                {frequency === "monthly" && amount !== "custom" && donationSettings.donationsEnabled && donationSettings.paypalClientId && !monthlyPlanId && (
+                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+                    No PayPal monthly plan is configured for ${amount}. Add that plan ID in admin settings to activate this recurring option.
+                  </p>
+                )}
+
+                {!hasValidAmount && (
+                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+                    Enter a donation amount greater than $0 to activate checkout.
+                  </p>
+                )}
+
+                {!donationSettings.donationsEnabled && (
+                  <p className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700">
+                    Online donations are currently turned off. Enable them in the admin settings when you are ready to accept payments.
+                  </p>
+                )}
+
+                {donationSettings.donationsEnabled && !donationSettings.paypalClientId && (
+                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+                    PayPal is missing a Client ID. Add it in the admin settings to activate the donation button.
+                  </p>
+                )}
+
+                {paymentState === "success" && (
+                  <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
+                    {frequency === "monthly"
+                      ? "Subscription started. Thank you for becoming a monthly supporter of Afrokokoroot Foundation."
+                      : "Donation received. Thank you for supporting Afrokokoroot Foundation."}
+                  </p>
+                )}
+
+                {paymentState === "error" && (
+                  <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800">
+                    PayPal could not process the donation. Please try again or contact the team directly.
+                  </p>
+                )}
+
                 <div className="flex items-center justify-center gap-2 text-xs font-medium text-green-500">
                   <Lock className="h-3 w-3" />
                   <span>Secure 256-bit SSL Encrypted Payment</span>

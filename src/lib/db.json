@@ -373,6 +373,19 @@
       "threads": "https://www.threads.net/@afrokokoroot_foundation"
     }
   },
+  "donationSettings": {
+    "donationsEnabled": false,
+    "paypalClientId": "",
+    "paypalMerchantId": "",
+    "currencyCode": "USD",
+    "monthlyPlanIds": {
+      "25": "",
+      "50": "",
+      "100": "",
+      "250": "",
+      "500": ""
+    }
+  },
   "impactMetrics": [
     {
       "label": "Students Educated",

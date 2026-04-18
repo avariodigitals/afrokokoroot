@@ -1,8 +1,8 @@
 'use server';
 
-import { getData, updateData } from './api';
+import { DEFAULT_DONATION_SETTINGS, getData, updateData } from './api';
 import { revalidatePath } from 'next/cache';
-import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead, GalleryItem, PageContent, AdminUserInput } from '@/lib/types';
+import { Event, BlogPost, Program, TeamMember, ImpactMetric, ContactInfo, Lead, GalleryItem, PageContent, AdminUserInput, SiteSettings } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 import { assertAdminPermission, deleteAdminUserAccount, saveAdminUserAccount } from '@/lib/admin-auth';
 
@@ -173,10 +173,46 @@ export async function deleteTeamMember(slug: string) {
 export async function saveContactInfo(infoData: ContactInfo) {
   await assertAdminPermission('settings');
   const data = await getData();
-  data.contactInfo = { ...data.contactInfo, ...infoData };
+  data.contactInfo = {
+    ...data.contactInfo,
+    ...infoData,
+    socials: {
+      ...(data.contactInfo?.socials || {}),
+      ...(infoData.socials || {}),
+    },
+  };
   
   await updateData(data);
   revalidatePath('/');
+  return { success: true };
+}
+
+export async function saveSiteSettings(settingsData: SiteSettings) {
+  await assertAdminPermission('settings');
+  const data = await getData();
+
+  data.contactInfo = {
+    ...data.contactInfo,
+    ...settingsData.contactInfo,
+    socials: {
+      ...(data.contactInfo?.socials || {}),
+      ...(settingsData.contactInfo.socials || {}),
+    },
+  };
+
+  data.donationSettings = {
+    ...DEFAULT_DONATION_SETTINGS,
+    ...(data.donationSettings || {}),
+    ...(settingsData.donationSettings || {}),
+  };
+
+  await updateData(data);
+  revalidatePath('/');
+  revalidatePath('/contact');
+  revalidatePath('/privacy');
+  revalidatePath('/terms');
+  revalidatePath('/donate');
+  revalidatePath('/admin/settings');
   return { success: true };
 }
 
