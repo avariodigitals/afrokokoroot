@@ -4,7 +4,7 @@ import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
-import { Check, Heart, ShieldCheck, Lock, CreditCard, Sparkles, ArrowRight } from "lucide-react"
+import { Check, Heart, ShieldCheck, Lock, CreditCard, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DonationSettings } from "@/lib/types"
 import { cn } from "@/lib/utils"
@@ -168,10 +168,7 @@ export default function DonateClient({ donationSettings }: DonateClientProps) {
               </div>
 
               {/* Impact Statement based on amount */}
-              <div className="bg-lime-50/80 p-6 rounded-2xl border border-lime-100 flex gap-4 items-start shadow-sm">
-                <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center shrink-0">
-                  <Sparkles className="h-5 w-5 text-green-600" />
-                </div>
+              <div className="bg-lime-50/80 p-6 rounded-2xl border border-lime-100 shadow-sm">
                 <div>
                   <h4 className="font-bold text-green-900 mb-1">Your Impact</h4>
                   <p className="text-green-800/80 leading-relaxed">
