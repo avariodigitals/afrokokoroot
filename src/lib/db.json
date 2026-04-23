@@ -125,6 +125,10 @@
           "name": "Partner 2",
           "image": ""
         }
+      ],
+      "galleryImages": [
+        "/uploads/events/3be39fdc-bd3b-4977-a316-35b61a9f3c6e.jpeg",
+        "/uploads/events/f34672c9-ce8b-42e0-86f5-6d00f276ec28.jpeg"
       ]
     },
     {
@@ -361,6 +365,15 @@
         "impactIntro": "Our metrics capture meaningful progress in education, events, arts access, and community support.",
         "metricHeadline": "Impact at a Glance"
       }
+    },
+    {
+      "slug": "gallery",
+      "title": "Gallery",
+      "description": "Explore moments of joy, rhythm, and connection from Afrokokoroot Foundation events and community gatherings.",
+      "heroTitle": "Our Gallery",
+      "heroSubtitle": "A visual journey through our mission to preserve global heritage and empower communities through music and art .",
+      "heroImage": "/uploads/pages/a644a7ea-ad7e-4a46-ba79-bf852fe7feb4.jpeg",
+      "content": {}
     }
   ],
   "contactInfo": {
@@ -505,8 +518,8 @@
       "isActive": true,
       "isOwner": true,
       "createdAt": "2026-04-17T00:00:00.000Z",
-      "updatedAt": "2026-04-17T22:47:42.150Z",
-      "lastLoginAt": "2026-04-17T22:47:42.150Z"
+      "updatedAt": "2026-04-23T20:49:54.847Z",
+      "lastLoginAt": "2026-04-23T20:49:54.847Z"
     },
     {
       "id": "a61e6618-a1a4-406e-9a87-4afd0db4e24f",
@@ -525,6 +538,15 @@
       "isOwner": false,
       "createdAt": "2026-04-17T18:40:38.060Z",
       "updatedAt": "2026-04-17T18:40:38.060Z"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "da0a17b2-bc76-4a61-aa06-9db3c973b714",
+      "title": "Sunny and his band",
+      "image": "/uploads/gallery/2fa309e4-c2dd-4150-857c-c7d68c1a6b32.jpeg",
+      "category": "World Peace Awakening",
+      "date": "2025-09-23"
     }
   ]
 }

@@ -5,7 +5,7 @@ import { Metadata } from "next"
 import { Calendar, MapPin, Clock, ArrowLeft, Sparkles, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Gallery } from "@/components/sections/Gallery"
-import { getEvents, getGalleryItems } from "@/lib/api"
+import { getEvents } from "@/lib/api"
 import { Event } from "@/lib/types"
 import { siteConfig } from "@/lib/site-config"
 import JsonLd from "@/components/ui/JSONLD"
@@ -66,11 +66,19 @@ export default async function EventPage({ params }: EventPageProps) {
   const { slug } = await params
   const events = await getEvents()
   const event = events.find((e: Event) => e.slug === slug)
-  const galleryItems = await getGalleryItems()
 
   if (!event) {
     notFound()
   }
+
+  // Build gallery items from the event's own galleryImages
+  const eventGalleryItems = (event.galleryImages || []).map((url: string, i: number) => ({
+    id: `${slug}-gallery-${i}`,
+    title: `${event.title} moment ${i + 1}`,
+    image: url,
+    category: 'Event',
+    date: event.date,
+  }))
 
   // Group artists by stage
   const artistsByStage = event.artists?.reduce((acc, artist) => {
@@ -263,16 +271,18 @@ export default async function EventPage({ params }: EventPageProps) {
           )}
 
           {/* Past Event Gallery */}
+          {eventGalleryItems.length > 0 && (
           <section className="bg-lime-50/50 rounded-3xl p-8 md:p-12 border border-lime-100">
             <h2 className="text-3xl font-bold mb-6 text-green-950">Past Event Moments</h2>
             <p className="text-slate-600 mb-8 text-lg">A glimpse into our previous celebrations and community gatherings.</p>
-            <Gallery hideTitle={true} initialItems={galleryItems.slice(0, 4)} />
+            <Gallery hideTitle={true} initialItems={eventGalleryItems} />
             <div className="mt-8 text-center">
               <Button variant="outline" asChild className="rounded-full border-green-200 text-green-700 hover:bg-green-50 hover:text-green-800">
                 <Link href="/gallery">View Full Gallery</Link>
               </Button>
             </div>
           </section>
+          )}
 
           {/* Sponsors Section */}
           {event.sponsors && event.sponsors.length > 0 && (

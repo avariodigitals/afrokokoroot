@@ -6,6 +6,7 @@ import { put } from '@vercel/blob';
 import { AuthError, PermissionError, assertAdminPermission } from '@/lib/admin-auth';
 
 const canUseBlobStorage = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+const canUseImageKit = Boolean(process.env.IMAGEKIT_PRIVATE_KEY) && Boolean(process.env.IMAGEKIT_PUBLIC_KEY) && Boolean(process.env.IMAGEKIT_URL_ENDPOINT);
 
 const uploadPermissions = {
   blog: 'blog',
@@ -62,6 +63,40 @@ export async function POST(request: NextRequest) {
     // Generate unique filename
     const ext = file.name.split('.').pop();
     const filename = `${uuidv4()}.${ext}`;
+
+    if (canUseImageKit) {
+      const formDataIK = new FormData();
+      formDataIK.append('file', file, filename);
+      formDataIK.append('fileName', filename);
+      formDataIK.append('folder', `/uploads/${category}`);
+      formDataIK.append('useUniqueFileName', 'false');
+
+      const credentials = Buffer.from(`${process.env.IMAGEKIT_PRIVATE_KEY}:`).toString('base64');
+      const ikResponse = await fetch('https://upload.imagekit.io/api/v1/files/upload', {
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${credentials}`,
+        },
+        body: formDataIK,
+      });
+
+      if (!ikResponse.ok) {
+        const err = await ikResponse.text();
+        console.error('ImageKit upload error:', err);
+        return NextResponse.json({ error: 'ImageKit upload failed' }, { status: 500 });
+      }
+
+      const ikData = await ikResponse.json();
+
+      return NextResponse.json(
+        {
+          success: true,
+          path: ikData.url,
+          filename,
+        },
+        { status: 201 }
+      );
+    }
 
     if (canUseBlobStorage) {
       const blob = await put(`uploads/${category}/${filename}`, file, {

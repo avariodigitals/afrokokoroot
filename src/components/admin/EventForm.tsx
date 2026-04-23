@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { saveEvent } from '@/lib/actions'
-import { Loader2 } from 'lucide-react'
+import { Loader2, X } from 'lucide-react'
 import { Event, Artist, Sponsor } from '@/lib/types'
 import Image from 'next/image'
 import { toast } from 'sonner'
@@ -15,6 +15,7 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [galleryUploading, setGalleryUploading] = useState(false)
   const [imagePreview, setImagePreview] = useState<string | null>(
     initialData?.image ? initialData.image : null
   )
@@ -31,7 +32,8 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
     highlights: [],
     artists: [],
     sponsors: [],
-    partners: []
+    partners: [],
+    galleryImages: []
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -174,6 +176,48 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
     } finally {
       setUploading(false)
     }
+  }
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+
+    setGalleryUploading(true)
+    const uploaded: string[] = []
+    try {
+      for (const file of Array.from(files)) {
+        const formDataToSend = new FormData()
+        formDataToSend.append('file', file)
+        formDataToSend.append('category', 'events')
+
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formDataToSend
+        })
+
+        if (!response.ok) throw new Error('Upload failed')
+        const data = await response.json()
+        uploaded.push(data.path)
+      }
+      setFormData((prev: Event) => ({
+        ...prev,
+        galleryImages: [...(prev.galleryImages || []), ...uploaded]
+      }))
+      toast.success(`${uploaded.length} image${uploaded.length > 1 ? 's' : ''} uploaded`)
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload one or more images')
+    } finally {
+      setGalleryUploading(false)
+      e.target.value = ''
+    }
+  }
+
+  const removeGalleryImage = (index: number) => {
+    setFormData((prev: Event) => ({
+      ...prev,
+      galleryImages: (prev.galleryImages || []).filter((_, i) => i !== index)
+    }))
   }
 
   const addPartner = () => {
@@ -534,6 +578,53 @@ export default function EventForm({ initialData }: { initialData?: Event }) {
           <Button type="button" variant="outline" onClick={addPartner}>
             Add Community Partner
           </Button>
+        </div>
+
+        {/* Event Gallery Section */}
+        <div className="space-y-4 rounded-lg border border-slate-200 p-4">
+          <div>
+            <h3 className="text-lg font-medium text-slate-800">Past Event Moments (Gallery)</h3>
+            <p className="text-sm text-slate-500 mt-1">
+              These photos appear in the &quot;Past Event Moments&quot; section on this event&apos;s page. You can select multiple images at once.
+            </p>
+          </div>
+          <div className="relative">
+            <Input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleGalleryUpload}
+              disabled={galleryUploading}
+              className="cursor-pointer"
+            />
+            {galleryUploading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/70 rounded">
+                <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
+                <span className="ml-2 text-sm text-slate-600">Uploading...</span>
+              </div>
+            )}
+          </div>
+          {(formData.galleryImages || []).length > 0 && (
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+              {(formData.galleryImages || []).map((url, index) => (
+                <div key={index} className="relative group rounded-lg overflow-hidden border border-slate-200 aspect-square">
+                  <Image
+                    src={url}
+                    alt={`Gallery image ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeGalleryImage(index)}
+                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

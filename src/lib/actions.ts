@@ -361,6 +361,10 @@ export async function savePageContent(pageData: PageContent) {
 
   data.pageContents = pages;
   await updateData(data);
+  revalidatePath(`/${pageData.slug}`);
+  if (pageData.slug === 'home') {
+    revalidatePath('/');
+  }
   revalidatePath('/about');
   revalidatePath('/admin/pages');
   revalidatePath('/');

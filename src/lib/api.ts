@@ -9,6 +9,16 @@ const DB_PATH = path.join(process.cwd(), 'src/lib/db.json');
 const DB_BLOB_PATH = 'cms/db.json';
 const canUseBlobStorage = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
+const DEFAULT_GALLERY_PAGE: PageContent = {
+  slug: 'gallery',
+  title: 'Gallery',
+  description: 'Explore moments of joy, rhythm, and connection from Afrokokoroot Foundation events and community gatherings.',
+  heroTitle: 'Our Gallery',
+  heroSubtitle: 'A visual journey through our mission to preserve African heritage and empower communities through music and art.',
+  heroImage: 'https://ik.imagekit.io/360t0n1jd9/Afrokoko%20Foundation%20Assets/IMG_8151.jpeg?updatedAt=1772546608755',
+  content: {},
+};
+
 export const DEFAULT_DONATION_SETTINGS: DonationSettings = {
   donationsEnabled: false,
   paypalClientId: '',
@@ -265,11 +275,23 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
 
 export async function getPages(): Promise<PageContent[]> {
   const data = await getData();
-  return data.pageContents || [];
+  const pages = data.pageContents || [];
+  const hasGallery = pages.some((page) => page.slug === 'gallery');
+  return hasGallery ? pages : [...pages, DEFAULT_GALLERY_PAGE];
 }
 
 export async function getPageContent(slug: string): Promise<PageContent | null> {
   const data = await getData();
   const pages = data.pageContents || [];
-  return pages.find((page) => page.slug === slug) || null;
+  const page = pages.find((entry) => entry.slug === slug);
+
+  if (page) {
+    return page;
+  }
+
+  if (slug === 'gallery') {
+    return DEFAULT_GALLERY_PAGE;
+  }
+
+  return null;
 }

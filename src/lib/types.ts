@@ -13,6 +13,7 @@ export interface Event {
   artists?: Artist[];
   sponsors?: Sponsor[];
   partners?: Sponsor[];
+  galleryImages?: string[];
 }
 
 export interface Artist {
