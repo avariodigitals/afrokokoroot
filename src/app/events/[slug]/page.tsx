@@ -344,7 +344,7 @@ export default async function EventPage({ params }: EventPageProps) {
               <div className="space-y-4">
                 <h2 className="text-4xl md:text-5xl font-black tracking-tight">Reserve Your Spot</h2>
                 <p className="text-lime-100/80 text-xl leading-relaxed">
-                  Join us for the World Peace Awakening 2026. Secure your tickets now to be part of this unforgettable cultural experience.
+                  Join us for the World Peace Awakening 2026. Register as a volunteer or apply to be a vendor and be part of this unforgettable cultural experience.
                 </p>
               </div>
               
